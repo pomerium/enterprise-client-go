@@ -24,7 +24,7 @@ type PomeriumAuthCredentials struct {
 // NewPomeriumAuthCredentials returns a new PomeriumAuthCredentials for the provided service account authToken
 func NewPomeriumAuthCredentials(authToken string) *PomeriumAuthCredentials {
 	return &PomeriumAuthCredentials{
-		metadata: map[string]string{"authorization": fmt.Sprintf("Pomerium %s", authToken)},
+		metadata: map[string]string{"authorization": AuthorizationHeader(authToken)},
 	}
 }
 
