@@ -12,7 +12,7 @@ go get -u github.com/pomerium/enterprise-client-go
 
 ## Usage
 
-[Enterprise Setup](https://docs.pomerium.io/enterprise/api.html)
+[Enterprise Setup](https://pomerium.io/enterprise/api.html)
 
 [example](https://github.com/pomerium/enterprise-client-go/blob/master/example/main.go)
 
