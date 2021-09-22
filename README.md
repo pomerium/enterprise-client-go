@@ -14,7 +14,7 @@ go get -u github.com/pomerium/enterprise-client-go
 
 [Enterprise Setup](https://pomerium.io/enterprise/api.html)
 
-[example](https://github.com/pomerium/enterprise-client-go/blob/master/example/main.go)
+[Example](https://github.com/pomerium/enterprise-client-go/blob/master/example/main.go)
 
 ## Reference
 
