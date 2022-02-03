@@ -48,6 +48,7 @@ type Client struct {
 	conn *grpc.ClientConn
 
 	ActivityLogService            pb.ActivityLogServiceClient
+	DeviceService                 pb.DeviceServiceClient
 	KeyChainService               pb.KeyChainServiceClient
 	NamespacePermissionService    pb.NamespacePermissionServiceClient
 	NamespaceService              pb.NamespaceServiceClient
@@ -79,6 +80,7 @@ func NewClient(ctx context.Context, target string, authToken string, opts ...Opt
 		RouteService:                  pb.NewRouteServiceClient(conn),
 		SettingsService:               pb.NewSettingsServiceClient(conn),
 		UserService:                   pb.NewUserServiceClient(conn),
+		DeviceService:                 pb.NewDeviceServiceClient(conn),
 	}, nil
 }
 
