@@ -3,18 +3,18 @@ module github.com/pomerium/enterprise-client-go
 go 1.20
 
 require (
-	github.com/envoyproxy/go-control-plane v0.10.2-0.20220325020618-49ff273808a1
+	github.com/envoyproxy/go-control-plane v0.11.0
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
 	github.com/pomerium/pomerium v0.18.0
-	github.com/stretchr/testify v1.8.0
-	google.golang.org/grpc v1.48.0
+	github.com/stretchr/testify v1.8.1
+	google.golang.org/grpc v1.52.0
 	google.golang.org/protobuf v1.30.0
 )
 
 require (
 	github.com/caddyserver/certmagic v0.16.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
-	github.com/cncf/xds/go v0.0.0-20211130200136-a8f946100490 // indirect
+	github.com/cncf/xds/go v0.0.0-20220314180256-7f1daf1720fc // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -43,7 +43,7 @@ require (
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
 	golang.org/x/tools v0.7.0 // indirect
-	google.golang.org/genproto v0.0.0-20220624142145-8cd45d7dbd1f // indirect
+	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
