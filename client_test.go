@@ -11,12 +11,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/interop/grpc_testing"
 	"google.golang.org/grpc/metadata"
-	"google.golang.org/grpc/test/grpc_testing"
 )
 
 func Test_PomeriumAuthCredentials(t *testing.T) {
-	var token = "mysecuretesttoken"
+	token := "mysecuretesttoken"
 
 	creds := NewPomeriumAuthCredentials(token)
 	meta, err := creds.GetRequestMetadata(context.Background(), "/something")
@@ -27,7 +27,7 @@ func Test_PomeriumAuthCredentials(t *testing.T) {
 }
 
 func Test_dial(t *testing.T) {
-	var token = "mysecuretesttoken"
+	token := "mysecuretesttoken"
 
 	srv := grpc.NewServer()
 	h := httptest.NewUnstartedServer(srv)
