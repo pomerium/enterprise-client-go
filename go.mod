@@ -1,6 +1,6 @@
 module github.com/pomerium/enterprise-client-go
 
-go 1.20
+go 1.21
 
 require (
 	github.com/envoyproxy/go-control-plane v0.11.1
