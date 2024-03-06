@@ -7,19 +7,19 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
 	github.com/pomerium/pomerium v0.25.0
 	github.com/stretchr/testify v1.9.0
-	google.golang.org/grpc v1.61.0
+	google.golang.org/grpc v1.62.1
 	google.golang.org/protobuf v1.32.0
 )
 
 require (
 	github.com/caddyserver/certmagic v0.20.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
-	github.com/cncf/xds/go v0.0.0-20231109132714-523115ebc101 // indirect
+	github.com/cncf/xds/go v0.0.0-20231128003011-0fa0005c9caa // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/btree v1.1.2 // indirect
-	github.com/google/uuid v1.5.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
@@ -39,11 +39,11 @@ require (
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/mod v0.14.0 // indirect
 	golang.org/x/net v0.20.0 // indirect
-	golang.org/x/sync v0.5.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.15.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20231120223509-83a465c0220f // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231127180814-3a041ad873d4 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240123012728-ef4313101c80 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240123012728-ef4313101c80 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
