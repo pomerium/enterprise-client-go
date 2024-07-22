@@ -1,6 +1,7 @@
 module github.com/pomerium/enterprise-client-go
 
-go 1.22
+go 1.22.2
+
 toolchain go1.22.4
 
 require (
