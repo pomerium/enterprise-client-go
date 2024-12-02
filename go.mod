@@ -8,7 +8,7 @@ require (
 	github.com/envoyproxy/go-control-plane v0.13.1
 	github.com/envoyproxy/protoc-gen-validate v1.1.0
 	github.com/pomerium/pomerium v0.28.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.68.0
 	google.golang.org/protobuf v1.35.2
 )
