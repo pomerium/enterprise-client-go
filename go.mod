@@ -7,7 +7,7 @@ toolchain go1.23.1
 require (
 	github.com/envoyproxy/go-control-plane/envoy v1.32.3
 	github.com/envoyproxy/protoc-gen-validate v1.1.0
-	github.com/pomerium/pomerium v0.28.1-0.20250122205906-0bd6d8cc8315
+	github.com/pomerium/pomerium v0.28.1-0.20250129195726-3c5c7fbd31dd
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.36.2
