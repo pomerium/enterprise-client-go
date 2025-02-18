@@ -7,14 +7,13 @@ toolchain go1.23.1
 require (
 	github.com/envoyproxy/go-control-plane/envoy v1.32.3
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
-	github.com/pomerium/pomerium v0.28.1-0.20250122205906-0bd6d8cc8315
+	github.com/pomerium/pomerium v0.28.1-0.20250218200206-b9fd926618e2
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.3
 )
 
 require (
-	cel.dev/expr v0.19.0 // indirect
 	github.com/caddyserver/certmagic v0.21.4 // indirect
 	github.com/caddyserver/zerossl v0.1.3 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
@@ -48,7 +47,6 @@ require (
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/tools v0.24.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20241209162323-e6fa225c2576 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241209162323-e6fa225c2576 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
