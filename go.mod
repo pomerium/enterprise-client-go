@@ -5,12 +5,12 @@ go 1.23.0
 toolchain go1.23.1
 
 require (
-	github.com/envoyproxy/go-control-plane/envoy v1.32.3
+	github.com/envoyproxy/go-control-plane/envoy v1.32.4
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
 	github.com/pomerium/pomerium v0.28.1-0.20250218200206-b9fd926618e2
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.70.0
-	google.golang.org/protobuf v1.36.3
+	google.golang.org/protobuf v1.36.4
 )
 
 require (
