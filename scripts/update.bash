@@ -13,13 +13,28 @@ git clone \
     --depth 1 \
     --filter=blob:none \
     --sparse \
-    --branch "$_tag" \
     git@github.com:pomerium/pomerium-console \
     "$_temp_dir"
-(cd "$_temp_dir" && git sparse-checkout set pkg/pb)
-cp -f "$_temp_dir/pkg/pb/"*.pb.go "$_script_dir/../pb/"
+(cd "$_temp_dir" && git fetch --depth 1 origin "$_tag" && git checkout "$_tag" && git sparse-checkout set pkg/pb)
 
-# update pomerium
+_files=(
+  activity_log
+  devices
+  external_data_sources
+  key_chain
+  namespaces
+  policy
+  route_health_check
+  route_redirect_action
+  routes
+  settings
+  types
+  users
+)
+
+for file in "${_files[@]}"; do
+    cp -f "$_temp_dir/pkg/pb/"${file}*.pb*.go "$_script_dir/../pb/"
+done
+
 cd "$_script_dir/.."
-go get -u github.com/pomerium/pomerium@"$_tag"
 go mod tidy
