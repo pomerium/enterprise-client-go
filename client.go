@@ -48,6 +48,7 @@ type Client struct {
 	conn *grpc.ClientConn
 
 	ActivityLogService            pb.ActivityLogServiceClient
+	ClusterService                pb.ClustersServiceClient
 	DeviceService                 pb.DeviceServiceClient
 	KeyChainService               pb.KeyChainServiceClient
 	NamespacePermissionService    pb.NamespacePermissionServiceClient
@@ -71,6 +72,7 @@ func NewClient(ctx context.Context, target string, authToken string, opts ...Opt
 		conn: conn,
 
 		ActivityLogService:            pb.NewActivityLogServiceClient(conn),
+		ClusterService:                pb.NewClustersServiceClient(conn),
 		KeyChainService:               pb.NewKeyChainServiceClient(conn),
 		NamespacePermissionService:    pb.NewNamespacePermissionServiceClient(conn),
 		NamespaceService:              pb.NewNamespaceServiceClient(conn),
@@ -93,7 +95,6 @@ func dial(ctx context.Context, target string, authToken string, opts ...Option) 
 	creds := NewPomeriumAuthCredentials(authToken)
 	dialOpts := append(cfg.dialOpts, grpc.WithTransportCredentials(credentials.NewTLS(cfg.tlsConfig)), grpc.WithPerRPCCredentials(creds))
 	conn, err := grpc.DialContext(ctx, target, dialOpts...)
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect: %w", err)
 	}
