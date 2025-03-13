@@ -584,8 +584,6 @@ func (m *Route) validate(all bool) error {
 
 	// no validation rules for EnableGoogleCloudServerlessAuthentication
 
-	// no validation rules for JwtIssuerFormat
-
 	if all {
 		switch v := interface{}(m.GetJwtGroupsFilter()).(type) {
 		case interface{ ValidateAll() error }:
@@ -823,6 +821,10 @@ func (m *Route) validate(all bool) error {
 
 	if m.KubernetesServiceAccountTokenFile != nil {
 		// no validation rules for KubernetesServiceAccountTokenFile
+	}
+
+	if m.JwtIssuerFormat != nil {
+		// no validation rules for JwtIssuerFormat
 	}
 
 	if m.BearerTokenFormat != nil {
