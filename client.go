@@ -50,6 +50,7 @@ type Client struct {
 	ActivityLogService            pb.ActivityLogServiceClient
 	ClusterService                pb.ClustersServiceClient
 	DeviceService                 pb.DeviceServiceClient
+	ExternalDataSourceService     pb.ExternalDataSourceServiceClient
 	KeyChainService               pb.KeyChainServiceClient
 	NamespacePermissionService    pb.NamespacePermissionServiceClient
 	NamespaceService              pb.NamespaceServiceClient
@@ -73,6 +74,8 @@ func NewClient(ctx context.Context, target string, authToken string, opts ...Opt
 
 		ActivityLogService:            pb.NewActivityLogServiceClient(conn),
 		ClusterService:                pb.NewClustersServiceClient(conn),
+		DeviceService:                 pb.NewDeviceServiceClient(conn),
+		ExternalDataSourceService:     pb.NewExternalDataSourceServiceClient(conn),
 		KeyChainService:               pb.NewKeyChainServiceClient(conn),
 		NamespacePermissionService:    pb.NewNamespacePermissionServiceClient(conn),
 		NamespaceService:              pb.NewNamespaceServiceClient(conn),
@@ -82,7 +85,6 @@ func NewClient(ctx context.Context, target string, authToken string, opts ...Opt
 		RouteService:                  pb.NewRouteServiceClient(conn),
 		SettingsService:               pb.NewSettingsServiceClient(conn),
 		UserService:                   pb.NewUserServiceClient(conn),
-		DeviceService:                 pb.NewDeviceServiceClient(conn),
 	}, nil
 }
 
