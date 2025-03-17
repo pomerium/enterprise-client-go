@@ -1239,7 +1239,8 @@ type ListRoutesRequest struct {
 	// limit the number of Route entries returned
 	Limit *int64 `protobuf:"varint,4,opt,name=limit,proto3,oneof" json:"limit,omitempty"`
 	// sort the Routes by newest, oldest, name or from
-	OrderBy   *string `protobuf:"bytes,5,opt,name=order_by,json=orderBy,proto3,oneof" json:"order_by,omitempty"`
+	OrderBy *string `protobuf:"bytes,5,opt,name=order_by,json=orderBy,proto3,oneof" json:"order_by,omitempty"`
+	// list Routes belonging to the cluster, or the default cluster if not set
 	ClusterId *string `protobuf:"bytes,6,opt,name=cluster_id,json=clusterId,proto3,oneof" json:"cluster_id,omitempty"`
 }
 
