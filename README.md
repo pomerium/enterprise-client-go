@@ -1,6 +1,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/pomerium/enterprise-client-go.svg)](https://pkg.go.dev/github.com/pomerium/enterprise-client-go)
 [![Go Report Card](https://goreportcard.com/badge/github.com/pomerium/enterprise-client-go)](https://goreportcard.com/report/github.com/pomerium/enterprise-client-go)
 [![Test Status](https://img.shields.io/github/workflow/status/pomerium/enterprise-client-go/test)](https://img.shields.io/github/workflow/status/pomerium/enterprise-client-go/test)
+[![Coverage Status](https://coveralls.io/repos/github/pomerium/sdk-go/badge.svg)](https://coveralls.io/github/pomerium/sdk-go)
 
 Official go client for the [Pomerium Enterprise](https://www.pomerium.com/enterprise/about.html) API.
 
