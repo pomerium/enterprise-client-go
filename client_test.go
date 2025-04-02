@@ -43,9 +43,7 @@ func Test_dial(t *testing.T) {
 	testService := &testServiceServer{}
 	srv.RegisterService(&grpc_testing.TestService_ServiceDesc, testService)
 
-	ctx := context.Background()
-
-	conn, err := dial(ctx, hURL.Host, token, WithTlsConfig(&tls.Config{RootCAs: hCA}))
+	conn, err := dial(hURL.Host, token, WithTlsConfig(&tls.Config{RootCAs: hCA}))
 
 	require.NoError(t, err)
 	defer conn.Close()

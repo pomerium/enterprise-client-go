@@ -61,8 +61,8 @@ type Client struct {
 }
 
 // NewClient returns a Pomerium Enterprise client configured to communicate with a given target API
-func NewClient(ctx context.Context, target string, authToken string, opts ...Option) (*Client, error) {
-	conn, err := dial(ctx, target, authToken, opts...)
+func NewClient(_ context.Context, target string, authToken string, opts ...Option) (*Client, error) {
+	conn, err := dial(target, authToken, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect: %w", err)
 	}
@@ -84,7 +84,7 @@ func NewClient(ctx context.Context, target string, authToken string, opts ...Opt
 	}, nil
 }
 
-func dial(ctx context.Context, target string, authToken string, opts ...Option) (*grpc.ClientConn, error) {
+func dial(target string, authToken string, opts ...Option) (*grpc.ClientConn, error) {
 	cfg := &options{}
 	for _, o := range opts {
 		o(cfg)
@@ -92,8 +92,8 @@ func dial(ctx context.Context, target string, authToken string, opts ...Option) 
 
 	creds := NewPomeriumAuthCredentials(authToken)
 	dialOpts := append(cfg.dialOpts, grpc.WithTransportCredentials(credentials.NewTLS(cfg.tlsConfig)), grpc.WithPerRPCCredentials(creds))
-	conn, err := grpc.DialContext(ctx, target, dialOpts...)
 
+	conn, err := grpc.NewClient(target, dialOpts...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect: %w", err)
 	}
