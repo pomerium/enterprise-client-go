@@ -41,7 +41,7 @@ type DeviceServiceClient interface {
 	DeleteDevice(ctx context.Context, in *DeleteDeviceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteDeviceType(ctx context.Context, in *DeleteDeviceTypeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListDevices(ctx context.Context, in *ListDevicesRequest, opts ...grpc.CallOption) (*ListDevicesResponse, error)
-	ListDeviceTypes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListDeviceTypesResponse, error)
+	ListDeviceTypes(ctx context.Context, in *ListDeviceTypesRequest, opts ...grpc.CallOption) (*ListDeviceTypesResponse, error)
 }
 
 type deviceServiceClient struct {
@@ -112,7 +112,7 @@ func (c *deviceServiceClient) ListDevices(ctx context.Context, in *ListDevicesRe
 	return out, nil
 }
 
-func (c *deviceServiceClient) ListDeviceTypes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListDeviceTypesResponse, error) {
+func (c *deviceServiceClient) ListDeviceTypes(ctx context.Context, in *ListDeviceTypesRequest, opts ...grpc.CallOption) (*ListDeviceTypesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListDeviceTypesResponse)
 	err := c.cc.Invoke(ctx, DeviceService_ListDeviceTypes_FullMethodName, in, out, cOpts...)
@@ -134,7 +134,7 @@ type DeviceServiceServer interface {
 	DeleteDevice(context.Context, *DeleteDeviceRequest) (*emptypb.Empty, error)
 	DeleteDeviceType(context.Context, *DeleteDeviceTypeRequest) (*emptypb.Empty, error)
 	ListDevices(context.Context, *ListDevicesRequest) (*ListDevicesResponse, error)
-	ListDeviceTypes(context.Context, *emptypb.Empty) (*ListDeviceTypesResponse, error)
+	ListDeviceTypes(context.Context, *ListDeviceTypesRequest) (*ListDeviceTypesResponse, error)
 }
 
 // UnimplementedDeviceServiceServer should be embedded to have
@@ -162,7 +162,7 @@ func (UnimplementedDeviceServiceServer) DeleteDeviceType(context.Context, *Delet
 func (UnimplementedDeviceServiceServer) ListDevices(context.Context, *ListDevicesRequest) (*ListDevicesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListDevices not implemented")
 }
-func (UnimplementedDeviceServiceServer) ListDeviceTypes(context.Context, *emptypb.Empty) (*ListDeviceTypesResponse, error) {
+func (UnimplementedDeviceServiceServer) ListDeviceTypes(context.Context, *ListDeviceTypesRequest) (*ListDeviceTypesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListDeviceTypes not implemented")
 }
 func (UnimplementedDeviceServiceServer) testEmbeddedByValue() {}
@@ -294,7 +294,7 @@ func _DeviceService_ListDevices_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _DeviceService_ListDeviceTypes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(ListDeviceTypesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -306,7 +306,7 @@ func _DeviceService_ListDeviceTypes_Handler(srv interface{}, ctx context.Context
 		FullMethod: DeviceService_ListDeviceTypes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeviceServiceServer).ListDeviceTypes(ctx, req.(*emptypb.Empty))
+		return srv.(DeviceServiceServer).ListDeviceTypes(ctx, req.(*ListDeviceTypesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

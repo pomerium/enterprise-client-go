@@ -1810,6 +1810,10 @@ func (m *ListRoutesRequest) validate(all bool) error {
 		// no validation rules for OrderBy
 	}
 
+	if m.ClusterId != nil {
+		// no validation rules for ClusterId
+	}
+
 	if len(errors) > 0 {
 		return ListRoutesRequestMultiError(errors)
 	}
