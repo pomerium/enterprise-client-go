@@ -10,15 +10,16 @@ trap 'rm -rf $_temp_dir' EXIT
 
 # update protobuf definitions
 git clone \
-    --depth 1 \
-    --filter=blob:none \
-    --sparse \
-    git@github.com:pomerium/pomerium-console \
-    "$_temp_dir"
+  --depth 1 \
+  --filter=blob:none \
+  --sparse \
+  git@github.com:pomerium/pomerium-console \
+  "$_temp_dir"
 (cd "$_temp_dir" && git fetch --depth 1 origin "$_tag" && git checkout "$_tag" && git sparse-checkout set pkg/pb)
 
 _files=(
   activity_log
+  clusters
   devices
   external_data_sources
   key_chain
@@ -33,7 +34,7 @@ _files=(
 )
 
 for file in "${_files[@]}"; do
-    cp -f "$_temp_dir/pkg/pb/"${file}*.pb*.go "$_script_dir/../pb/"
+  cp -f "$_temp_dir/pkg/pb/"${file}*.pb*.go "$_script_dir/../pb/"
 done
 
 cd "$_script_dir/.."
