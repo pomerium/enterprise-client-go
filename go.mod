@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
 	github.com/stretchr/testify v1.10.0
-	google.golang.org/grpc v1.72.0
+	google.golang.org/grpc v1.72.2
 	google.golang.org/protobuf v1.36.6
 )
 
