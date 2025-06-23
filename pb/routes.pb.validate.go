@@ -368,6 +368,128 @@ var _ interface {
 	ErrorName() string
 } = JwtGroupsFilterValidationError{}
 
+// Validate checks the field values on CircuitBreakerThresholds with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *CircuitBreakerThresholds) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CircuitBreakerThresholds with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CircuitBreakerThresholdsMultiError, or nil if none found.
+func (m *CircuitBreakerThresholds) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CircuitBreakerThresholds) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.MaxConnections != nil {
+		// no validation rules for MaxConnections
+	}
+
+	if m.MaxPendingRequests != nil {
+		// no validation rules for MaxPendingRequests
+	}
+
+	if m.MaxRequests != nil {
+		// no validation rules for MaxRequests
+	}
+
+	if m.MaxRetries != nil {
+		// no validation rules for MaxRetries
+	}
+
+	if m.MaxConnectionPools != nil {
+		// no validation rules for MaxConnectionPools
+	}
+
+	if len(errors) > 0 {
+		return CircuitBreakerThresholdsMultiError(errors)
+	}
+
+	return nil
+}
+
+// CircuitBreakerThresholdsMultiError is an error wrapping multiple validation
+// errors returned by CircuitBreakerThresholds.ValidateAll() if the designated
+// constraints aren't met.
+type CircuitBreakerThresholdsMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CircuitBreakerThresholdsMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CircuitBreakerThresholdsMultiError) AllErrors() []error { return m }
+
+// CircuitBreakerThresholdsValidationError is the validation error returned by
+// CircuitBreakerThresholds.Validate if the designated constraints aren't met.
+type CircuitBreakerThresholdsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CircuitBreakerThresholdsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CircuitBreakerThresholdsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CircuitBreakerThresholdsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CircuitBreakerThresholdsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CircuitBreakerThresholdsValidationError) ErrorName() string {
+	return "CircuitBreakerThresholdsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CircuitBreakerThresholdsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCircuitBreakerThresholds.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CircuitBreakerThresholdsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CircuitBreakerThresholdsValidationError{}
+
 // Validate checks the field values on Route with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -883,6 +1005,39 @@ func (m *Route) validate(all bool) error {
 				return err
 			}
 			errors = append(errors, err)
+		}
+
+	}
+
+	if m.CircuitBreakerThresholds != nil {
+
+		if all {
+			switch v := interface{}(m.GetCircuitBreakerThresholds()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "CircuitBreakerThresholds",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "CircuitBreakerThresholds",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetCircuitBreakerThresholds()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return RouteValidationError{
+					field:  "CircuitBreakerThresholds",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
 		}
 
 	}
