@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserService_GetUserInfo_FullMethodName = "/pomerium.dashboard.UserService/GetUserInfo"
-	UserService_QueryGroups_FullMethodName = "/pomerium.dashboard.UserService/QueryGroups"
-	UserService_QueryUsers_FullMethodName  = "/pomerium.dashboard.UserService/QueryUsers"
+	UserService_GetGroupInfo_FullMethodName = "/pomerium.dashboard.UserService/GetGroupInfo"
+	UserService_GetUserInfo_FullMethodName  = "/pomerium.dashboard.UserService/GetUserInfo"
+	UserService_QueryGroups_FullMethodName  = "/pomerium.dashboard.UserService/QueryGroups"
+	UserService_QueryUsers_FullMethodName   = "/pomerium.dashboard.UserService/QueryUsers"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -30,6 +31,8 @@ const (
 //
 // UserService supports querying directory data from the databroker
 type UserServiceClient interface {
+	// GetGroupInfo retrieves information about a group.
+	GetGroupInfo(ctx context.Context, in *GetGroupInfoRequest, opts ...grpc.CallOption) (*GetGroupInfoResponse, error)
 	// GetUserInfo retrieves identity information and permission mappings for a
 	// user
 	GetUserInfo(ctx context.Context, in *GetUserInfoRequest, opts ...grpc.CallOption) (*GetUserInfoResponse, error)
@@ -47,6 +50,16 @@ type userServiceClient struct {
 
 func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 	return &userServiceClient{cc}
+}
+
+func (c *userServiceClient) GetGroupInfo(ctx context.Context, in *GetGroupInfoRequest, opts ...grpc.CallOption) (*GetGroupInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGroupInfoResponse)
+	err := c.cc.Invoke(ctx, UserService_GetGroupInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *userServiceClient) GetUserInfo(ctx context.Context, in *GetUserInfoRequest, opts ...grpc.CallOption) (*GetUserInfoResponse, error) {
@@ -85,6 +98,8 @@ func (c *userServiceClient) QueryUsers(ctx context.Context, in *QueryUsersReques
 //
 // UserService supports querying directory data from the databroker
 type UserServiceServer interface {
+	// GetGroupInfo retrieves information about a group.
+	GetGroupInfo(context.Context, *GetGroupInfoRequest) (*GetGroupInfoResponse, error)
 	// GetUserInfo retrieves identity information and permission mappings for a
 	// user
 	GetUserInfo(context.Context, *GetUserInfoRequest) (*GetUserInfoResponse, error)
@@ -103,6 +118,9 @@ type UserServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedUserServiceServer struct{}
 
+func (UnimplementedUserServiceServer) GetGroupInfo(context.Context, *GetGroupInfoRequest) (*GetGroupInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGroupInfo not implemented")
+}
 func (UnimplementedUserServiceServer) GetUserInfo(context.Context, *GetUserInfoRequest) (*GetUserInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfo not implemented")
 }
@@ -130,6 +148,24 @@ func RegisterUserServiceServer(s grpc.ServiceRegistrar, srv UserServiceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&UserService_ServiceDesc, srv)
+}
+
+func _UserService_GetGroupInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGroupInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetGroupInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetGroupInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetGroupInfo(ctx, req.(*GetGroupInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _UserService_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -193,6 +229,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "pomerium.dashboard.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetGroupInfo",
+			Handler:    _UserService_GetGroupInfo_Handler,
+		},
 		{
 			MethodName: "GetUserInfo",
 			Handler:    _UserService_GetUserInfo_Handler,
