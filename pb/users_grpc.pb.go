@@ -519,10 +519,11 @@ var PomeriumServiceAccountService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	PomeriumSessionService_DeletePomeriumSession_FullMethodName = "/pomerium.dashboard.PomeriumSessionService/DeletePomeriumSession"
-	PomeriumSessionService_GetPomeriumSession_FullMethodName    = "/pomerium.dashboard.PomeriumSessionService/GetPomeriumSession"
-	PomeriumSessionService_Impersonate_FullMethodName           = "/pomerium.dashboard.PomeriumSessionService/Impersonate"
-	PomeriumSessionService_ListPomeriumSessions_FullMethodName  = "/pomerium.dashboard.PomeriumSessionService/ListPomeriumSessions"
+	PomeriumSessionService_DeletePomeriumSession_FullMethodName                = "/pomerium.dashboard.PomeriumSessionService/DeletePomeriumSession"
+	PomeriumSessionService_GetPomeriumSession_FullMethodName                   = "/pomerium.dashboard.PomeriumSessionService/GetPomeriumSession"
+	PomeriumSessionService_Impersonate_FullMethodName                          = "/pomerium.dashboard.PomeriumSessionService/Impersonate"
+	PomeriumSessionService_ListPomeriumSessions_FullMethodName                 = "/pomerium.dashboard.PomeriumSessionService/ListPomeriumSessions"
+	PomeriumSessionService_ListPomeriumSessionsForImpersonation_FullMethodName = "/pomerium.dashboard.PomeriumSessionService/ListPomeriumSessionsForImpersonation"
 )
 
 // PomeriumSessionServiceClient is the client API for PomeriumSessionService service.
@@ -540,6 +541,9 @@ type PomeriumSessionServiceClient interface {
 	// ListPomeriumSessions lists existing sessions based on the parameters of
 	// ListPomeriumSessionsRequest
 	ListPomeriumSessions(ctx context.Context, in *ListPomeriumSessionsRequest, opts ...grpc.CallOption) (*ListPomeriumSessionsResponse, error)
+	// ListPomeriumSessionsForImpersonation lists existing sessions for
+	// impersonation.
+	ListPomeriumSessionsForImpersonation(ctx context.Context, in *ListPomeriumSessionsForImpersonationRequest, opts ...grpc.CallOption) (*ListPomeriumSessionsForImpersonationResponse, error)
 }
 
 type pomeriumSessionServiceClient struct {
@@ -590,6 +594,16 @@ func (c *pomeriumSessionServiceClient) ListPomeriumSessions(ctx context.Context,
 	return out, nil
 }
 
+func (c *pomeriumSessionServiceClient) ListPomeriumSessionsForImpersonation(ctx context.Context, in *ListPomeriumSessionsForImpersonationRequest, opts ...grpc.CallOption) (*ListPomeriumSessionsForImpersonationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPomeriumSessionsForImpersonationResponse)
+	err := c.cc.Invoke(ctx, PomeriumSessionService_ListPomeriumSessionsForImpersonation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PomeriumSessionServiceServer is the server API for PomeriumSessionService service.
 // All implementations should embed UnimplementedPomeriumSessionServiceServer
 // for forward compatibility.
@@ -605,6 +619,9 @@ type PomeriumSessionServiceServer interface {
 	// ListPomeriumSessions lists existing sessions based on the parameters of
 	// ListPomeriumSessionsRequest
 	ListPomeriumSessions(context.Context, *ListPomeriumSessionsRequest) (*ListPomeriumSessionsResponse, error)
+	// ListPomeriumSessionsForImpersonation lists existing sessions for
+	// impersonation.
+	ListPomeriumSessionsForImpersonation(context.Context, *ListPomeriumSessionsForImpersonationRequest) (*ListPomeriumSessionsForImpersonationResponse, error)
 }
 
 // UnimplementedPomeriumSessionServiceServer should be embedded to have
@@ -625,6 +642,9 @@ func (UnimplementedPomeriumSessionServiceServer) Impersonate(context.Context, *I
 }
 func (UnimplementedPomeriumSessionServiceServer) ListPomeriumSessions(context.Context, *ListPomeriumSessionsRequest) (*ListPomeriumSessionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPomeriumSessions not implemented")
+}
+func (UnimplementedPomeriumSessionServiceServer) ListPomeriumSessionsForImpersonation(context.Context, *ListPomeriumSessionsForImpersonationRequest) (*ListPomeriumSessionsForImpersonationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPomeriumSessionsForImpersonation not implemented")
 }
 func (UnimplementedPomeriumSessionServiceServer) testEmbeddedByValue() {}
 
@@ -718,6 +738,24 @@ func _PomeriumSessionService_ListPomeriumSessions_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PomeriumSessionService_ListPomeriumSessionsForImpersonation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPomeriumSessionsForImpersonationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PomeriumSessionServiceServer).ListPomeriumSessionsForImpersonation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PomeriumSessionService_ListPomeriumSessionsForImpersonation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PomeriumSessionServiceServer).ListPomeriumSessionsForImpersonation(ctx, req.(*ListPomeriumSessionsForImpersonationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PomeriumSessionService_ServiceDesc is the grpc.ServiceDesc for PomeriumSessionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -740,6 +778,10 @@ var PomeriumSessionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListPomeriumSessions",
 			Handler:    _PomeriumSessionService_ListPomeriumSessions_Handler,
+		},
+		{
+			MethodName: "ListPomeriumSessionsForImpersonation",
+			Handler:    _PomeriumSessionService_ListPomeriumSessionsForImpersonation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -490,6 +490,671 @@ var _ interface {
 	ErrorName() string
 } = CircuitBreakerThresholdsValidationError{}
 
+// Validate checks the field values on MCP with the rules defined in the proto
+// definition for this message. If any rules are violated, the first error
+// encountered is returned, or nil if there are no violations.
+func (m *MCP) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MCP with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in MCPMultiError, or nil if none found.
+func (m *MCP) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MCP) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	switch v := m.Mode.(type) {
+	case *MCP_Server:
+		if v == nil {
+			err := MCPValidationError{
+				field:  "Mode",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetServer()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, MCPValidationError{
+						field:  "Server",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, MCPValidationError{
+						field:  "Server",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetServer()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MCPValidationError{
+					field:  "Server",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *MCP_Client:
+		if v == nil {
+			err := MCPValidationError{
+				field:  "Mode",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetClient()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, MCPValidationError{
+						field:  "Client",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, MCPValidationError{
+						field:  "Client",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetClient()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MCPValidationError{
+					field:  "Client",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+
+	if len(errors) > 0 {
+		return MCPMultiError(errors)
+	}
+
+	return nil
+}
+
+// MCPMultiError is an error wrapping multiple validation errors returned by
+// MCP.ValidateAll() if the designated constraints aren't met.
+type MCPMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MCPMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MCPMultiError) AllErrors() []error { return m }
+
+// MCPValidationError is the validation error returned by MCP.Validate if the
+// designated constraints aren't met.
+type MCPValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MCPValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MCPValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MCPValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MCPValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MCPValidationError) ErrorName() string { return "MCPValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MCPValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMCP.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MCPValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MCPValidationError{}
+
+// Validate checks the field values on MCPServer with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MCPServer) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MCPServer with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MCPServerMultiError, or nil
+// if none found.
+func (m *MCPServer) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MCPServer) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.UpstreamOauth2 != nil {
+
+		if all {
+			switch v := interface{}(m.GetUpstreamOauth2()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, MCPServerValidationError{
+						field:  "UpstreamOauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, MCPServerValidationError{
+						field:  "UpstreamOauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetUpstreamOauth2()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MCPServerValidationError{
+					field:  "UpstreamOauth2",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.MaxRequestBytes != nil {
+		// no validation rules for MaxRequestBytes
+	}
+
+	if m.Path != nil {
+		// no validation rules for Path
+	}
+
+	if len(errors) > 0 {
+		return MCPServerMultiError(errors)
+	}
+
+	return nil
+}
+
+// MCPServerMultiError is an error wrapping multiple validation errors returned
+// by MCPServer.ValidateAll() if the designated constraints aren't met.
+type MCPServerMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MCPServerMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MCPServerMultiError) AllErrors() []error { return m }
+
+// MCPServerValidationError is the validation error returned by
+// MCPServer.Validate if the designated constraints aren't met.
+type MCPServerValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MCPServerValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MCPServerValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MCPServerValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MCPServerValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MCPServerValidationError) ErrorName() string { return "MCPServerValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MCPServerValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMCPServer.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MCPServerValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MCPServerValidationError{}
+
+// Validate checks the field values on MCPClient with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MCPClient) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MCPClient with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MCPClientMultiError, or nil
+// if none found.
+func (m *MCPClient) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MCPClient) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return MCPClientMultiError(errors)
+	}
+
+	return nil
+}
+
+// MCPClientMultiError is an error wrapping multiple validation errors returned
+// by MCPClient.ValidateAll() if the designated constraints aren't met.
+type MCPClientMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MCPClientMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MCPClientMultiError) AllErrors() []error { return m }
+
+// MCPClientValidationError is the validation error returned by
+// MCPClient.Validate if the designated constraints aren't met.
+type MCPClientValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MCPClientValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MCPClientValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MCPClientValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MCPClientValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MCPClientValidationError) ErrorName() string { return "MCPClientValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MCPClientValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMCPClient.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MCPClientValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MCPClientValidationError{}
+
+// Validate checks the field values on UpstreamOAuth2 with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *UpstreamOAuth2) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpstreamOAuth2 with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in UpstreamOAuth2MultiError,
+// or nil if none found.
+func (m *UpstreamOAuth2) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpstreamOAuth2) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ClientId
+
+	// no validation rules for ClientSecret
+
+	if all {
+		switch v := interface{}(m.GetOauth2Endpoint()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, UpstreamOAuth2ValidationError{
+					field:  "Oauth2Endpoint",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, UpstreamOAuth2ValidationError{
+					field:  "Oauth2Endpoint",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetOauth2Endpoint()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpstreamOAuth2ValidationError{
+				field:  "Oauth2Endpoint",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return UpstreamOAuth2MultiError(errors)
+	}
+
+	return nil
+}
+
+// UpstreamOAuth2MultiError is an error wrapping multiple validation errors
+// returned by UpstreamOAuth2.ValidateAll() if the designated constraints
+// aren't met.
+type UpstreamOAuth2MultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpstreamOAuth2MultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpstreamOAuth2MultiError) AllErrors() []error { return m }
+
+// UpstreamOAuth2ValidationError is the validation error returned by
+// UpstreamOAuth2.Validate if the designated constraints aren't met.
+type UpstreamOAuth2ValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpstreamOAuth2ValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpstreamOAuth2ValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpstreamOAuth2ValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpstreamOAuth2ValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpstreamOAuth2ValidationError) ErrorName() string { return "UpstreamOAuth2ValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UpstreamOAuth2ValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpstreamOAuth2.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpstreamOAuth2ValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpstreamOAuth2ValidationError{}
+
+// Validate checks the field values on OAuth2Endpoint with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *OAuth2Endpoint) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OAuth2Endpoint with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in OAuth2EndpointMultiError,
+// or nil if none found.
+func (m *OAuth2Endpoint) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OAuth2Endpoint) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for AuthUrl
+
+	// no validation rules for TokenUrl
+
+	if m.AuthStyle != nil {
+		// no validation rules for AuthStyle
+	}
+
+	if len(errors) > 0 {
+		return OAuth2EndpointMultiError(errors)
+	}
+
+	return nil
+}
+
+// OAuth2EndpointMultiError is an error wrapping multiple validation errors
+// returned by OAuth2Endpoint.ValidateAll() if the designated constraints
+// aren't met.
+type OAuth2EndpointMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OAuth2EndpointMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OAuth2EndpointMultiError) AllErrors() []error { return m }
+
+// OAuth2EndpointValidationError is the validation error returned by
+// OAuth2Endpoint.Validate if the designated constraints aren't met.
+type OAuth2EndpointValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OAuth2EndpointValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OAuth2EndpointValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OAuth2EndpointValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OAuth2EndpointValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OAuth2EndpointValidationError) ErrorName() string { return "OAuth2EndpointValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OAuth2EndpointValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOAuth2Endpoint.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OAuth2EndpointValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OAuth2EndpointValidationError{}
+
 // Validate checks the field values on Route with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -1040,6 +1705,43 @@ func (m *Route) validate(all bool) error {
 			}
 		}
 
+	}
+
+	if m.Mcp != nil {
+
+		if all {
+			switch v := interface{}(m.GetMcp()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "Mcp",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "Mcp",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetMcp()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return RouteValidationError{
+					field:  "Mcp",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.HealthyPanicThreshold != nil {
+		// no validation rules for HealthyPanicThreshold
 	}
 
 	if len(errors) > 0 {
