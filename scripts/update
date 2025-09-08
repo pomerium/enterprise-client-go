@@ -6,7 +6,7 @@ _root_dir="$(dirname "$_scripts_dir")"
 _deps_dir="$_root_dir/deps"
 
 readonly _git_deps=(
-  "pomerium/pomerium-console|c58d413db5134bc86797272285313b3e2bdf943d"
+  "pomerium/pomerium-console|0797fe31a0d1a32faaaacbaf1d891102d4984fbb"
 )
 
 function clone() {
