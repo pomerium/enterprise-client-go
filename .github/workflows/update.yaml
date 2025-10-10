@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  update-pomerium-core:
+  update:
     runs-on: ubuntu-latest
     # if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'pomerium/enterprise-client-go'
     steps:
