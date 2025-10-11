@@ -21,9 +21,8 @@ jobs:
         with:
           go-version: 1.24.x
 
-      - name: Update
-        run: |
-          ./scripts/update
+      - name: Generate
+        run: make generate
 
       - name: Commit
         if: github.event.pull_request.user.login == 'dependabot[bot]'
