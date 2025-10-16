@@ -1,0 +1,69 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Setup Go
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00
+        with:
+          go-version: 1.24.x
+
+      - name: Build
+        run: make build
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Setup Go
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00
+        with:
+          go-version: 1.24.x
+
+      - name: Test
+        run: make cover
+
+      - uses: jandelgado/gcov2lcov-action@e4612787670fc5b5f49026b8c29c5569921de1db
+        name: convert coverage to lcov
+        with:
+          infile: coverage.txt
+          outfile: coverage.lcov
+
+      - name: upload to coveralls
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: coverage.lcov
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@55c2c1448f86e01eaae002a5a3a9624417608d84
+        with:
+          version: v1.64.8

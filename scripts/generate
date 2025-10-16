@@ -1,0 +1,27 @@
+#!/bin/bash
+set -euo pipefail
+
+_scripts_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+_root_dir="$(dirname "$_scripts_dir")"
+_deps_dir="$_root_dir/deps"
+
+_files=(
+	activity_log
+	clusters
+	devices
+	external_data_sources
+	key_chain
+	namespaces
+	policy
+	route_health_check
+	route_redirect_action
+	routes
+	settings
+	types
+	users
+)
+
+for _f in "${_files[@]}"; do
+	cp -f "$_deps_dir/github.com/pomerium/pomerium-console/pkg/pb/$_f"*.pb*.go "$_scripts_dir/../pb/"
+done
+go mod tidy
