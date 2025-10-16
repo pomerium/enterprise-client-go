@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: "monthly"
     exclude-paths:
-      - "deps/github.com/pomerium/*"
+      - "deps/github.com/pomerium/**"
     groups:
       gitsubmodule:
         patterns:
