@@ -1,5 +1,10 @@
 .PHONY: all
-all: generate lint test
+all: generate build lint test
+
+.PHONY: build
+build:
+	@echo "==> $@"
+	go build ./...
 
 .PHONY: cover
 cover: ## Runs go test with coverage
