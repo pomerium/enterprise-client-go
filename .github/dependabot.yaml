@@ -8,11 +8,12 @@ updates:
       gitsubmodule:
         patterns:
           - "*"
+        exclude-patterns:
+          - "deps/github.com/pomerium/*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 50
     groups:
       github-actions:
         patterns:
@@ -21,7 +22,6 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 50
     groups:
       go:
         patterns:
