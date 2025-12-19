@@ -1,0 +1,9 @@
+version: "2"
+linters:
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - std-error-handling
+      - common-false-positives
+      - legacy
