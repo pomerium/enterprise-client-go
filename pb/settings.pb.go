@@ -132,7 +132,7 @@ func (x *ConsoleSettings) GetUseChangesets() bool {
 }
 
 // Settings defines the global pomerium settings
-// Next id: 122.
+// Next id: 123.
 type Settings struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Id             string                 `protobuf:"bytes,107,opt,name=id,proto3" json:"id,omitempty"`
@@ -237,6 +237,7 @@ type Settings struct {
 	SshHostKeys                                       *Settings_StringList      `protobuf:"bytes,113,opt,name=ssh_host_keys,json=sshHostKeys,proto3,oneof" json:"ssh_host_keys,omitempty"`
 	SshUserCaKeyFile                                  *string                   `protobuf:"bytes,114,opt,name=ssh_user_ca_key_file,json=sshUserCaKeyFile,proto3,oneof" json:"ssh_user_ca_key_file,omitempty"`
 	SshUserCaKey                                      *string                   `protobuf:"bytes,115,opt,name=ssh_user_ca_key,json=sshUserCaKey,proto3,oneof" json:"ssh_user_ca_key,omitempty"`
+	McpAllowedClientIdDomains                         *Settings_StringList      `protobuf:"bytes,122,opt,name=mcp_allowed_client_id_domains,json=mcpAllowedClientIdDomains,proto3,oneof" json:"mcp_allowed_client_id_domains,omitempty"`
 	unknownFields                                     protoimpl.UnknownFields
 	sizeCache                                         protoimpl.SizeCache
 }
@@ -978,6 +979,13 @@ func (x *Settings) GetSshUserCaKey() string {
 	return ""
 }
 
+func (x *Settings) GetMcpAllowedClientIdDomains() *Settings_StringList {
+	if x != nil {
+		return x.McpAllowedClientIdDomains
+	}
+	return nil
+}
+
 type GetConsoleSettingsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -1345,7 +1353,7 @@ const file_settings_proto_rawDesc = "" +
 	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"n\n" +
 	"\x0fConsoleSettings\x124\n" +
 	"\x16enable_feedback_widget\x18\x01 \x01(\bR\x14enableFeedbackWidget\x12%\n" +
-	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\xefD\n" +
+	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\x81F\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -1455,7 +1463,8 @@ const file_settings_proto_rawDesc = "" +
 	"\x12ssh_host_key_files\x18p \x01(\v2'.pomerium.dashboard.Settings.StringListHUR\x0fsshHostKeyFiles\x88\x01\x01\x12P\n" +
 	"\rssh_host_keys\x18q \x01(\v2'.pomerium.dashboard.Settings.StringListHVR\vsshHostKeys\x88\x01\x01\x123\n" +
 	"\x14ssh_user_ca_key_file\x18r \x01(\tHWR\x10sshUserCaKeyFile\x88\x01\x01\x12*\n" +
-	"\x0fssh_user_ca_key\x18s \x01(\tHXR\fsshUserCaKey\x88\x01\x01\x1ai\n" +
+	"\x0fssh_user_ca_key\x18s \x01(\tHXR\fsshUserCaKey\x88\x01\x01\x12n\n" +
+	"\x1dmcp_allowed_client_id_domains\x18z \x01(\v2'.pomerium.dashboard.Settings.StringListHYR\x19mcpAllowedClientIdDomains\x88\x01\x01\x1ai\n" +
 	"\vCertificate\x12\x1d\n" +
 	"\n" +
 	"cert_bytes\x18\x03 \x01(\fR\tcertBytes\x12\x1b\n" +
@@ -1564,7 +1573,8 @@ const file_settings_proto_rawDesc = "" +
 	"\x13_ssh_host_key_filesB\x10\n" +
 	"\x0e_ssh_host_keysB\x17\n" +
 	"\x15_ssh_user_ca_key_fileB\x12\n" +
-	"\x10_ssh_user_ca_keyJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x1b\n" +
+	"\x10_ssh_user_ca_keyB \n" +
+	"\x1e_mcp_allowed_client_id_domainsJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x1b\n" +
 	"\x19GetConsoleSettingsRequest\"l\n" +
 	"\x1aGetConsoleSettingsResponse\x12N\n" +
 	"\x10console_settings\x18\x01 \x01(\v2#.pomerium.dashboard.ConsoleSettingsR\x0fconsoleSettings\"G\n" +
@@ -1659,23 +1669,24 @@ var file_settings_proto_depIdxs = []int32{
 	20, // 28: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
 	10, // 29: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
 	10, // 30: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
-	1,  // 31: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
-	2,  // 32: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	2,  // 33: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
-	2,  // 34: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	5,  // 35: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	7,  // 36: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
-	5,  // 37: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	3,  // 38: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
-	6,  // 39: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	8,  // 40: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
-	6,  // 41: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	4,  // 42: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
-	39, // [39:43] is the sub-list for method output_type
-	35, // [35:39] is the sub-list for method input_type
-	35, // [35:35] is the sub-list for extension type_name
-	35, // [35:35] is the sub-list for extension extendee
-	0,  // [0:35] is the sub-list for field type_name
+	10, // 31: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
+	1,  // 32: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
+	2,  // 33: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	2,  // 34: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
+	2,  // 35: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	5,  // 36: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	7,  // 37: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
+	5,  // 38: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	3,  // 39: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
+	6,  // 40: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	8,  // 41: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
+	6,  // 42: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	4,  // 43: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
+	40, // [40:44] is the sub-list for method output_type
+	36, // [36:40] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_settings_proto_init() }
