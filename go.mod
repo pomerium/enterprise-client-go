@@ -1,6 +1,6 @@
 module github.com/pomerium/enterprise-client-go
 
-go 1.24.0
+go 1.26.0
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.3.0
