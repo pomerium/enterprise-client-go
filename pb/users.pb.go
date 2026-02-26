@@ -1388,9 +1388,13 @@ func (x *PomeriumSession) GetClaims() map[string]*structpb.ListValue {
 }
 
 type DeletePomeriumSessionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	ClusterId     *string                `protobuf:"bytes,2,opt,name=cluster_id,json=clusterId,proto3,oneof" json:"cluster_id,omitempty"`
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	Id        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ClusterId *string                `protobuf:"bytes,2,opt,name=cluster_id,json=clusterId,proto3,oneof" json:"cluster_id,omitempty"`
+	// If set, in addition to revoking the session,
+	// revoke any other session associated with the session user id,
+	// and block the user from accessing any routes.
+	BlockUser     *bool `protobuf:"varint,3,opt,name=block_user,json=blockUser,proto3,oneof" json:"block_user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1437,6 +1441,13 @@ func (x *DeletePomeriumSessionRequest) GetClusterId() string {
 		return *x.ClusterId
 	}
 	return ""
+}
+
+func (x *DeletePomeriumSessionRequest) GetBlockUser() bool {
+	if x != nil && x.BlockUser != nil {
+		return *x.BlockUser
+	}
+	return false
 }
 
 type DeletePomeriumSessionResponse struct {
@@ -2091,7 +2102,7 @@ var File_users_proto protoreflect.FileDescriptor
 
 const file_users_proto_rawDesc = "" +
 	"\n" +
-	"\vusers.proto\x12\x12pomerium.dashboard\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\x8f\x02\n" +
+	"\vusers.proto\x12\x12pomerium.dashboard\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8f\x02\n" +
 	"\rRecoveryToken\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1c\n" +
 	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x129\n" +
@@ -2229,12 +2240,15 @@ const file_users_proto_rawDesc = "" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x1aU\n" +
 	"\vClaimsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x120\n" +
-	"\x05value\x18\x02 \x01(\v2\x1a.google.protobuf.ListValueR\x05value:\x028\x01\"a\n" +
+	"\x05value\x18\x02 \x01(\v2\x1a.google.protobuf.ListValueR\x05value:\x028\x01\"\x94\x01\n" +
 	"\x1cDeletePomeriumSessionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
 	"\n" +
-	"cluster_id\x18\x02 \x01(\tH\x00R\tclusterId\x88\x01\x01B\r\n" +
-	"\v_cluster_id\"\x1f\n" +
+	"cluster_id\x18\x02 \x01(\tH\x00R\tclusterId\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"block_user\x18\x03 \x01(\bH\x01R\tblockUser\x88\x01\x01B\r\n" +
+	"\v_cluster_idB\r\n" +
+	"\v_block_user\"\x1f\n" +
 	"\x1dDeletePomeriumSessionResponse\"^\n" +
 	"\x19GetPomeriumSessionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
