@@ -1397,6 +1397,7 @@ func (x *Route) GetUpstreamTunnel() *UpstreamTunnel {
 
 type UpstreamTunnel struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	SshPolicyId   *string                `protobuf:"bytes,1,opt,name=ssh_policy_id,json=sshPolicyId,proto3,oneof" json:"ssh_policy_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1429,6 +1430,13 @@ func (x *UpstreamTunnel) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UpstreamTunnel.ProtoReflect.Descriptor instead.
 func (*UpstreamTunnel) Descriptor() ([]byte, []int) {
 	return file_routes_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UpstreamTunnel) GetSshPolicyId() string {
+	if x != nil && x.SshPolicyId != nil {
+		return *x.SshPolicyId
+	}
+	return ""
 }
 
 // RouteWithPolicies contains automatically created routes and policies from a
@@ -2458,8 +2466,10 @@ const file_routes_proto_rawDesc = "" +
 	"\x1b_circuit_breaker_thresholdsB\x06\n" +
 	"\x04_mcpB\x1a\n" +
 	"\x18_healthy_panic_thresholdB\x12\n" +
-	"\x10_upstream_tunnelJ\x04\b(\x10)J\x04\b2\x103J\x04\b'\x10(\"\x10\n" +
-	"\x0eUpstreamTunnel\"|\n" +
+	"\x10_upstream_tunnelJ\x04\b(\x10)J\x04\b2\x103J\x04\b'\x10(\"K\n" +
+	"\x0eUpstreamTunnel\x12'\n" +
+	"\rssh_policy_id\x18\x01 \x01(\tH\x00R\vsshPolicyId\x88\x01\x01B\x10\n" +
+	"\x0e_ssh_policy_id\"|\n" +
 	"\x11RouteWithPolicies\x12/\n" +
 	"\x05route\x18\x01 \x01(\v2\x19.pomerium.dashboard.RouteR\x05route\x126\n" +
 	"\bpolicies\x18\x02 \x03(\v2\x1a.pomerium.dashboard.PolicyR\bpolicies\"$\n" +
@@ -2672,6 +2682,7 @@ func file_routes_proto_init() {
 	file_routes_proto_msgTypes[5].OneofWrappers = []any{}
 	file_routes_proto_msgTypes[8].OneofWrappers = []any{}
 	file_routes_proto_msgTypes[9].OneofWrappers = []any{}
+	file_routes_proto_msgTypes[10].OneofWrappers = []any{}
 	file_routes_proto_msgTypes[18].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
