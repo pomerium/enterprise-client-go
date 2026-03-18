@@ -132,7 +132,7 @@ func (x *ConsoleSettings) GetUseChangesets() bool {
 }
 
 // Settings defines the global pomerium settings
-// Next id: 125.
+// Next id: 126.
 type Settings struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Id             string                 `protobuf:"bytes,107,opt,name=id,proto3" json:"id,omitempty"`
@@ -240,6 +240,7 @@ type Settings struct {
 	McpAllowedClientIdDomains                         *Settings_StringList      `protobuf:"bytes,122,opt,name=mcp_allowed_client_id_domains,json=mcpAllowedClientIdDomains,proto3,oneof" json:"mcp_allowed_client_id_domains,omitempty"`
 	SessionRecordingEnabled                           *bool                     `protobuf:"varint,123,opt,name=session_recording_enabled,json=sessionRecordingEnabled,proto3,oneof" json:"session_recording_enabled,omitempty"`
 	BlobStorage                                       *BlobStorageSettings      `protobuf:"bytes,124,opt,name=blob_storage,json=blobStorage,proto3,oneof" json:"blob_storage,omitempty"`
+	AutoApplyChangesets                               *bool                     `protobuf:"varint,125,opt,name=auto_apply_changesets,json=autoApplyChangesets,proto3,oneof" json:"auto_apply_changesets,omitempty"`
 	unknownFields                                     protoimpl.UnknownFields
 	sizeCache                                         protoimpl.SizeCache
 }
@@ -1002,6 +1003,13 @@ func (x *Settings) GetBlobStorage() *BlobStorageSettings {
 	return nil
 }
 
+func (x *Settings) GetAutoApplyChangesets() bool {
+	if x != nil && x.AutoApplyChangesets != nil {
+		return *x.AutoApplyChangesets
+	}
+	return false
+}
+
 type BlobStorageSettings struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	BucketUri     *string                `protobuf:"bytes,1,opt,name=bucket_uri,json=bucketUri,proto3,oneof" json:"bucket_uri,omitempty"`
@@ -1413,7 +1421,7 @@ const file_settings_proto_rawDesc = "" +
 	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"n\n" +
 	"\x0fConsoleSettings\x124\n" +
 	"\x16enable_feedback_widget\x18\x01 \x01(\bR\x14enableFeedbackWidget\x12%\n" +
-	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\xc2G\n" +
+	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\x95H\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -1526,7 +1534,8 @@ const file_settings_proto_rawDesc = "" +
 	"\x0fssh_user_ca_key\x18s \x01(\tHXR\fsshUserCaKey\x88\x01\x01\x12n\n" +
 	"\x1dmcp_allowed_client_id_domains\x18z \x01(\v2'.pomerium.dashboard.Settings.StringListHYR\x19mcpAllowedClientIdDomains\x88\x01\x01\x12?\n" +
 	"\x19session_recording_enabled\x18{ \x01(\bHZR\x17sessionRecordingEnabled\x88\x01\x01\x12O\n" +
-	"\fblob_storage\x18| \x01(\v2'.pomerium.dashboard.BlobStorageSettingsH[R\vblobStorage\x88\x01\x01\x1ai\n" +
+	"\fblob_storage\x18| \x01(\v2'.pomerium.dashboard.BlobStorageSettingsH[R\vblobStorage\x88\x01\x01\x127\n" +
+	"\x15auto_apply_changesets\x18} \x01(\bH\\R\x13autoApplyChangesets\x88\x01\x01\x1ai\n" +
 	"\vCertificate\x12\x1d\n" +
 	"\n" +
 	"cert_bytes\x18\x03 \x01(\fR\tcertBytes\x12\x1b\n" +
@@ -1638,7 +1647,8 @@ const file_settings_proto_rawDesc = "" +
 	"\x10_ssh_user_ca_keyB \n" +
 	"\x1e_mcp_allowed_client_id_domainsB\x1c\n" +
 	"\x1a_session_recording_enabledB\x0f\n" +
-	"\r_blob_storageJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"H\n" +
+	"\r_blob_storageB\x18\n" +
+	"\x16_auto_apply_changesetsJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"H\n" +
 	"\x13BlobStorageSettings\x12\"\n" +
 	"\n" +
 	"bucket_uri\x18\x01 \x01(\tH\x00R\tbucketUri\x88\x01\x01B\r\n" +
