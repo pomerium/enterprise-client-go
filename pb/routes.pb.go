@@ -711,13 +711,14 @@ func (*MCPClient) Descriptor() ([]byte, []int) {
 
 // UpstreamOAuth2 configures OAuth2 authentication for upstream requests
 type UpstreamOAuth2 struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	ClientId       string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	ClientSecret   string                 `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"`
-	Oauth2Endpoint *OAuth2Endpoint        `protobuf:"bytes,3,opt,name=oauth2_endpoint,json=oauth2Endpoint,proto3" json:"oauth2_endpoint,omitempty"`
-	Scopes         []string               `protobuf:"bytes,4,rep,name=scopes,proto3" json:"scopes,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	ClientId               string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	ClientSecret           string                 `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"`
+	Oauth2Endpoint         *OAuth2Endpoint        `protobuf:"bytes,3,opt,name=oauth2_endpoint,json=oauth2Endpoint,proto3" json:"oauth2_endpoint,omitempty"`
+	Scopes                 []string               `protobuf:"bytes,4,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	AuthorizationUrlParams map[string]string      `protobuf:"bytes,5,rep,name=authorization_url_params,json=authorizationUrlParams,proto3" json:"authorization_url_params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *UpstreamOAuth2) Reset() {
@@ -774,6 +775,13 @@ func (x *UpstreamOAuth2) GetOauth2Endpoint() *OAuth2Endpoint {
 func (x *UpstreamOAuth2) GetScopes() []string {
 	if x != nil {
 		return x.Scopes
+	}
+	return nil
+}
+
+func (x *UpstreamOAuth2) GetAuthorizationUrlParams() map[string]string {
+	if x != nil {
+		return x.AuthorizationUrlParams
 	}
 	return nil
 }
@@ -2257,7 +2265,7 @@ type Route_StringList struct {
 
 func (x *Route_StringList) Reset() {
 	*x = Route_StringList{}
-	mi := &file_routes_proto_msgTypes[28]
+	mi := &file_routes_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2269,7 +2277,7 @@ func (x *Route_StringList) String() string {
 func (*Route_StringList) ProtoMessage() {}
 
 func (x *Route_StringList) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[28]
+	mi := &file_routes_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2334,12 +2342,16 @@ const file_routes_proto_rawDesc = "" +
 	"\x12_max_request_bytesB\a\n" +
 	"\x05_pathB\x1b\n" +
 	"\x19_authorization_server_url\"\v\n" +
-	"\tMCPClient\"\xb7\x01\n" +
+	"\tMCPClient\"\xfc\x02\n" +
 	"\x0eUpstreamOAuth2\x12\x1b\n" +
 	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12#\n" +
 	"\rclient_secret\x18\x02 \x01(\tR\fclientSecret\x12K\n" +
 	"\x0foauth2_endpoint\x18\x03 \x01(\v2\".pomerium.dashboard.OAuth2EndpointR\x0eoauth2Endpoint\x12\x16\n" +
-	"\x06scopes\x18\x04 \x03(\tR\x06scopes\"\xa0\x01\n" +
+	"\x06scopes\x18\x04 \x03(\tR\x06scopes\x12x\n" +
+	"\x18authorization_url_params\x18\x05 \x03(\v2>.pomerium.dashboard.UpstreamOAuth2.AuthorizationUrlParamsEntryR\x16authorizationUrlParams\x1aI\n" +
+	"\x1bAuthorizationUrlParamsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xa0\x01\n" +
 	"\x0eOAuth2Endpoint\x12\x19\n" +
 	"\bauth_url\x18\x01 \x01(\tR\aauthUrl\x12\x1b\n" +
 	"\ttoken_url\x18\x02 \x01(\tR\btokenUrl\x12G\n" +
@@ -2562,7 +2574,7 @@ func file_routes_proto_rawDescGZIP() []byte {
 }
 
 var file_routes_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_routes_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
+var file_routes_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_routes_proto_goTypes = []any{
 	(IssuerFormat)(0),                // 0: pomerium.dashboard.IssuerFormat
 	(BearerTokenFormat)(0),           // 1: pomerium.dashboard.BearerTokenFormat
@@ -2596,70 +2608,72 @@ var file_routes_proto_goTypes = []any{
 	(*SetRoutesResponse)(nil),        // 29: pomerium.dashboard.SetRoutesResponse
 	(*MoveRoutesRequest)(nil),        // 30: pomerium.dashboard.MoveRoutesRequest
 	(*MoveRoutesResponse)(nil),       // 31: pomerium.dashboard.MoveRoutesResponse
-	(*Route_StringList)(nil),         // 32: pomerium.dashboard.Route.StringList
-	nil,                              // 33: pomerium.dashboard.Route.SetRequestHeadersEntry
-	nil,                              // 34: pomerium.dashboard.Route.SetResponseHeadersEntry
-	(*timestamppb.Timestamp)(nil),    // 35: google.protobuf.Timestamp
-	(*RedirectAction)(nil),           // 36: pomerium.dashboard.RedirectAction
-	(*durationpb.Duration)(nil),      // 37: google.protobuf.Duration
-	(*HealthCheck)(nil),              // 38: pomerium.dashboard.HealthCheck
-	(*Policy)(nil),                   // 39: pomerium.dashboard.Policy
+	nil,                              // 32: pomerium.dashboard.UpstreamOAuth2.AuthorizationUrlParamsEntry
+	(*Route_StringList)(nil),         // 33: pomerium.dashboard.Route.StringList
+	nil,                              // 34: pomerium.dashboard.Route.SetRequestHeadersEntry
+	nil,                              // 35: pomerium.dashboard.Route.SetResponseHeadersEntry
+	(*timestamppb.Timestamp)(nil),    // 36: google.protobuf.Timestamp
+	(*RedirectAction)(nil),           // 37: pomerium.dashboard.RedirectAction
+	(*durationpb.Duration)(nil),      // 38: google.protobuf.Duration
+	(*HealthCheck)(nil),              // 39: pomerium.dashboard.HealthCheck
+	(*Policy)(nil),                   // 40: pomerium.dashboard.Policy
 }
 var file_routes_proto_depIdxs = []int32{
 	9,  // 0: pomerium.dashboard.MCP.server:type_name -> pomerium.dashboard.MCPServer
 	10, // 1: pomerium.dashboard.MCP.client:type_name -> pomerium.dashboard.MCPClient
 	11, // 2: pomerium.dashboard.MCPServer.upstream_oauth2:type_name -> pomerium.dashboard.UpstreamOAuth2
 	12, // 3: pomerium.dashboard.UpstreamOAuth2.oauth2_endpoint:type_name -> pomerium.dashboard.OAuth2Endpoint
-	3,  // 4: pomerium.dashboard.OAuth2Endpoint.auth_style:type_name -> pomerium.dashboard.OAuth2AuthStyle
-	35, // 5: pomerium.dashboard.Route.created_at:type_name -> google.protobuf.Timestamp
-	35, // 6: pomerium.dashboard.Route.modified_at:type_name -> google.protobuf.Timestamp
-	35, // 7: pomerium.dashboard.Route.deleted_at:type_name -> google.protobuf.Timestamp
-	36, // 8: pomerium.dashboard.Route.redirect:type_name -> pomerium.dashboard.RedirectAction
-	5,  // 9: pomerium.dashboard.Route.response:type_name -> pomerium.dashboard.RouteDirectResponse
-	37, // 10: pomerium.dashboard.Route.timeout:type_name -> google.protobuf.Duration
-	37, // 11: pomerium.dashboard.Route.idle_timeout:type_name -> google.protobuf.Duration
-	33, // 12: pomerium.dashboard.Route.set_request_headers:type_name -> pomerium.dashboard.Route.SetRequestHeadersEntry
-	34, // 13: pomerium.dashboard.Route.set_response_headers:type_name -> pomerium.dashboard.Route.SetResponseHeadersEntry
-	4,  // 14: pomerium.dashboard.Route.rewrite_response_headers:type_name -> pomerium.dashboard.RouteRewriteHeader
-	0,  // 15: pomerium.dashboard.Route.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
-	1,  // 16: pomerium.dashboard.Route.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
-	6,  // 17: pomerium.dashboard.Route.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
-	32, // 18: pomerium.dashboard.Route.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Route.StringList
-	2,  // 19: pomerium.dashboard.Route.load_balancing_policy:type_name -> pomerium.dashboard.LoadBalancingPolicy
-	38, // 20: pomerium.dashboard.Route.health_checks:type_name -> pomerium.dashboard.HealthCheck
-	7,  // 21: pomerium.dashboard.Route.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
-	8,  // 22: pomerium.dashboard.Route.mcp:type_name -> pomerium.dashboard.MCP
-	14, // 23: pomerium.dashboard.Route.upstream_tunnel:type_name -> pomerium.dashboard.UpstreamTunnel
-	13, // 24: pomerium.dashboard.RouteWithPolicies.route:type_name -> pomerium.dashboard.Route
-	39, // 25: pomerium.dashboard.RouteWithPolicies.policies:type_name -> pomerium.dashboard.Policy
-	13, // 26: pomerium.dashboard.GetRouteResponse.route:type_name -> pomerium.dashboard.Route
-	13, // 27: pomerium.dashboard.ListRoutesResponse.routes:type_name -> pomerium.dashboard.Route
-	15, // 28: pomerium.dashboard.LoadRoutesResponse.routes:type_name -> pomerium.dashboard.RouteWithPolicies
-	13, // 29: pomerium.dashboard.SetRouteRequest.route:type_name -> pomerium.dashboard.Route
-	13, // 30: pomerium.dashboard.SetRouteResponse.route:type_name -> pomerium.dashboard.Route
-	13, // 31: pomerium.dashboard.SetRoutesRequest.routes:type_name -> pomerium.dashboard.Route
-	13, // 32: pomerium.dashboard.SetRoutesResponse.routes:type_name -> pomerium.dashboard.Route
-	16, // 33: pomerium.dashboard.RouteService.DeleteRoute:input_type -> pomerium.dashboard.DeleteRouteRequest
-	18, // 34: pomerium.dashboard.RouteService.DeleteRoutes:input_type -> pomerium.dashboard.DeleteRoutesRequest
-	20, // 35: pomerium.dashboard.RouteService.GetRoute:input_type -> pomerium.dashboard.GetRouteRequest
-	22, // 36: pomerium.dashboard.RouteService.ListRoutes:input_type -> pomerium.dashboard.ListRoutesRequest
-	24, // 37: pomerium.dashboard.RouteService.LoadRoutes:input_type -> pomerium.dashboard.LoadRoutesRequest
-	26, // 38: pomerium.dashboard.RouteService.SetRoute:input_type -> pomerium.dashboard.SetRouteRequest
-	28, // 39: pomerium.dashboard.RouteService.SetRoutes:input_type -> pomerium.dashboard.SetRoutesRequest
-	30, // 40: pomerium.dashboard.RouteService.MoveRoutes:input_type -> pomerium.dashboard.MoveRoutesRequest
-	17, // 41: pomerium.dashboard.RouteService.DeleteRoute:output_type -> pomerium.dashboard.DeleteRouteResponse
-	19, // 42: pomerium.dashboard.RouteService.DeleteRoutes:output_type -> pomerium.dashboard.DeleteRoutesResponse
-	21, // 43: pomerium.dashboard.RouteService.GetRoute:output_type -> pomerium.dashboard.GetRouteResponse
-	23, // 44: pomerium.dashboard.RouteService.ListRoutes:output_type -> pomerium.dashboard.ListRoutesResponse
-	25, // 45: pomerium.dashboard.RouteService.LoadRoutes:output_type -> pomerium.dashboard.LoadRoutesResponse
-	27, // 46: pomerium.dashboard.RouteService.SetRoute:output_type -> pomerium.dashboard.SetRouteResponse
-	29, // 47: pomerium.dashboard.RouteService.SetRoutes:output_type -> pomerium.dashboard.SetRoutesResponse
-	31, // 48: pomerium.dashboard.RouteService.MoveRoutes:output_type -> pomerium.dashboard.MoveRoutesResponse
-	41, // [41:49] is the sub-list for method output_type
-	33, // [33:41] is the sub-list for method input_type
-	33, // [33:33] is the sub-list for extension type_name
-	33, // [33:33] is the sub-list for extension extendee
-	0,  // [0:33] is the sub-list for field type_name
+	32, // 4: pomerium.dashboard.UpstreamOAuth2.authorization_url_params:type_name -> pomerium.dashboard.UpstreamOAuth2.AuthorizationUrlParamsEntry
+	3,  // 5: pomerium.dashboard.OAuth2Endpoint.auth_style:type_name -> pomerium.dashboard.OAuth2AuthStyle
+	36, // 6: pomerium.dashboard.Route.created_at:type_name -> google.protobuf.Timestamp
+	36, // 7: pomerium.dashboard.Route.modified_at:type_name -> google.protobuf.Timestamp
+	36, // 8: pomerium.dashboard.Route.deleted_at:type_name -> google.protobuf.Timestamp
+	37, // 9: pomerium.dashboard.Route.redirect:type_name -> pomerium.dashboard.RedirectAction
+	5,  // 10: pomerium.dashboard.Route.response:type_name -> pomerium.dashboard.RouteDirectResponse
+	38, // 11: pomerium.dashboard.Route.timeout:type_name -> google.protobuf.Duration
+	38, // 12: pomerium.dashboard.Route.idle_timeout:type_name -> google.protobuf.Duration
+	34, // 13: pomerium.dashboard.Route.set_request_headers:type_name -> pomerium.dashboard.Route.SetRequestHeadersEntry
+	35, // 14: pomerium.dashboard.Route.set_response_headers:type_name -> pomerium.dashboard.Route.SetResponseHeadersEntry
+	4,  // 15: pomerium.dashboard.Route.rewrite_response_headers:type_name -> pomerium.dashboard.RouteRewriteHeader
+	0,  // 16: pomerium.dashboard.Route.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
+	1,  // 17: pomerium.dashboard.Route.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
+	6,  // 18: pomerium.dashboard.Route.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
+	33, // 19: pomerium.dashboard.Route.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Route.StringList
+	2,  // 20: pomerium.dashboard.Route.load_balancing_policy:type_name -> pomerium.dashboard.LoadBalancingPolicy
+	39, // 21: pomerium.dashboard.Route.health_checks:type_name -> pomerium.dashboard.HealthCheck
+	7,  // 22: pomerium.dashboard.Route.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
+	8,  // 23: pomerium.dashboard.Route.mcp:type_name -> pomerium.dashboard.MCP
+	14, // 24: pomerium.dashboard.Route.upstream_tunnel:type_name -> pomerium.dashboard.UpstreamTunnel
+	13, // 25: pomerium.dashboard.RouteWithPolicies.route:type_name -> pomerium.dashboard.Route
+	40, // 26: pomerium.dashboard.RouteWithPolicies.policies:type_name -> pomerium.dashboard.Policy
+	13, // 27: pomerium.dashboard.GetRouteResponse.route:type_name -> pomerium.dashboard.Route
+	13, // 28: pomerium.dashboard.ListRoutesResponse.routes:type_name -> pomerium.dashboard.Route
+	15, // 29: pomerium.dashboard.LoadRoutesResponse.routes:type_name -> pomerium.dashboard.RouteWithPolicies
+	13, // 30: pomerium.dashboard.SetRouteRequest.route:type_name -> pomerium.dashboard.Route
+	13, // 31: pomerium.dashboard.SetRouteResponse.route:type_name -> pomerium.dashboard.Route
+	13, // 32: pomerium.dashboard.SetRoutesRequest.routes:type_name -> pomerium.dashboard.Route
+	13, // 33: pomerium.dashboard.SetRoutesResponse.routes:type_name -> pomerium.dashboard.Route
+	16, // 34: pomerium.dashboard.RouteService.DeleteRoute:input_type -> pomerium.dashboard.DeleteRouteRequest
+	18, // 35: pomerium.dashboard.RouteService.DeleteRoutes:input_type -> pomerium.dashboard.DeleteRoutesRequest
+	20, // 36: pomerium.dashboard.RouteService.GetRoute:input_type -> pomerium.dashboard.GetRouteRequest
+	22, // 37: pomerium.dashboard.RouteService.ListRoutes:input_type -> pomerium.dashboard.ListRoutesRequest
+	24, // 38: pomerium.dashboard.RouteService.LoadRoutes:input_type -> pomerium.dashboard.LoadRoutesRequest
+	26, // 39: pomerium.dashboard.RouteService.SetRoute:input_type -> pomerium.dashboard.SetRouteRequest
+	28, // 40: pomerium.dashboard.RouteService.SetRoutes:input_type -> pomerium.dashboard.SetRoutesRequest
+	30, // 41: pomerium.dashboard.RouteService.MoveRoutes:input_type -> pomerium.dashboard.MoveRoutesRequest
+	17, // 42: pomerium.dashboard.RouteService.DeleteRoute:output_type -> pomerium.dashboard.DeleteRouteResponse
+	19, // 43: pomerium.dashboard.RouteService.DeleteRoutes:output_type -> pomerium.dashboard.DeleteRoutesResponse
+	21, // 44: pomerium.dashboard.RouteService.GetRoute:output_type -> pomerium.dashboard.GetRouteResponse
+	23, // 45: pomerium.dashboard.RouteService.ListRoutes:output_type -> pomerium.dashboard.ListRoutesResponse
+	25, // 46: pomerium.dashboard.RouteService.LoadRoutes:output_type -> pomerium.dashboard.LoadRoutesResponse
+	27, // 47: pomerium.dashboard.RouteService.SetRoute:output_type -> pomerium.dashboard.SetRouteResponse
+	29, // 48: pomerium.dashboard.RouteService.SetRoutes:output_type -> pomerium.dashboard.SetRoutesResponse
+	31, // 49: pomerium.dashboard.RouteService.MoveRoutes:output_type -> pomerium.dashboard.MoveRoutesResponse
+	42, // [42:50] is the sub-list for method output_type
+	34, // [34:42] is the sub-list for method input_type
+	34, // [34:34] is the sub-list for extension type_name
+	34, // [34:34] is the sub-list for extension extendee
+	0,  // [0:34] is the sub-list for field type_name
 }
 
 func init() { file_routes_proto_init() }
@@ -2690,7 +2704,7 @@ func file_routes_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_routes_proto_rawDesc), len(file_routes_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   31,
+			NumMessages:   32,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
