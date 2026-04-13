@@ -848,7 +848,7 @@ func (x *OAuth2Endpoint) GetAuthStyle() OAuth2AuthStyle {
 }
 
 // Route defines a proxy route's settings and policy associations
-// Next ID: 77
+// Next ID: 78
 type Route struct {
 	state       protoimpl.MessageState `protogen:"open.v1"`
 	Id          string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -921,6 +921,7 @@ type Route struct {
 	Mcp                            *MCP                      `protobuf:"bytes,74,opt,name=mcp,proto3,oneof" json:"mcp,omitempty"`
 	HealthyPanicThreshold          *int32                    `protobuf:"varint,75,opt,name=healthy_panic_threshold,json=healthyPanicThreshold,proto3,oneof" json:"healthy_panic_threshold,omitempty"`
 	UpstreamTunnel                 *UpstreamTunnel           `protobuf:"bytes,76,opt,name=upstream_tunnel,json=upstreamTunnel,proto3,oneof" json:"upstream_tunnel,omitempty"`
+	AllowUpgrades                  *Route_StringList         `protobuf:"bytes,77,opt,name=allow_upgrades,json=allowUpgrades,proto3,oneof" json:"allow_upgrades,omitempty"`
 	unknownFields                  protoimpl.UnknownFields
 	sizeCache                      protoimpl.SizeCache
 }
@@ -1399,6 +1400,13 @@ func (x *Route) GetHealthyPanicThreshold() int32 {
 func (x *Route) GetUpstreamTunnel() *UpstreamTunnel {
 	if x != nil {
 		return x.UpstreamTunnel
+	}
+	return nil
+}
+
+func (x *Route) GetAllowUpgrades() *Route_StringList {
+	if x != nil {
+		return x.AllowUpgrades
 	}
 	return nil
 }
@@ -2357,7 +2365,7 @@ const file_routes_proto_rawDesc = "" +
 	"\ttoken_url\x18\x02 \x01(\tR\btokenUrl\x12G\n" +
 	"\n" +
 	"auth_style\x18\x03 \x01(\x0e2#.pomerium.dashboard.OAuth2AuthStyleH\x00R\tauthStyle\x88\x01\x01B\r\n" +
-	"\v_auth_style\"\xfc%\n" +
+	"\v_auth_style\"\xe1&\n" +
 	"\x05Route\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
 	"\fnamespace_id\x18\x1d \x01(\tR\vnamespaceId\x129\n" +
@@ -2430,7 +2438,8 @@ const file_routes_proto_rawDesc = "" +
 	"\x1acircuit_breaker_thresholds\x18I \x01(\v2,.pomerium.dashboard.CircuitBreakerThresholdsH\"R\x18circuitBreakerThresholds\x88\x01\x01\x12.\n" +
 	"\x03mcp\x18J \x01(\v2\x17.pomerium.dashboard.MCPH#R\x03mcp\x88\x01\x01\x12;\n" +
 	"\x17healthy_panic_threshold\x18K \x01(\x05H$R\x15healthyPanicThreshold\x88\x01\x01\x12P\n" +
-	"\x0fupstream_tunnel\x18L \x01(\v2\".pomerium.dashboard.UpstreamTunnelH%R\x0eupstreamTunnel\x88\x01\x01\x1a$\n" +
+	"\x0fupstream_tunnel\x18L \x01(\v2\".pomerium.dashboard.UpstreamTunnelH%R\x0eupstreamTunnel\x88\x01\x01\x12P\n" +
+	"\x0eallow_upgrades\x18M \x01(\v2$.pomerium.dashboard.Route.StringListH&R\rallowUpgrades\x88\x01\x01\x1a$\n" +
 	"\n" +
 	"StringList\x12\x16\n" +
 	"\x06values\x18\x01 \x03(\tR\x06values\x1aD\n" +
@@ -2478,7 +2487,8 @@ const file_routes_proto_rawDesc = "" +
 	"\x1b_circuit_breaker_thresholdsB\x06\n" +
 	"\x04_mcpB\x1a\n" +
 	"\x18_healthy_panic_thresholdB\x12\n" +
-	"\x10_upstream_tunnelJ\x04\b(\x10)J\x04\b2\x103J\x04\b'\x10(\"K\n" +
+	"\x10_upstream_tunnelB\x11\n" +
+	"\x0f_allow_upgradesJ\x04\b(\x10)J\x04\b2\x103J\x04\b'\x10(\"K\n" +
 	"\x0eUpstreamTunnel\x12'\n" +
 	"\rssh_policy_id\x18\x01 \x01(\tH\x00R\vsshPolicyId\x88\x01\x01B\x10\n" +
 	"\x0e_ssh_policy_id\"|\n" +
@@ -2644,36 +2654,37 @@ var file_routes_proto_depIdxs = []int32{
 	7,  // 22: pomerium.dashboard.Route.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
 	8,  // 23: pomerium.dashboard.Route.mcp:type_name -> pomerium.dashboard.MCP
 	14, // 24: pomerium.dashboard.Route.upstream_tunnel:type_name -> pomerium.dashboard.UpstreamTunnel
-	13, // 25: pomerium.dashboard.RouteWithPolicies.route:type_name -> pomerium.dashboard.Route
-	40, // 26: pomerium.dashboard.RouteWithPolicies.policies:type_name -> pomerium.dashboard.Policy
-	13, // 27: pomerium.dashboard.GetRouteResponse.route:type_name -> pomerium.dashboard.Route
-	13, // 28: pomerium.dashboard.ListRoutesResponse.routes:type_name -> pomerium.dashboard.Route
-	15, // 29: pomerium.dashboard.LoadRoutesResponse.routes:type_name -> pomerium.dashboard.RouteWithPolicies
-	13, // 30: pomerium.dashboard.SetRouteRequest.route:type_name -> pomerium.dashboard.Route
-	13, // 31: pomerium.dashboard.SetRouteResponse.route:type_name -> pomerium.dashboard.Route
-	13, // 32: pomerium.dashboard.SetRoutesRequest.routes:type_name -> pomerium.dashboard.Route
-	13, // 33: pomerium.dashboard.SetRoutesResponse.routes:type_name -> pomerium.dashboard.Route
-	16, // 34: pomerium.dashboard.RouteService.DeleteRoute:input_type -> pomerium.dashboard.DeleteRouteRequest
-	18, // 35: pomerium.dashboard.RouteService.DeleteRoutes:input_type -> pomerium.dashboard.DeleteRoutesRequest
-	20, // 36: pomerium.dashboard.RouteService.GetRoute:input_type -> pomerium.dashboard.GetRouteRequest
-	22, // 37: pomerium.dashboard.RouteService.ListRoutes:input_type -> pomerium.dashboard.ListRoutesRequest
-	24, // 38: pomerium.dashboard.RouteService.LoadRoutes:input_type -> pomerium.dashboard.LoadRoutesRequest
-	26, // 39: pomerium.dashboard.RouteService.SetRoute:input_type -> pomerium.dashboard.SetRouteRequest
-	28, // 40: pomerium.dashboard.RouteService.SetRoutes:input_type -> pomerium.dashboard.SetRoutesRequest
-	30, // 41: pomerium.dashboard.RouteService.MoveRoutes:input_type -> pomerium.dashboard.MoveRoutesRequest
-	17, // 42: pomerium.dashboard.RouteService.DeleteRoute:output_type -> pomerium.dashboard.DeleteRouteResponse
-	19, // 43: pomerium.dashboard.RouteService.DeleteRoutes:output_type -> pomerium.dashboard.DeleteRoutesResponse
-	21, // 44: pomerium.dashboard.RouteService.GetRoute:output_type -> pomerium.dashboard.GetRouteResponse
-	23, // 45: pomerium.dashboard.RouteService.ListRoutes:output_type -> pomerium.dashboard.ListRoutesResponse
-	25, // 46: pomerium.dashboard.RouteService.LoadRoutes:output_type -> pomerium.dashboard.LoadRoutesResponse
-	27, // 47: pomerium.dashboard.RouteService.SetRoute:output_type -> pomerium.dashboard.SetRouteResponse
-	29, // 48: pomerium.dashboard.RouteService.SetRoutes:output_type -> pomerium.dashboard.SetRoutesResponse
-	31, // 49: pomerium.dashboard.RouteService.MoveRoutes:output_type -> pomerium.dashboard.MoveRoutesResponse
-	42, // [42:50] is the sub-list for method output_type
-	34, // [34:42] is the sub-list for method input_type
-	34, // [34:34] is the sub-list for extension type_name
-	34, // [34:34] is the sub-list for extension extendee
-	0,  // [0:34] is the sub-list for field type_name
+	33, // 25: pomerium.dashboard.Route.allow_upgrades:type_name -> pomerium.dashboard.Route.StringList
+	13, // 26: pomerium.dashboard.RouteWithPolicies.route:type_name -> pomerium.dashboard.Route
+	40, // 27: pomerium.dashboard.RouteWithPolicies.policies:type_name -> pomerium.dashboard.Policy
+	13, // 28: pomerium.dashboard.GetRouteResponse.route:type_name -> pomerium.dashboard.Route
+	13, // 29: pomerium.dashboard.ListRoutesResponse.routes:type_name -> pomerium.dashboard.Route
+	15, // 30: pomerium.dashboard.LoadRoutesResponse.routes:type_name -> pomerium.dashboard.RouteWithPolicies
+	13, // 31: pomerium.dashboard.SetRouteRequest.route:type_name -> pomerium.dashboard.Route
+	13, // 32: pomerium.dashboard.SetRouteResponse.route:type_name -> pomerium.dashboard.Route
+	13, // 33: pomerium.dashboard.SetRoutesRequest.routes:type_name -> pomerium.dashboard.Route
+	13, // 34: pomerium.dashboard.SetRoutesResponse.routes:type_name -> pomerium.dashboard.Route
+	16, // 35: pomerium.dashboard.RouteService.DeleteRoute:input_type -> pomerium.dashboard.DeleteRouteRequest
+	18, // 36: pomerium.dashboard.RouteService.DeleteRoutes:input_type -> pomerium.dashboard.DeleteRoutesRequest
+	20, // 37: pomerium.dashboard.RouteService.GetRoute:input_type -> pomerium.dashboard.GetRouteRequest
+	22, // 38: pomerium.dashboard.RouteService.ListRoutes:input_type -> pomerium.dashboard.ListRoutesRequest
+	24, // 39: pomerium.dashboard.RouteService.LoadRoutes:input_type -> pomerium.dashboard.LoadRoutesRequest
+	26, // 40: pomerium.dashboard.RouteService.SetRoute:input_type -> pomerium.dashboard.SetRouteRequest
+	28, // 41: pomerium.dashboard.RouteService.SetRoutes:input_type -> pomerium.dashboard.SetRoutesRequest
+	30, // 42: pomerium.dashboard.RouteService.MoveRoutes:input_type -> pomerium.dashboard.MoveRoutesRequest
+	17, // 43: pomerium.dashboard.RouteService.DeleteRoute:output_type -> pomerium.dashboard.DeleteRouteResponse
+	19, // 44: pomerium.dashboard.RouteService.DeleteRoutes:output_type -> pomerium.dashboard.DeleteRoutesResponse
+	21, // 45: pomerium.dashboard.RouteService.GetRoute:output_type -> pomerium.dashboard.GetRouteResponse
+	23, // 46: pomerium.dashboard.RouteService.ListRoutes:output_type -> pomerium.dashboard.ListRoutesResponse
+	25, // 47: pomerium.dashboard.RouteService.LoadRoutes:output_type -> pomerium.dashboard.LoadRoutesResponse
+	27, // 48: pomerium.dashboard.RouteService.SetRoute:output_type -> pomerium.dashboard.SetRouteResponse
+	29, // 49: pomerium.dashboard.RouteService.SetRoutes:output_type -> pomerium.dashboard.SetRoutesResponse
+	31, // 50: pomerium.dashboard.RouteService.MoveRoutes:output_type -> pomerium.dashboard.MoveRoutesResponse
+	43, // [43:51] is the sub-list for method output_type
+	35, // [35:43] is the sub-list for method input_type
+	35, // [35:35] is the sub-list for extension type_name
+	35, // [35:35] is the sub-list for extension extendee
+	0,  // [0:35] is the sub-list for field type_name
 }
 
 func init() { file_routes_proto_init() }

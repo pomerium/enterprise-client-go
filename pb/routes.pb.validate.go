@@ -1783,6 +1783,39 @@ func (m *Route) validate(all bool) error {
 
 	}
 
+	if m.AllowUpgrades != nil {
+
+		if all {
+			switch v := interface{}(m.GetAllowUpgrades()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "AllowUpgrades",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "AllowUpgrades",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetAllowUpgrades()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return RouteValidationError{
+					field:  "AllowUpgrades",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return RouteMultiError(errors)
 	}
