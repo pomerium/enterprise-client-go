@@ -1237,6 +1237,7 @@ func (x *SetPomeriumServiceAccountRequest) GetClusterId() string {
 type SetPomeriumServiceAccountResponse struct {
 	state          protoimpl.MessageState  `protogen:"open.v1"`
 	ServiceAccount *PomeriumServiceAccount `protobuf:"bytes,1,opt,name=service_account,json=serviceAccount,proto3" json:"service_account,omitempty"`
+	Jwt            string                  `protobuf:"bytes,2,opt,name=jwt,proto3" json:"jwt,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -1276,6 +1277,13 @@ func (x *SetPomeriumServiceAccountResponse) GetServiceAccount() *PomeriumService
 		return x.ServiceAccount
 	}
 	return nil
+}
+
+func (x *SetPomeriumServiceAccountResponse) GetJwt() string {
+	if x != nil {
+		return x.Jwt
+	}
+	return ""
 }
 
 // PomeriumSession defines a user session from the databroker
@@ -2215,9 +2223,10 @@ const file_users_proto_rawDesc = "" +
 	"\x0fservice_account\x18\x01 \x01(\v2*.pomerium.dashboard.PomeriumServiceAccountR\x0eserviceAccount\x12\"\n" +
 	"\n" +
 	"cluster_id\x18\x02 \x01(\tH\x00R\tclusterId\x88\x01\x01B\r\n" +
-	"\v_cluster_id\"x\n" +
+	"\v_cluster_id\"\x8a\x01\n" +
 	"!SetPomeriumServiceAccountResponse\x12S\n" +
-	"\x0fservice_account\x18\x01 \x01(\v2*.pomerium.dashboard.PomeriumServiceAccountR\x0eserviceAccount\"\xac\x05\n" +
+	"\x0fservice_account\x18\x01 \x01(\v2*.pomerium.dashboard.PomeriumServiceAccountR\x0eserviceAccount\x12\x10\n" +
+	"\x03jwt\x18\x02 \x01(\tR\x03jwt\"\xac\x05\n" +
 	"\x0fPomeriumSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12<\n" +
 	"\x04user\x18\x02 \x01(\v2(.pomerium.dashboard.PomeriumSession.UserR\x04user\x12A\n" +
