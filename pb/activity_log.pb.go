@@ -548,6 +548,86 @@ func (x *ListActivityLogEntriesResponse) GetTotalCount() int64 {
 	return 0
 }
 
+type ListEntityTypesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListEntityTypesRequest) Reset() {
+	*x = ListEntityTypesRequest{}
+	mi := &file_activity_log_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListEntityTypesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListEntityTypesRequest) ProtoMessage() {}
+
+func (x *ListEntityTypesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_activity_log_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListEntityTypesRequest.ProtoReflect.Descriptor instead.
+func (*ListEntityTypesRequest) Descriptor() ([]byte, []int) {
+	return file_activity_log_proto_rawDescGZIP(), []int{5}
+}
+
+type ListEntityTypesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EntityTypes   []string               `protobuf:"bytes,1,rep,name=entity_types,json=entityTypes,proto3" json:"entity_types,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListEntityTypesResponse) Reset() {
+	*x = ListEntityTypesResponse{}
+	mi := &file_activity_log_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListEntityTypesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListEntityTypesResponse) ProtoMessage() {}
+
+func (x *ListEntityTypesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_activity_log_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListEntityTypesResponse.ProtoReflect.Descriptor instead.
+func (*ListEntityTypesResponse) Descriptor() ([]byte, []int) {
+	return file_activity_log_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListEntityTypesResponse) GetEntityTypes() []string {
+	if x != nil {
+		return x.EntityTypes
+	}
+	return nil
+}
+
 type ActivityLogEntry_DiffSummary struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// number of lines added
@@ -560,7 +640,7 @@ type ActivityLogEntry_DiffSummary struct {
 
 func (x *ActivityLogEntry_DiffSummary) Reset() {
 	*x = ActivityLogEntry_DiffSummary{}
-	mi := &file_activity_log_proto_msgTypes[5]
+	mi := &file_activity_log_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -572,7 +652,7 @@ func (x *ActivityLogEntry_DiffSummary) String() string {
 func (*ActivityLogEntry_DiffSummary) ProtoMessage() {}
 
 func (x *ActivityLogEntry_DiffSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_activity_log_proto_msgTypes[5]
+	mi := &file_activity_log_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -613,7 +693,7 @@ type ListActivityLogEntriesRequest_Entity struct {
 
 func (x *ListActivityLogEntriesRequest_Entity) Reset() {
 	*x = ListActivityLogEntriesRequest_Entity{}
-	mi := &file_activity_log_proto_msgTypes[6]
+	mi := &file_activity_log_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -625,7 +705,7 @@ func (x *ListActivityLogEntriesRequest_Entity) String() string {
 func (*ListActivityLogEntriesRequest_Entity) ProtoMessage() {}
 
 func (x *ListActivityLogEntriesRequest_Entity) ProtoReflect() protoreflect.Message {
-	mi := &file_activity_log_proto_msgTypes[6]
+	mi := &file_activity_log_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -669,7 +749,7 @@ type ListActivityLogEntriesRequest_Sort struct {
 
 func (x *ListActivityLogEntriesRequest_Sort) Reset() {
 	*x = ListActivityLogEntriesRequest_Sort{}
-	mi := &file_activity_log_proto_msgTypes[7]
+	mi := &file_activity_log_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -681,7 +761,7 @@ func (x *ListActivityLogEntriesRequest_Sort) String() string {
 func (*ListActivityLogEntriesRequest_Sort) ProtoMessage() {}
 
 func (x *ListActivityLogEntriesRequest_Sort) ProtoReflect() protoreflect.Message {
-	mi := &file_activity_log_proto_msgTypes[7]
+	mi := &file_activity_log_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -723,7 +803,7 @@ type ListActivityLogEntriesRequest_DateFilter struct {
 
 func (x *ListActivityLogEntriesRequest_DateFilter) Reset() {
 	*x = ListActivityLogEntriesRequest_DateFilter{}
-	mi := &file_activity_log_proto_msgTypes[8]
+	mi := &file_activity_log_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -735,7 +815,7 @@ func (x *ListActivityLogEntriesRequest_DateFilter) String() string {
 func (*ListActivityLogEntriesRequest_DateFilter) ProtoMessage() {}
 
 func (x *ListActivityLogEntriesRequest_DateFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_activity_log_proto_msgTypes[8]
+	mi := &file_activity_log_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -778,7 +858,7 @@ type ListActivityLogEntriesRequest_StringFilter struct {
 
 func (x *ListActivityLogEntriesRequest_StringFilter) Reset() {
 	*x = ListActivityLogEntriesRequest_StringFilter{}
-	mi := &file_activity_log_proto_msgTypes[9]
+	mi := &file_activity_log_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -790,7 +870,7 @@ func (x *ListActivityLogEntriesRequest_StringFilter) String() string {
 func (*ListActivityLogEntriesRequest_StringFilter) ProtoMessage() {}
 
 func (x *ListActivityLogEntriesRequest_StringFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_activity_log_proto_msgTypes[9]
+	mi := &file_activity_log_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -922,10 +1002,14 @@ const file_activity_log_proto_rawDesc = "" +
 	"\x1eListActivityLogEntriesResponse\x12>\n" +
 	"\aentries\x18\x01 \x03(\v2$.pomerium.dashboard.ActivityLogEntryR\aentries\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x03R\n" +
-	"totalCount2\x8d\x02\n" +
+	"totalCount\"\x18\n" +
+	"\x16ListEntityTypesRequest\"<\n" +
+	"\x17ListEntityTypesResponse\x12!\n" +
+	"\fentity_types\x18\x01 \x03(\tR\ventityTypes2\xf9\x02\n" +
 	"\x12ActivityLogService\x12v\n" +
 	"\x13GetActivityLogEntry\x12..pomerium.dashboard.GetActivityLogEntryRequest\x1a/.pomerium.dashboard.GetActivityLogEntryResponse\x12\x7f\n" +
-	"\x16ListActivityLogEntries\x121.pomerium.dashboard.ListActivityLogEntriesRequest\x1a2.pomerium.dashboard.ListActivityLogEntriesResponseB-Z+github.com/pomerium/pomerium-console/pkg/pbb\x06proto3"
+	"\x16ListActivityLogEntries\x121.pomerium.dashboard.ListActivityLogEntriesRequest\x1a2.pomerium.dashboard.ListActivityLogEntriesResponse\x12j\n" +
+	"\x0fListEntityTypes\x12*.pomerium.dashboard.ListEntityTypesRequest\x1a+.pomerium.dashboard.ListEntityTypesResponseB-Z+github.com/pomerium/pomerium-console/pkg/pbb\x06proto3"
 
 var (
 	file_activity_log_proto_rawDescOnce sync.Once
@@ -939,36 +1023,40 @@ func file_activity_log_proto_rawDescGZIP() []byte {
 	return file_activity_log_proto_rawDescData
 }
 
-var file_activity_log_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_activity_log_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_activity_log_proto_goTypes = []any{
 	(*ActivityLogEntry)(nil),                           // 0: pomerium.dashboard.ActivityLogEntry
 	(*GetActivityLogEntryRequest)(nil),                 // 1: pomerium.dashboard.GetActivityLogEntryRequest
 	(*GetActivityLogEntryResponse)(nil),                // 2: pomerium.dashboard.GetActivityLogEntryResponse
 	(*ListActivityLogEntriesRequest)(nil),              // 3: pomerium.dashboard.ListActivityLogEntriesRequest
 	(*ListActivityLogEntriesResponse)(nil),             // 4: pomerium.dashboard.ListActivityLogEntriesResponse
-	(*ActivityLogEntry_DiffSummary)(nil),               // 5: pomerium.dashboard.ActivityLogEntry.DiffSummary
-	(*ListActivityLogEntriesRequest_Entity)(nil),       // 6: pomerium.dashboard.ListActivityLogEntriesRequest.Entity
-	(*ListActivityLogEntriesRequest_Sort)(nil),         // 7: pomerium.dashboard.ListActivityLogEntriesRequest.Sort
-	(*ListActivityLogEntriesRequest_DateFilter)(nil),   // 8: pomerium.dashboard.ListActivityLogEntriesRequest.DateFilter
-	(*ListActivityLogEntriesRequest_StringFilter)(nil), // 9: pomerium.dashboard.ListActivityLogEntriesRequest.StringFilter
-	(*timestamppb.Timestamp)(nil),                      // 10: google.protobuf.Timestamp
+	(*ListEntityTypesRequest)(nil),                     // 5: pomerium.dashboard.ListEntityTypesRequest
+	(*ListEntityTypesResponse)(nil),                    // 6: pomerium.dashboard.ListEntityTypesResponse
+	(*ActivityLogEntry_DiffSummary)(nil),               // 7: pomerium.dashboard.ActivityLogEntry.DiffSummary
+	(*ListActivityLogEntriesRequest_Entity)(nil),       // 8: pomerium.dashboard.ListActivityLogEntriesRequest.Entity
+	(*ListActivityLogEntriesRequest_Sort)(nil),         // 9: pomerium.dashboard.ListActivityLogEntriesRequest.Sort
+	(*ListActivityLogEntriesRequest_DateFilter)(nil),   // 10: pomerium.dashboard.ListActivityLogEntriesRequest.DateFilter
+	(*ListActivityLogEntriesRequest_StringFilter)(nil), // 11: pomerium.dashboard.ListActivityLogEntriesRequest.StringFilter
+	(*timestamppb.Timestamp)(nil),                      // 12: google.protobuf.Timestamp
 }
 var file_activity_log_proto_depIdxs = []int32{
-	10, // 0: pomerium.dashboard.ActivityLogEntry.created_at:type_name -> google.protobuf.Timestamp
-	5,  // 1: pomerium.dashboard.ActivityLogEntry.diff_summary:type_name -> pomerium.dashboard.ActivityLogEntry.DiffSummary
+	12, // 0: pomerium.dashboard.ActivityLogEntry.created_at:type_name -> google.protobuf.Timestamp
+	7,  // 1: pomerium.dashboard.ActivityLogEntry.diff_summary:type_name -> pomerium.dashboard.ActivityLogEntry.DiffSummary
 	0,  // 2: pomerium.dashboard.GetActivityLogEntryResponse.entry:type_name -> pomerium.dashboard.ActivityLogEntry
-	6,  // 3: pomerium.dashboard.ListActivityLogEntriesRequest.entities:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.Entity
-	7,  // 4: pomerium.dashboard.ListActivityLogEntriesRequest.sort:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.Sort
-	8,  // 5: pomerium.dashboard.ListActivityLogEntriesRequest.date_filter:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.DateFilter
-	9,  // 6: pomerium.dashboard.ListActivityLogEntriesRequest.string_filter:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.StringFilter
+	8,  // 3: pomerium.dashboard.ListActivityLogEntriesRequest.entities:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.Entity
+	9,  // 4: pomerium.dashboard.ListActivityLogEntriesRequest.sort:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.Sort
+	10, // 5: pomerium.dashboard.ListActivityLogEntriesRequest.date_filter:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.DateFilter
+	11, // 6: pomerium.dashboard.ListActivityLogEntriesRequest.string_filter:type_name -> pomerium.dashboard.ListActivityLogEntriesRequest.StringFilter
 	0,  // 7: pomerium.dashboard.ListActivityLogEntriesResponse.entries:type_name -> pomerium.dashboard.ActivityLogEntry
-	10, // 8: pomerium.dashboard.ListActivityLogEntriesRequest.DateFilter.date:type_name -> google.protobuf.Timestamp
+	12, // 8: pomerium.dashboard.ListActivityLogEntriesRequest.DateFilter.date:type_name -> google.protobuf.Timestamp
 	1,  // 9: pomerium.dashboard.ActivityLogService.GetActivityLogEntry:input_type -> pomerium.dashboard.GetActivityLogEntryRequest
 	3,  // 10: pomerium.dashboard.ActivityLogService.ListActivityLogEntries:input_type -> pomerium.dashboard.ListActivityLogEntriesRequest
-	2,  // 11: pomerium.dashboard.ActivityLogService.GetActivityLogEntry:output_type -> pomerium.dashboard.GetActivityLogEntryResponse
-	4,  // 12: pomerium.dashboard.ActivityLogService.ListActivityLogEntries:output_type -> pomerium.dashboard.ListActivityLogEntriesResponse
-	11, // [11:13] is the sub-list for method output_type
-	9,  // [9:11] is the sub-list for method input_type
+	5,  // 11: pomerium.dashboard.ActivityLogService.ListEntityTypes:input_type -> pomerium.dashboard.ListEntityTypesRequest
+	2,  // 12: pomerium.dashboard.ActivityLogService.GetActivityLogEntry:output_type -> pomerium.dashboard.GetActivityLogEntryResponse
+	4,  // 13: pomerium.dashboard.ActivityLogService.ListActivityLogEntries:output_type -> pomerium.dashboard.ListActivityLogEntriesResponse
+	6,  // 14: pomerium.dashboard.ActivityLogService.ListEntityTypes:output_type -> pomerium.dashboard.ListEntityTypesResponse
+	12, // [12:15] is the sub-list for method output_type
+	9,  // [9:12] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
 	9,  // [9:9] is the sub-list for extension extendee
 	0,  // [0:9] is the sub-list for field type_name
@@ -988,7 +1076,7 @@ func file_activity_log_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_activity_log_proto_rawDesc), len(file_activity_log_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
