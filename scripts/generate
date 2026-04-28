@@ -15,6 +15,7 @@ _files=(
 	policy
 	route_health_check
 	route_redirect_action
+	recording_data
 	routes
 	settings
 	types
