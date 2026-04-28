@@ -60,6 +60,7 @@ type Client struct {
 	RouteService                  pb.RouteServiceClient
 	SettingsService               pb.SettingsServiceClient
 	UserService                   pb.UserServiceClient
+	SessionRecordingService       pb.RecordingQuerierServiceClient
 }
 
 // NewClient returns a Pomerium Enterprise client configured to communicate with a given target API
@@ -85,6 +86,7 @@ func NewClient(_ context.Context, target string, authToken string, opts ...Optio
 		RouteService:                  pb.NewRouteServiceClient(conn),
 		SettingsService:               pb.NewSettingsServiceClient(conn),
 		UserService:                   pb.NewUserServiceClient(conn),
+		SessionRecordingService:       pb.NewRecordingQuerierServiceClient(conn),
 	}, nil
 }
 

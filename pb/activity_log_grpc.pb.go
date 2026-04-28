@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	ActivityLogService_GetActivityLogEntry_FullMethodName    = "/pomerium.dashboard.ActivityLogService/GetActivityLogEntry"
 	ActivityLogService_ListActivityLogEntries_FullMethodName = "/pomerium.dashboard.ActivityLogService/ListActivityLogEntries"
+	ActivityLogService_ListEntityTypes_FullMethodName        = "/pomerium.dashboard.ActivityLogService/ListEntityTypes"
 )
 
 // ActivityLogServiceClient is the client API for ActivityLogService service.
@@ -35,6 +36,8 @@ type ActivityLogServiceClient interface {
 	// ListActivityLogEntries lists activity log entries based on paramters in the
 	// ListActivityLogEntriesRequest
 	ListActivityLogEntries(ctx context.Context, in *ListActivityLogEntriesRequest, opts ...grpc.CallOption) (*ListActivityLogEntriesResponse, error)
+	// Lists all the known entity types.
+	ListEntityTypes(ctx context.Context, in *ListEntityTypesRequest, opts ...grpc.CallOption) (*ListEntityTypesResponse, error)
 }
 
 type activityLogServiceClient struct {
@@ -65,6 +68,16 @@ func (c *activityLogServiceClient) ListActivityLogEntries(ctx context.Context, i
 	return out, nil
 }
 
+func (c *activityLogServiceClient) ListEntityTypes(ctx context.Context, in *ListEntityTypesRequest, opts ...grpc.CallOption) (*ListEntityTypesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListEntityTypesResponse)
+	err := c.cc.Invoke(ctx, ActivityLogService_ListEntityTypes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ActivityLogServiceServer is the server API for ActivityLogService service.
 // All implementations should embed UnimplementedActivityLogServiceServer
 // for forward compatibility.
@@ -77,6 +90,8 @@ type ActivityLogServiceServer interface {
 	// ListActivityLogEntries lists activity log entries based on paramters in the
 	// ListActivityLogEntriesRequest
 	ListActivityLogEntries(context.Context, *ListActivityLogEntriesRequest) (*ListActivityLogEntriesResponse, error)
+	// Lists all the known entity types.
+	ListEntityTypes(context.Context, *ListEntityTypesRequest) (*ListEntityTypesResponse, error)
 }
 
 // UnimplementedActivityLogServiceServer should be embedded to have
@@ -91,6 +106,9 @@ func (UnimplementedActivityLogServiceServer) GetActivityLogEntry(context.Context
 }
 func (UnimplementedActivityLogServiceServer) ListActivityLogEntries(context.Context, *ListActivityLogEntriesRequest) (*ListActivityLogEntriesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListActivityLogEntries not implemented")
+}
+func (UnimplementedActivityLogServiceServer) ListEntityTypes(context.Context, *ListEntityTypesRequest) (*ListEntityTypesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListEntityTypes not implemented")
 }
 func (UnimplementedActivityLogServiceServer) testEmbeddedByValue() {}
 
@@ -148,6 +166,24 @@ func _ActivityLogService_ListActivityLogEntries_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ActivityLogService_ListEntityTypes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEntityTypesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityLogServiceServer).ListEntityTypes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ActivityLogService_ListEntityTypes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityLogServiceServer).ListEntityTypes(ctx, req.(*ListEntityTypesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ActivityLogService_ServiceDesc is the grpc.ServiceDesc for ActivityLogService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -162,6 +198,10 @@ var ActivityLogService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListActivityLogEntries",
 			Handler:    _ActivityLogService_ListActivityLogEntries_Handler,
+		},
+		{
+			MethodName: "ListEntityTypes",
+			Handler:    _ActivityLogService_ListEntityTypes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
