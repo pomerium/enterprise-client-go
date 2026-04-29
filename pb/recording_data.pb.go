@@ -25,17 +25,112 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type GetDatasourceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDatasourceRequest) Reset() {
+	*x = GetDatasourceRequest{}
+	mi := &file_recording_data_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDatasourceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDatasourceRequest) ProtoMessage() {}
+
+func (x *GetDatasourceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_recording_data_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDatasourceRequest.ProtoReflect.Descriptor instead.
+func (*GetDatasourceRequest) Descriptor() ([]byte, []int) {
+	return file_recording_data_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *GetDatasourceRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GetDatasourceRequest) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+type GetDatasourceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Datasource    *Datasource            `protobuf:"bytes,1,opt,name=datasource,proto3" json:"datasource,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDatasourceResponse) Reset() {
+	*x = GetDatasourceResponse{}
+	mi := &file_recording_data_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDatasourceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDatasourceResponse) ProtoMessage() {}
+
+func (x *GetDatasourceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_recording_data_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDatasourceResponse.ProtoReflect.Descriptor instead.
+func (*GetDatasourceResponse) Descriptor() ([]byte, []int) {
+	return file_recording_data_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetDatasourceResponse) GetDatasource() *Datasource {
+	if x != nil {
+		return x.Datasource
+	}
+	return nil
+}
+
 type CreateDatasourceRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Entry         *DatasourceEntry       `protobuf:"bytes,1,opt,name=entry,proto3" json:"entry,omitempty"`
-	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Datasource    *Datasource            `protobuf:"bytes,1,opt,name=datasource,proto3" json:"datasource,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateDatasourceRequest) Reset() {
 	*x = CreateDatasourceRequest{}
-	mi := &file_recording_data_proto_msgTypes[0]
+	mi := &file_recording_data_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47,7 +142,7 @@ func (x *CreateDatasourceRequest) String() string {
 func (*CreateDatasourceRequest) ProtoMessage() {}
 
 func (x *CreateDatasourceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[0]
+	mi := &file_recording_data_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60,32 +155,26 @@ func (x *CreateDatasourceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDatasourceRequest.ProtoReflect.Descriptor instead.
 func (*CreateDatasourceRequest) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{0}
+	return file_recording_data_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CreateDatasourceRequest) GetEntry() *DatasourceEntry {
+func (x *CreateDatasourceRequest) GetDatasource() *Datasource {
 	if x != nil {
-		return x.Entry
+		return x.Datasource
 	}
 	return nil
 }
 
-func (x *CreateDatasourceRequest) GetNamespace() string {
-	if x != nil {
-		return x.Namespace
-	}
-	return ""
-}
-
 type CreateDatasourceResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Created       *Datasource            `protobuf:"bytes,1,opt,name=created,proto3" json:"created,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateDatasourceResponse) Reset() {
 	*x = CreateDatasourceResponse{}
-	mi := &file_recording_data_proto_msgTypes[1]
+	mi := &file_recording_data_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -97,7 +186,7 @@ func (x *CreateDatasourceResponse) String() string {
 func (*CreateDatasourceResponse) ProtoMessage() {}
 
 func (x *CreateDatasourceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[1]
+	mi := &file_recording_data_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -110,7 +199,14 @@ func (x *CreateDatasourceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDatasourceResponse.ProtoReflect.Descriptor instead.
 func (*CreateDatasourceResponse) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{1}
+	return file_recording_data_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CreateDatasourceResponse) GetCreated() *Datasource {
+	if x != nil {
+		return x.Created
+	}
+	return nil
 }
 
 type DeleteDatasourceRequest struct {
@@ -123,7 +219,7 @@ type DeleteDatasourceRequest struct {
 
 func (x *DeleteDatasourceRequest) Reset() {
 	*x = DeleteDatasourceRequest{}
-	mi := &file_recording_data_proto_msgTypes[2]
+	mi := &file_recording_data_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -135,7 +231,7 @@ func (x *DeleteDatasourceRequest) String() string {
 func (*DeleteDatasourceRequest) ProtoMessage() {}
 
 func (x *DeleteDatasourceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[2]
+	mi := &file_recording_data_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -148,7 +244,7 @@ func (x *DeleteDatasourceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDatasourceRequest.ProtoReflect.Descriptor instead.
 func (*DeleteDatasourceRequest) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{2}
+	return file_recording_data_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *DeleteDatasourceRequest) GetName() string {
@@ -173,7 +269,7 @@ type DeleteDatasourceResponse struct {
 
 func (x *DeleteDatasourceResponse) Reset() {
 	*x = DeleteDatasourceResponse{}
-	mi := &file_recording_data_proto_msgTypes[3]
+	mi := &file_recording_data_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -185,7 +281,7 @@ func (x *DeleteDatasourceResponse) String() string {
 func (*DeleteDatasourceResponse) ProtoMessage() {}
 
 func (x *DeleteDatasourceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[3]
+	mi := &file_recording_data_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -198,7 +294,7 @@ func (x *DeleteDatasourceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDatasourceResponse.ProtoReflect.Descriptor instead.
 func (*DeleteDatasourceResponse) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{3}
+	return file_recording_data_proto_rawDescGZIP(), []int{5}
 }
 
 type ListDatasourceRequest struct {
@@ -210,7 +306,7 @@ type ListDatasourceRequest struct {
 
 func (x *ListDatasourceRequest) Reset() {
 	*x = ListDatasourceRequest{}
-	mi := &file_recording_data_proto_msgTypes[4]
+	mi := &file_recording_data_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -222,7 +318,7 @@ func (x *ListDatasourceRequest) String() string {
 func (*ListDatasourceRequest) ProtoMessage() {}
 
 func (x *ListDatasourceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[4]
+	mi := &file_recording_data_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -235,7 +331,7 @@ func (x *ListDatasourceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDatasourceRequest.ProtoReflect.Descriptor instead.
 func (*ListDatasourceRequest) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{4}
+	return file_recording_data_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListDatasourceRequest) GetNamespace() string {
@@ -254,7 +350,7 @@ type ListDatasourceResponse struct {
 
 func (x *ListDatasourceResponse) Reset() {
 	*x = ListDatasourceResponse{}
-	mi := &file_recording_data_proto_msgTypes[5]
+	mi := &file_recording_data_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -266,7 +362,7 @@ func (x *ListDatasourceResponse) String() string {
 func (*ListDatasourceResponse) ProtoMessage() {}
 
 func (x *ListDatasourceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[5]
+	mi := &file_recording_data_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -279,12 +375,64 @@ func (x *ListDatasourceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDatasourceResponse.ProtoReflect.Descriptor instead.
 func (*ListDatasourceResponse) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{5}
+	return file_recording_data_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListDatasourceResponse) GetEntries() []*DatasourceEntry {
 	if x != nil {
 		return x.Entries
+	}
+	return nil
+}
+
+type Datasource struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Entry         *DatasourceEntry       `protobuf:"bytes,2,opt,name=entry,proto3" json:"entry,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Datasource) Reset() {
+	*x = Datasource{}
+	mi := &file_recording_data_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Datasource) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Datasource) ProtoMessage() {}
+
+func (x *Datasource) ProtoReflect() protoreflect.Message {
+	mi := &file_recording_data_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Datasource.ProtoReflect.Descriptor instead.
+func (*Datasource) Descriptor() ([]byte, []int) {
+	return file_recording_data_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *Datasource) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *Datasource) GetEntry() *DatasourceEntry {
+	if x != nil {
+		return x.Entry
 	}
 	return nil
 }
@@ -299,7 +447,7 @@ type DatasourceEntry struct {
 
 func (x *DatasourceEntry) Reset() {
 	*x = DatasourceEntry{}
-	mi := &file_recording_data_proto_msgTypes[6]
+	mi := &file_recording_data_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -311,7 +459,7 @@ func (x *DatasourceEntry) String() string {
 func (*DatasourceEntry) ProtoMessage() {}
 
 func (x *DatasourceEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[6]
+	mi := &file_recording_data_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -324,7 +472,7 @@ func (x *DatasourceEntry) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DatasourceEntry.ProtoReflect.Descriptor instead.
 func (*DatasourceEntry) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{6}
+	return file_recording_data_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *DatasourceEntry) GetName() string {
@@ -351,7 +499,7 @@ type DatasourceRef struct {
 
 func (x *DatasourceRef) Reset() {
 	*x = DatasourceRef{}
-	mi := &file_recording_data_proto_msgTypes[7]
+	mi := &file_recording_data_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -363,7 +511,7 @@ func (x *DatasourceRef) String() string {
 func (*DatasourceRef) ProtoMessage() {}
 
 func (x *DatasourceRef) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[7]
+	mi := &file_recording_data_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -376,7 +524,7 @@ func (x *DatasourceRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DatasourceRef.ProtoReflect.Descriptor instead.
 func (*DatasourceRef) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{7}
+	return file_recording_data_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DatasourceRef) GetDatasource() string {
@@ -408,7 +556,7 @@ type ListSessionRecordingRequest struct {
 
 func (x *ListSessionRecordingRequest) Reset() {
 	*x = ListSessionRecordingRequest{}
-	mi := &file_recording_data_proto_msgTypes[8]
+	mi := &file_recording_data_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -420,7 +568,7 @@ func (x *ListSessionRecordingRequest) String() string {
 func (*ListSessionRecordingRequest) ProtoMessage() {}
 
 func (x *ListSessionRecordingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[8]
+	mi := &file_recording_data_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -433,7 +581,7 @@ func (x *ListSessionRecordingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSessionRecordingRequest.ProtoReflect.Descriptor instead.
 func (*ListSessionRecordingRequest) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{8}
+	return file_recording_data_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListSessionRecordingRequest) GetDatasourceRef() *DatasourceRef {
@@ -497,7 +645,7 @@ type GetSessionRecordingMetadataRequest struct {
 
 func (x *GetSessionRecordingMetadataRequest) Reset() {
 	*x = GetSessionRecordingMetadataRequest{}
-	mi := &file_recording_data_proto_msgTypes[9]
+	mi := &file_recording_data_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -509,7 +657,7 @@ func (x *GetSessionRecordingMetadataRequest) String() string {
 func (*GetSessionRecordingMetadataRequest) ProtoMessage() {}
 
 func (x *GetSessionRecordingMetadataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[9]
+	mi := &file_recording_data_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -522,7 +670,7 @@ func (x *GetSessionRecordingMetadataRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetSessionRecordingMetadataRequest.ProtoReflect.Descriptor instead.
 func (*GetSessionRecordingMetadataRequest) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{9}
+	return file_recording_data_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetSessionRecordingMetadataRequest) GetDatasourceRef() *DatasourceRef {
@@ -562,7 +710,7 @@ type GetSessionRecordingMetadataResponse struct {
 
 func (x *GetSessionRecordingMetadataResponse) Reset() {
 	*x = GetSessionRecordingMetadataResponse{}
-	mi := &file_recording_data_proto_msgTypes[10]
+	mi := &file_recording_data_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -574,7 +722,7 @@ func (x *GetSessionRecordingMetadataResponse) String() string {
 func (*GetSessionRecordingMetadataResponse) ProtoMessage() {}
 
 func (x *GetSessionRecordingMetadataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[10]
+	mi := &file_recording_data_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -587,7 +735,7 @@ func (x *GetSessionRecordingMetadataResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetSessionRecordingMetadataResponse.ProtoReflect.Descriptor instead.
 func (*GetSessionRecordingMetadataResponse) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{10}
+	return file_recording_data_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetSessionRecordingMetadataResponse) GetMd() *SessionRecordingMetadata {
@@ -607,7 +755,7 @@ type ListSessionRecordingResponse struct {
 
 func (x *ListSessionRecordingResponse) Reset() {
 	*x = ListSessionRecordingResponse{}
-	mi := &file_recording_data_proto_msgTypes[11]
+	mi := &file_recording_data_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -619,7 +767,7 @@ func (x *ListSessionRecordingResponse) String() string {
 func (*ListSessionRecordingResponse) ProtoMessage() {}
 
 func (x *ListSessionRecordingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[11]
+	mi := &file_recording_data_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -632,7 +780,7 @@ func (x *ListSessionRecordingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSessionRecordingResponse.ProtoReflect.Descriptor instead.
 func (*ListSessionRecordingResponse) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{11}
+	return file_recording_data_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListSessionRecordingResponse) GetTotalCount() uint64 {
@@ -659,7 +807,7 @@ type SessionRecordingMetadata struct {
 
 func (x *SessionRecordingMetadata) Reset() {
 	*x = SessionRecordingMetadata{}
-	mi := &file_recording_data_proto_msgTypes[12]
+	mi := &file_recording_data_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -671,7 +819,7 @@ func (x *SessionRecordingMetadata) String() string {
 func (*SessionRecordingMetadata) ProtoMessage() {}
 
 func (x *SessionRecordingMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[12]
+	mi := &file_recording_data_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -684,7 +832,7 @@ func (x *SessionRecordingMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SessionRecordingMetadata.ProtoReflect.Descriptor instead.
 func (*SessionRecordingMetadata) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{12}
+	return file_recording_data_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SessionRecordingMetadata) GetId() string {
@@ -711,7 +859,7 @@ type GetContentRequest struct {
 
 func (x *GetContentRequest) Reset() {
 	*x = GetContentRequest{}
-	mi := &file_recording_data_proto_msgTypes[13]
+	mi := &file_recording_data_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -723,7 +871,7 @@ func (x *GetContentRequest) String() string {
 func (*GetContentRequest) ProtoMessage() {}
 
 func (x *GetContentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[13]
+	mi := &file_recording_data_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -736,7 +884,7 @@ func (x *GetContentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetContentRequest.ProtoReflect.Descriptor instead.
 func (*GetContentRequest) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{13}
+	return file_recording_data_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetContentRequest) GetDatasourceRef() *DatasourceRef {
@@ -766,7 +914,7 @@ type GetContentResponse struct {
 
 func (x *GetContentResponse) Reset() {
 	*x = GetContentResponse{}
-	mi := &file_recording_data_proto_msgTypes[14]
+	mi := &file_recording_data_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -778,7 +926,7 @@ func (x *GetContentResponse) String() string {
 func (*GetContentResponse) ProtoMessage() {}
 
 func (x *GetContentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[14]
+	mi := &file_recording_data_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -791,7 +939,7 @@ func (x *GetContentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetContentResponse.ProtoReflect.Descriptor instead.
 func (*GetContentResponse) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{14}
+	return file_recording_data_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetContentResponse) GetResp() isGetContentResponse_Resp {
@@ -843,7 +991,7 @@ type StreamingRedirect struct {
 
 func (x *StreamingRedirect) Reset() {
 	*x = StreamingRedirect{}
-	mi := &file_recording_data_proto_msgTypes[15]
+	mi := &file_recording_data_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -855,7 +1003,7 @@ func (x *StreamingRedirect) String() string {
 func (*StreamingRedirect) ProtoMessage() {}
 
 func (x *StreamingRedirect) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[15]
+	mi := &file_recording_data_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -868,7 +1016,7 @@ func (x *StreamingRedirect) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamingRedirect.ProtoReflect.Descriptor instead.
 func (*StreamingRedirect) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{15}
+	return file_recording_data_proto_rawDescGZIP(), []int{18}
 }
 
 type SSHRecordingMetadata struct {
@@ -890,7 +1038,7 @@ type SSHRecordingMetadata struct {
 
 func (x *SSHRecordingMetadata) Reset() {
 	*x = SSHRecordingMetadata{}
-	mi := &file_recording_data_proto_msgTypes[16]
+	mi := &file_recording_data_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -902,7 +1050,7 @@ func (x *SSHRecordingMetadata) String() string {
 func (*SSHRecordingMetadata) ProtoMessage() {}
 
 func (x *SSHRecordingMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[16]
+	mi := &file_recording_data_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -915,7 +1063,7 @@ func (x *SSHRecordingMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SSHRecordingMetadata.ProtoReflect.Descriptor instead.
 func (*SSHRecordingMetadata) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{16}
+	return file_recording_data_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *SSHRecordingMetadata) GetRecordingName() string {
@@ -1009,7 +1157,7 @@ type SSHDownstreamPTYInfo struct {
 
 func (x *SSHDownstreamPTYInfo) Reset() {
 	*x = SSHDownstreamPTYInfo{}
-	mi := &file_recording_data_proto_msgTypes[17]
+	mi := &file_recording_data_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1021,7 +1169,7 @@ func (x *SSHDownstreamPTYInfo) String() string {
 func (*SSHDownstreamPTYInfo) ProtoMessage() {}
 
 func (x *SSHDownstreamPTYInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_recording_data_proto_msgTypes[17]
+	mi := &file_recording_data_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1034,7 +1182,7 @@ func (x *SSHDownstreamPTYInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SSHDownstreamPTYInfo.ProtoReflect.Descriptor instead.
 func (*SSHDownstreamPTYInfo) Descriptor() ([]byte, []int) {
-	return file_recording_data_proto_rawDescGZIP(), []int{17}
+	return file_recording_data_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *SSHDownstreamPTYInfo) GetTermEnv() string {
@@ -1083,11 +1231,20 @@ var File_recording_data_proto protoreflect.FileDescriptor
 
 const file_recording_data_proto_rawDesc = "" +
 	"\n" +
-	"\x14recording_data.proto\x12\trecording\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"|\n" +
-	"\x17CreateDatasourceRequest\x12:\n" +
-	"\x05entry\x18\x01 \x01(\v2\x1a.recording.DatasourceEntryB\b\xfaB\x05\x8a\x01\x02\x10\x01R\x05entry\x12%\n" +
-	"\tnamespace\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tnamespace\"\x1a\n" +
-	"\x18CreateDatasourceResponse\"]\n" +
+	"\x14recording_data.proto\x12\trecording\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17validate/validate.proto\"Z\n" +
+	"\x14GetDatasourceRequest\x12\x1b\n" +
+	"\x04name\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x04name\x12%\n" +
+	"\tnamespace\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tnamespace\"N\n" +
+	"\x15GetDatasourceResponse\x125\n" +
+	"\n" +
+	"datasource\x18\x01 \x01(\v2\x15.recording.DatasourceR\n" +
+	"datasource\"P\n" +
+	"\x17CreateDatasourceRequest\x125\n" +
+	"\n" +
+	"datasource\x18\x01 \x01(\v2\x15.recording.DatasourceR\n" +
+	"datasource\"K\n" +
+	"\x18CreateDatasourceResponse\x12/\n" +
+	"\acreated\x18\x01 \x01(\v2\x15.recording.DatasourceR\acreated\"]\n" +
 	"\x17DeleteDatasourceRequest\x12\x1b\n" +
 	"\x04name\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x04name\x12%\n" +
 	"\tnamespace\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tnamespace\"\x1a\n" +
@@ -1095,7 +1252,11 @@ const file_recording_data_proto_rawDesc = "" +
 	"\x15ListDatasourceRequest\x12%\n" +
 	"\tnamespace\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tnamespace\"N\n" +
 	"\x16ListDatasourceResponse\x124\n" +
-	"\aentries\x18\x01 \x03(\v2\x1a.recording.DatasourceEntryR\aentries\"U\n" +
+	"\aentries\x18\x01 \x03(\v2\x1a.recording.DatasourceEntryR\aentries\"o\n" +
+	"\n" +
+	"Datasource\x12%\n" +
+	"\tnamespace\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tnamespace\x12:\n" +
+	"\x05entry\x18\x02 \x01(\v2\x1a.recording.DatasourceEntryB\b\xfaB\x05\x8a\x01\x02\x10\x01R\x05entry\"U\n" +
 	"\x0fDatasourceEntry\x12\x1b\n" +
 	"\x04name\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x04name\x12%\n" +
 	"\tbucketURI\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tbucketURI\"_\n" +
@@ -1167,9 +1328,10 @@ const file_recording_data_proto_rawDesc = "" +
 	"heightRows\x12\x19\n" +
 	"\bwidth_px\x18\x04 \x01(\rR\awidthPx\x12\x1b\n" +
 	"\theight_px\x18\x05 \x01(\rR\bheightPx\x12\x14\n" +
-	"\x05modes\x18\x06 \x01(\fR\x05modes2\xde\x04\n" +
+	"\x05modes\x18\x06 \x01(\fR\x05modes2\xb2\x05\n" +
 	"\x17RecordingQuerierService\x12[\n" +
-	"\x10CreateDatasource\x12\".recording.CreateDatasourceRequest\x1a#.recording.CreateDatasourceResponse\x12[\n" +
+	"\x10CreateDatasource\x12\".recording.CreateDatasourceRequest\x1a#.recording.CreateDatasourceResponse\x12R\n" +
+	"\rGetDatasource\x12\x1f.recording.GetDatasourceRequest\x1a .recording.GetDatasourceResponse\x12[\n" +
 	"\x10DeleteDatasource\x12\".recording.DeleteDatasourceRequest\x1a#.recording.DeleteDatasourceResponse\x12V\n" +
 	"\x0fListDatasources\x12 .recording.ListDatasourceRequest\x1a!.recording.ListDatasourceResponse\x12g\n" +
 	"\x14ListSessionRecording\x12&.recording.ListSessionRecordingRequest\x1a'.recording.ListSessionRecordingResponse\x12|\n" +
@@ -1188,63 +1350,71 @@ func file_recording_data_proto_rawDescGZIP() []byte {
 	return file_recording_data_proto_rawDescData
 }
 
-var file_recording_data_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_recording_data_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_recording_data_proto_goTypes = []any{
-	(*CreateDatasourceRequest)(nil),             // 0: recording.CreateDatasourceRequest
-	(*CreateDatasourceResponse)(nil),            // 1: recording.CreateDatasourceResponse
-	(*DeleteDatasourceRequest)(nil),             // 2: recording.DeleteDatasourceRequest
-	(*DeleteDatasourceResponse)(nil),            // 3: recording.DeleteDatasourceResponse
-	(*ListDatasourceRequest)(nil),               // 4: recording.ListDatasourceRequest
-	(*ListDatasourceResponse)(nil),              // 5: recording.ListDatasourceResponse
-	(*DatasourceEntry)(nil),                     // 6: recording.DatasourceEntry
-	(*DatasourceRef)(nil),                       // 7: recording.DatasourceRef
-	(*ListSessionRecordingRequest)(nil),         // 8: recording.ListSessionRecordingRequest
-	(*GetSessionRecordingMetadataRequest)(nil),  // 9: recording.GetSessionRecordingMetadataRequest
-	(*GetSessionRecordingMetadataResponse)(nil), // 10: recording.GetSessionRecordingMetadataResponse
-	(*ListSessionRecordingResponse)(nil),        // 11: recording.ListSessionRecordingResponse
-	(*SessionRecordingMetadata)(nil),            // 12: recording.SessionRecordingMetadata
-	(*GetContentRequest)(nil),                   // 13: recording.GetContentRequest
-	(*GetContentResponse)(nil),                  // 14: recording.GetContentResponse
-	(*StreamingRedirect)(nil),                   // 15: recording.StreamingRedirect
-	(*SSHRecordingMetadata)(nil),                // 16: recording.SSHRecordingMetadata
-	(*SSHDownstreamPTYInfo)(nil),                // 17: recording.SSHDownstreamPTYInfo
-	nil,                                         // 18: recording.SSHRecordingMetadata.MetadataEntry
-	(*structpb.Struct)(nil),                     // 19: google.protobuf.Struct
-	(*anypb.Any)(nil),                           // 20: google.protobuf.Any
-	(*timestamppb.Timestamp)(nil),               // 21: google.protobuf.Timestamp
+	(*GetDatasourceRequest)(nil),                // 0: recording.GetDatasourceRequest
+	(*GetDatasourceResponse)(nil),               // 1: recording.GetDatasourceResponse
+	(*CreateDatasourceRequest)(nil),             // 2: recording.CreateDatasourceRequest
+	(*CreateDatasourceResponse)(nil),            // 3: recording.CreateDatasourceResponse
+	(*DeleteDatasourceRequest)(nil),             // 4: recording.DeleteDatasourceRequest
+	(*DeleteDatasourceResponse)(nil),            // 5: recording.DeleteDatasourceResponse
+	(*ListDatasourceRequest)(nil),               // 6: recording.ListDatasourceRequest
+	(*ListDatasourceResponse)(nil),              // 7: recording.ListDatasourceResponse
+	(*Datasource)(nil),                          // 8: recording.Datasource
+	(*DatasourceEntry)(nil),                     // 9: recording.DatasourceEntry
+	(*DatasourceRef)(nil),                       // 10: recording.DatasourceRef
+	(*ListSessionRecordingRequest)(nil),         // 11: recording.ListSessionRecordingRequest
+	(*GetSessionRecordingMetadataRequest)(nil),  // 12: recording.GetSessionRecordingMetadataRequest
+	(*GetSessionRecordingMetadataResponse)(nil), // 13: recording.GetSessionRecordingMetadataResponse
+	(*ListSessionRecordingResponse)(nil),        // 14: recording.ListSessionRecordingResponse
+	(*SessionRecordingMetadata)(nil),            // 15: recording.SessionRecordingMetadata
+	(*GetContentRequest)(nil),                   // 16: recording.GetContentRequest
+	(*GetContentResponse)(nil),                  // 17: recording.GetContentResponse
+	(*StreamingRedirect)(nil),                   // 18: recording.StreamingRedirect
+	(*SSHRecordingMetadata)(nil),                // 19: recording.SSHRecordingMetadata
+	(*SSHDownstreamPTYInfo)(nil),                // 20: recording.SSHDownstreamPTYInfo
+	nil,                                         // 21: recording.SSHRecordingMetadata.MetadataEntry
+	(*structpb.Struct)(nil),                     // 22: google.protobuf.Struct
+	(*anypb.Any)(nil),                           // 23: google.protobuf.Any
+	(*timestamppb.Timestamp)(nil),               // 24: google.protobuf.Timestamp
 }
 var file_recording_data_proto_depIdxs = []int32{
-	6,  // 0: recording.CreateDatasourceRequest.entry:type_name -> recording.DatasourceEntry
-	6,  // 1: recording.ListDatasourceResponse.entries:type_name -> recording.DatasourceEntry
-	7,  // 2: recording.ListSessionRecordingRequest.datasource_ref:type_name -> recording.DatasourceRef
-	19, // 3: recording.ListSessionRecordingRequest.filter:type_name -> google.protobuf.Struct
-	7,  // 4: recording.GetSessionRecordingMetadataRequest.datasource_ref:type_name -> recording.DatasourceRef
-	12, // 5: recording.GetSessionRecordingMetadataResponse.md:type_name -> recording.SessionRecordingMetadata
-	12, // 6: recording.ListSessionRecordingResponse.items:type_name -> recording.SessionRecordingMetadata
-	20, // 7: recording.SessionRecordingMetadata.md:type_name -> google.protobuf.Any
-	7,  // 8: recording.GetContentRequest.datasource_ref:type_name -> recording.DatasourceRef
-	15, // 9: recording.GetContentResponse.redirect:type_name -> recording.StreamingRedirect
-	21, // 10: recording.SSHRecordingMetadata.start_time:type_name -> google.protobuf.Timestamp
-	21, // 11: recording.SSHRecordingMetadata.end_time:type_name -> google.protobuf.Timestamp
-	17, // 12: recording.SSHRecordingMetadata.pty_info:type_name -> recording.SSHDownstreamPTYInfo
-	18, // 13: recording.SSHRecordingMetadata.metadata:type_name -> recording.SSHRecordingMetadata.MetadataEntry
-	0,  // 14: recording.RecordingQuerierService.CreateDatasource:input_type -> recording.CreateDatasourceRequest
-	2,  // 15: recording.RecordingQuerierService.DeleteDatasource:input_type -> recording.DeleteDatasourceRequest
-	4,  // 16: recording.RecordingQuerierService.ListDatasources:input_type -> recording.ListDatasourceRequest
-	8,  // 17: recording.RecordingQuerierService.ListSessionRecording:input_type -> recording.ListSessionRecordingRequest
-	9,  // 18: recording.RecordingQuerierService.GetSessionRecordingMetadata:input_type -> recording.GetSessionRecordingMetadataRequest
-	13, // 19: recording.RecordingQuerierService.GetContents:input_type -> recording.GetContentRequest
-	1,  // 20: recording.RecordingQuerierService.CreateDatasource:output_type -> recording.CreateDatasourceResponse
-	3,  // 21: recording.RecordingQuerierService.DeleteDatasource:output_type -> recording.DeleteDatasourceResponse
-	5,  // 22: recording.RecordingQuerierService.ListDatasources:output_type -> recording.ListDatasourceResponse
-	11, // 23: recording.RecordingQuerierService.ListSessionRecording:output_type -> recording.ListSessionRecordingResponse
-	10, // 24: recording.RecordingQuerierService.GetSessionRecordingMetadata:output_type -> recording.GetSessionRecordingMetadataResponse
-	14, // 25: recording.RecordingQuerierService.GetContents:output_type -> recording.GetContentResponse
-	20, // [20:26] is the sub-list for method output_type
-	14, // [14:20] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	8,  // 0: recording.GetDatasourceResponse.datasource:type_name -> recording.Datasource
+	8,  // 1: recording.CreateDatasourceRequest.datasource:type_name -> recording.Datasource
+	8,  // 2: recording.CreateDatasourceResponse.created:type_name -> recording.Datasource
+	9,  // 3: recording.ListDatasourceResponse.entries:type_name -> recording.DatasourceEntry
+	9,  // 4: recording.Datasource.entry:type_name -> recording.DatasourceEntry
+	10, // 5: recording.ListSessionRecordingRequest.datasource_ref:type_name -> recording.DatasourceRef
+	22, // 6: recording.ListSessionRecordingRequest.filter:type_name -> google.protobuf.Struct
+	10, // 7: recording.GetSessionRecordingMetadataRequest.datasource_ref:type_name -> recording.DatasourceRef
+	15, // 8: recording.GetSessionRecordingMetadataResponse.md:type_name -> recording.SessionRecordingMetadata
+	15, // 9: recording.ListSessionRecordingResponse.items:type_name -> recording.SessionRecordingMetadata
+	23, // 10: recording.SessionRecordingMetadata.md:type_name -> google.protobuf.Any
+	10, // 11: recording.GetContentRequest.datasource_ref:type_name -> recording.DatasourceRef
+	18, // 12: recording.GetContentResponse.redirect:type_name -> recording.StreamingRedirect
+	24, // 13: recording.SSHRecordingMetadata.start_time:type_name -> google.protobuf.Timestamp
+	24, // 14: recording.SSHRecordingMetadata.end_time:type_name -> google.protobuf.Timestamp
+	20, // 15: recording.SSHRecordingMetadata.pty_info:type_name -> recording.SSHDownstreamPTYInfo
+	21, // 16: recording.SSHRecordingMetadata.metadata:type_name -> recording.SSHRecordingMetadata.MetadataEntry
+	2,  // 17: recording.RecordingQuerierService.CreateDatasource:input_type -> recording.CreateDatasourceRequest
+	0,  // 18: recording.RecordingQuerierService.GetDatasource:input_type -> recording.GetDatasourceRequest
+	4,  // 19: recording.RecordingQuerierService.DeleteDatasource:input_type -> recording.DeleteDatasourceRequest
+	6,  // 20: recording.RecordingQuerierService.ListDatasources:input_type -> recording.ListDatasourceRequest
+	11, // 21: recording.RecordingQuerierService.ListSessionRecording:input_type -> recording.ListSessionRecordingRequest
+	12, // 22: recording.RecordingQuerierService.GetSessionRecordingMetadata:input_type -> recording.GetSessionRecordingMetadataRequest
+	16, // 23: recording.RecordingQuerierService.GetContents:input_type -> recording.GetContentRequest
+	3,  // 24: recording.RecordingQuerierService.CreateDatasource:output_type -> recording.CreateDatasourceResponse
+	1,  // 25: recording.RecordingQuerierService.GetDatasource:output_type -> recording.GetDatasourceResponse
+	5,  // 26: recording.RecordingQuerierService.DeleteDatasource:output_type -> recording.DeleteDatasourceResponse
+	7,  // 27: recording.RecordingQuerierService.ListDatasources:output_type -> recording.ListDatasourceResponse
+	14, // 28: recording.RecordingQuerierService.ListSessionRecording:output_type -> recording.ListSessionRecordingResponse
+	13, // 29: recording.RecordingQuerierService.GetSessionRecordingMetadata:output_type -> recording.GetSessionRecordingMetadataResponse
+	17, // 30: recording.RecordingQuerierService.GetContents:output_type -> recording.GetContentResponse
+	24, // [24:31] is the sub-list for method output_type
+	17, // [17:24] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_recording_data_proto_init() }
@@ -1252,8 +1422,8 @@ func file_recording_data_proto_init() {
 	if File_recording_data_proto != nil {
 		return
 	}
-	file_recording_data_proto_msgTypes[8].OneofWrappers = []any{}
-	file_recording_data_proto_msgTypes[14].OneofWrappers = []any{
+	file_recording_data_proto_msgTypes[11].OneofWrappers = []any{}
+	file_recording_data_proto_msgTypes[17].OneofWrappers = []any{
 		(*GetContentResponse_Data)(nil),
 		(*GetContentResponse_Redirect)(nil),
 	}
@@ -1263,7 +1433,7 @@ func file_recording_data_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_recording_data_proto_rawDesc), len(file_recording_data_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   19,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

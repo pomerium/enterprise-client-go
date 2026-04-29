@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	RecordingQuerierService_CreateDatasource_FullMethodName            = "/recording.RecordingQuerierService/CreateDatasource"
+	RecordingQuerierService_GetDatasource_FullMethodName               = "/recording.RecordingQuerierService/GetDatasource"
 	RecordingQuerierService_DeleteDatasource_FullMethodName            = "/recording.RecordingQuerierService/DeleteDatasource"
 	RecordingQuerierService_ListDatasources_FullMethodName             = "/recording.RecordingQuerierService/ListDatasources"
 	RecordingQuerierService_ListSessionRecording_FullMethodName        = "/recording.RecordingQuerierService/ListSessionRecording"
@@ -32,6 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RecordingQuerierServiceClient interface {
 	CreateDatasource(ctx context.Context, in *CreateDatasourceRequest, opts ...grpc.CallOption) (*CreateDatasourceResponse, error)
+	GetDatasource(ctx context.Context, in *GetDatasourceRequest, opts ...grpc.CallOption) (*GetDatasourceResponse, error)
 	DeleteDatasource(ctx context.Context, in *DeleteDatasourceRequest, opts ...grpc.CallOption) (*DeleteDatasourceResponse, error)
 	ListDatasources(ctx context.Context, in *ListDatasourceRequest, opts ...grpc.CallOption) (*ListDatasourceResponse, error)
 	ListSessionRecording(ctx context.Context, in *ListSessionRecordingRequest, opts ...grpc.CallOption) (*ListSessionRecordingResponse, error)
@@ -51,6 +53,16 @@ func (c *recordingQuerierServiceClient) CreateDatasource(ctx context.Context, in
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateDatasourceResponse)
 	err := c.cc.Invoke(ctx, RecordingQuerierService_CreateDatasource_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *recordingQuerierServiceClient) GetDatasource(ctx context.Context, in *GetDatasourceRequest, opts ...grpc.CallOption) (*GetDatasourceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDatasourceResponse)
+	err := c.cc.Invoke(ctx, RecordingQuerierService_GetDatasource_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,6 +124,7 @@ func (c *recordingQuerierServiceClient) GetContents(ctx context.Context, in *Get
 // for forward compatibility.
 type RecordingQuerierServiceServer interface {
 	CreateDatasource(context.Context, *CreateDatasourceRequest) (*CreateDatasourceResponse, error)
+	GetDatasource(context.Context, *GetDatasourceRequest) (*GetDatasourceResponse, error)
 	DeleteDatasource(context.Context, *DeleteDatasourceRequest) (*DeleteDatasourceResponse, error)
 	ListDatasources(context.Context, *ListDatasourceRequest) (*ListDatasourceResponse, error)
 	ListSessionRecording(context.Context, *ListSessionRecordingRequest) (*ListSessionRecordingResponse, error)
@@ -128,6 +141,9 @@ type UnimplementedRecordingQuerierServiceServer struct{}
 
 func (UnimplementedRecordingQuerierServiceServer) CreateDatasource(context.Context, *CreateDatasourceRequest) (*CreateDatasourceResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateDatasource not implemented")
+}
+func (UnimplementedRecordingQuerierServiceServer) GetDatasource(context.Context, *GetDatasourceRequest) (*GetDatasourceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetDatasource not implemented")
 }
 func (UnimplementedRecordingQuerierServiceServer) DeleteDatasource(context.Context, *DeleteDatasourceRequest) (*DeleteDatasourceResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteDatasource not implemented")
@@ -178,6 +194,24 @@ func _RecordingQuerierService_CreateDatasource_Handler(srv interface{}, ctx cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RecordingQuerierServiceServer).CreateDatasource(ctx, req.(*CreateDatasourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RecordingQuerierService_GetDatasource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDatasourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RecordingQuerierServiceServer).GetDatasource(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RecordingQuerierService_GetDatasource_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RecordingQuerierServiceServer).GetDatasource(ctx, req.(*GetDatasourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -282,6 +316,10 @@ var RecordingQuerierService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateDatasource",
 			Handler:    _RecordingQuerierService_CreateDatasource_Handler,
+		},
+		{
+			MethodName: "GetDatasource",
+			Handler:    _RecordingQuerierService_GetDatasource_Handler,
 		},
 		{
 			MethodName: "DeleteDatasource",
