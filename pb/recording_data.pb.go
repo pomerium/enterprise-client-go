@@ -550,6 +550,7 @@ type ListSessionRecordingRequest struct {
 	Offset        *uint64                `protobuf:"varint,5,opt,name=offset,proto3,oneof" json:"offset,omitempty"`
 	Filter        *structpb.Struct       `protobuf:"bytes,6,opt,name=filter,proto3,oneof" json:"filter,omitempty"`
 	OrderBy       *string                `protobuf:"bytes,7,opt,name=order_by,json=orderBy,proto3,oneof" json:"order_by,omitempty"`
+	BypassCache   bool                   `protobuf:"varint,8,opt,name=bypass_cache,json=bypassCache,proto3" json:"bypass_cache,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -631,6 +632,13 @@ func (x *ListSessionRecordingRequest) GetOrderBy() string {
 		return *x.OrderBy
 	}
 	return ""
+}
+
+func (x *ListSessionRecordingRequest) GetBypassCache() bool {
+	if x != nil {
+		return x.BypassCache
+	}
+	return false
 }
 
 type GetSessionRecordingMetadataRequest struct {
@@ -1264,7 +1272,7 @@ const file_recording_data_proto_rawDesc = "" +
 	"\n" +
 	"datasource\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\n" +
 	"datasource\x12%\n" +
-	"\tnamespace\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tnamespace\"\xd0\x02\n" +
+	"\tnamespace\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tnamespace\"\xf3\x02\n" +
 	"\x1bListSessionRecordingRequest\x12?\n" +
 	"\x0edatasource_ref\x18\x01 \x01(\v2\x18.recording.DatasourceRefR\rdatasourceRef\x12\x1d\n" +
 	"\n" +
@@ -1273,7 +1281,8 @@ const file_recording_data_proto_rawDesc = "" +
 	"\x05limit\x18\x04 \x01(\x04H\x00R\x05limit\x88\x01\x01\x12\x1b\n" +
 	"\x06offset\x18\x05 \x01(\x04H\x01R\x06offset\x88\x01\x01\x124\n" +
 	"\x06filter\x18\x06 \x01(\v2\x17.google.protobuf.StructH\x02R\x06filter\x88\x01\x01\x12\x1e\n" +
-	"\border_by\x18\a \x01(\tH\x03R\aorderBy\x88\x01\x01B\b\n" +
+	"\border_by\x18\a \x01(\tH\x03R\aorderBy\x88\x01\x01\x12!\n" +
+	"\fbypass_cache\x18\b \x01(\bR\vbypassCacheB\b\n" +
 	"\x06_limitB\t\n" +
 	"\a_offsetB\t\n" +
 	"\a_filterB\v\n" +
