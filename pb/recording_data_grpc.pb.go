@@ -25,7 +25,6 @@ const (
 	RecordingQuerierService_ListDatasources_FullMethodName             = "/recording.RecordingQuerierService/ListDatasources"
 	RecordingQuerierService_ListSessionRecording_FullMethodName        = "/recording.RecordingQuerierService/ListSessionRecording"
 	RecordingQuerierService_GetSessionRecordingMetadata_FullMethodName = "/recording.RecordingQuerierService/GetSessionRecordingMetadata"
-	RecordingQuerierService_GetContents_FullMethodName                 = "/recording.RecordingQuerierService/GetContents"
 )
 
 // RecordingQuerierServiceClient is the client API for RecordingQuerierService service.
@@ -38,7 +37,6 @@ type RecordingQuerierServiceClient interface {
 	ListDatasources(ctx context.Context, in *ListDatasourceRequest, opts ...grpc.CallOption) (*ListDatasourceResponse, error)
 	ListSessionRecording(ctx context.Context, in *ListSessionRecordingRequest, opts ...grpc.CallOption) (*ListSessionRecordingResponse, error)
 	GetSessionRecordingMetadata(ctx context.Context, in *GetSessionRecordingMetadataRequest, opts ...grpc.CallOption) (*GetSessionRecordingMetadataResponse, error)
-	GetContents(ctx context.Context, in *GetContentRequest, opts ...grpc.CallOption) (*GetContentResponse, error)
 }
 
 type recordingQuerierServiceClient struct {
@@ -109,16 +107,6 @@ func (c *recordingQuerierServiceClient) GetSessionRecordingMetadata(ctx context.
 	return out, nil
 }
 
-func (c *recordingQuerierServiceClient) GetContents(ctx context.Context, in *GetContentRequest, opts ...grpc.CallOption) (*GetContentResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetContentResponse)
-	err := c.cc.Invoke(ctx, RecordingQuerierService_GetContents_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // RecordingQuerierServiceServer is the server API for RecordingQuerierService service.
 // All implementations should embed UnimplementedRecordingQuerierServiceServer
 // for forward compatibility.
@@ -129,7 +117,6 @@ type RecordingQuerierServiceServer interface {
 	ListDatasources(context.Context, *ListDatasourceRequest) (*ListDatasourceResponse, error)
 	ListSessionRecording(context.Context, *ListSessionRecordingRequest) (*ListSessionRecordingResponse, error)
 	GetSessionRecordingMetadata(context.Context, *GetSessionRecordingMetadataRequest) (*GetSessionRecordingMetadataResponse, error)
-	GetContents(context.Context, *GetContentRequest) (*GetContentResponse, error)
 }
 
 // UnimplementedRecordingQuerierServiceServer should be embedded to have
@@ -156,9 +143,6 @@ func (UnimplementedRecordingQuerierServiceServer) ListSessionRecording(context.C
 }
 func (UnimplementedRecordingQuerierServiceServer) GetSessionRecordingMetadata(context.Context, *GetSessionRecordingMetadataRequest) (*GetSessionRecordingMetadataResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetSessionRecordingMetadata not implemented")
-}
-func (UnimplementedRecordingQuerierServiceServer) GetContents(context.Context, *GetContentRequest) (*GetContentResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetContents not implemented")
 }
 func (UnimplementedRecordingQuerierServiceServer) testEmbeddedByValue() {}
 
@@ -288,24 +272,6 @@ func _RecordingQuerierService_GetSessionRecordingMetadata_Handler(srv interface{
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RecordingQuerierService_GetContents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetContentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RecordingQuerierServiceServer).GetContents(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RecordingQuerierService_GetContents_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RecordingQuerierServiceServer).GetContents(ctx, req.(*GetContentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // RecordingQuerierService_ServiceDesc is the grpc.ServiceDesc for RecordingQuerierService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -336,10 +302,6 @@ var RecordingQuerierService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSessionRecordingMetadata",
 			Handler:    _RecordingQuerierService_GetSessionRecordingMetadata_Handler,
-		},
-		{
-			MethodName: "GetContents",
-			Handler:    _RecordingQuerierService_GetContents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -243,6 +243,8 @@ type Settings struct {
 	BlobStorage                                       *BlobStorageSettings      `protobuf:"bytes,124,opt,name=blob_storage,json=blobStorage,proto3,oneof" json:"blob_storage,omitempty"`
 	AutoApplyChangesets                               *bool                     `protobuf:"varint,125,opt,name=auto_apply_changesets,json=autoApplyChangesets,proto3,oneof" json:"auto_apply_changesets,omitempty"`
 	AllowUpgrades                                     *Settings_StringList      `protobuf:"bytes,127,opt,name=allow_upgrades,json=allowUpgrades,proto3,oneof" json:"allow_upgrades,omitempty"`
+	EnvoyDynamicExtensions                            *Settings_StringList      `protobuf:"bytes,128,opt,name=envoy_dynamic_extensions,json=envoyDynamicExtensions,proto3,oneof" json:"envoy_dynamic_extensions,omitempty"`
+	SessionRecordingConcurrency                       *uint32                   `protobuf:"varint,129,opt,name=session_recording_concurrency,json=sessionRecordingConcurrency,proto3,oneof" json:"session_recording_concurrency,omitempty"`
 	unknownFields                                     protoimpl.UnknownFields
 	sizeCache                                         protoimpl.SizeCache
 }
@@ -1026,6 +1028,20 @@ func (x *Settings) GetAllowUpgrades() *Settings_StringList {
 	return nil
 }
 
+func (x *Settings) GetEnvoyDynamicExtensions() *Settings_StringList {
+	if x != nil {
+		return x.EnvoyDynamicExtensions
+	}
+	return nil
+}
+
+func (x *Settings) GetSessionRecordingConcurrency() uint32 {
+	if x != nil && x.SessionRecordingConcurrency != nil {
+		return *x.SessionRecordingConcurrency
+	}
+	return 0
+}
+
 type BlobStorageSettings struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	BucketUri     *string                `protobuf:"bytes,1,opt,name=bucket_uri,json=bucketUri,proto3,oneof" json:"bucket_uri,omitempty"`
@@ -1445,7 +1461,7 @@ const file_settings_proto_rawDesc = "" +
 	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"n\n" +
 	"\x0fConsoleSettings\x124\n" +
 	"\x16enable_feedback_widget\x18\x01 \x01(\bR\x14enableFeedbackWidget\x12%\n" +
-	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\x95J\n" +
+	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\x87L\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -1561,7 +1577,9 @@ const file_settings_proto_rawDesc = "" +
 	"\x19session_recording_enabled\x18{ \x01(\bH[R\x17sessionRecordingEnabled\x88\x01\x01\x12O\n" +
 	"\fblob_storage\x18| \x01(\v2'.pomerium.dashboard.BlobStorageSettingsH\\R\vblobStorage\x88\x01\x01\x127\n" +
 	"\x15auto_apply_changesets\x18} \x01(\bH]R\x13autoApplyChangesets\x88\x01\x01\x12S\n" +
-	"\x0eallow_upgrades\x18\x7f \x01(\v2'.pomerium.dashboard.Settings.StringListH^R\rallowUpgrades\x88\x01\x01\x1ai\n" +
+	"\x0eallow_upgrades\x18\x7f \x01(\v2'.pomerium.dashboard.Settings.StringListH^R\rallowUpgrades\x88\x01\x01\x12g\n" +
+	"\x18envoy_dynamic_extensions\x18\x80\x01 \x01(\v2'.pomerium.dashboard.Settings.StringListH_R\x16envoyDynamicExtensions\x88\x01\x01\x12H\n" +
+	"\x1dsession_recording_concurrency\x18\x81\x01 \x01(\rH`R\x1bsessionRecordingConcurrency\x88\x01\x01\x1ai\n" +
 	"\vCertificate\x12\x1d\n" +
 	"\n" +
 	"cert_bytes\x18\x03 \x01(\fR\tcertBytes\x12\x1b\n" +
@@ -1676,7 +1694,9 @@ const file_settings_proto_rawDesc = "" +
 	"\x1a_session_recording_enabledB\x0f\n" +
 	"\r_blob_storageB\x18\n" +
 	"\x16_auto_apply_changesetsB\x11\n" +
-	"\x0f_allow_upgradesJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
+	"\x0f_allow_upgradesB\x1b\n" +
+	"\x19_envoy_dynamic_extensionsB \n" +
+	"\x1e_session_recording_concurrencyJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
 	"\x13BlobStorageSettings\x12\"\n" +
 	"\n" +
 	"bucket_uri\x18\x01 \x01(\tH\x00R\tbucketUri\x88\x01\x01\x12*\n" +
@@ -1782,23 +1802,24 @@ var file_settings_proto_depIdxs = []int32{
 	11, // 32: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
 	3,  // 33: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
 	11, // 34: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
-	1,  // 35: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
-	2,  // 36: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	2,  // 37: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
-	2,  // 38: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	6,  // 39: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	8,  // 40: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
-	6,  // 41: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	4,  // 42: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
-	7,  // 43: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	9,  // 44: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
-	7,  // 45: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	5,  // 46: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
-	43, // [43:47] is the sub-list for method output_type
-	39, // [39:43] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	11, // 35: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
+	1,  // 36: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
+	2,  // 37: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	2,  // 38: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
+	2,  // 39: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	6,  // 40: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	8,  // 41: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
+	6,  // 42: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	4,  // 43: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
+	7,  // 44: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	9,  // 45: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
+	7,  // 46: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	5,  // 47: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
+	44, // [44:48] is the sub-list for method output_type
+	40, // [40:44] is the sub-list for method input_type
+	40, // [40:40] is the sub-list for extension type_name
+	40, // [40:40] is the sub-list for extension extendee
+	0,  // [0:40] is the sub-list for field type_name
 }
 
 func init() { file_settings_proto_init() }

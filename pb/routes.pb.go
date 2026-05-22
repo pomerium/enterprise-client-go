@@ -922,6 +922,7 @@ type Route struct {
 	HealthyPanicThreshold          *int32                    `protobuf:"varint,75,opt,name=healthy_panic_threshold,json=healthyPanicThreshold,proto3,oneof" json:"healthy_panic_threshold,omitempty"`
 	UpstreamTunnel                 *UpstreamTunnel           `protobuf:"bytes,76,opt,name=upstream_tunnel,json=upstreamTunnel,proto3,oneof" json:"upstream_tunnel,omitempty"`
 	AllowUpgrades                  *Route_StringList         `protobuf:"bytes,77,opt,name=allow_upgrades,json=allowUpgrades,proto3,oneof" json:"allow_upgrades,omitempty"`
+	SessionRecording               *SessionRecording         `protobuf:"bytes,78,opt,name=session_recording,json=sessionRecording,proto3" json:"session_recording,omitempty"`
 	unknownFields                  protoimpl.UnknownFields
 	sizeCache                      protoimpl.SizeCache
 }
@@ -1411,6 +1412,57 @@ func (x *Route) GetAllowUpgrades() *Route_StringList {
 	return nil
 }
 
+func (x *Route) GetSessionRecording() *SessionRecording {
+	if x != nil {
+		return x.SessionRecording
+	}
+	return nil
+}
+
+type SessionRecording struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Enabled       *bool                  `protobuf:"varint,1,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SessionRecording) Reset() {
+	*x = SessionRecording{}
+	mi := &file_routes_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SessionRecording) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SessionRecording) ProtoMessage() {}
+
+func (x *SessionRecording) ProtoReflect() protoreflect.Message {
+	mi := &file_routes_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SessionRecording.ProtoReflect.Descriptor instead.
+func (*SessionRecording) Descriptor() ([]byte, []int) {
+	return file_routes_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *SessionRecording) GetEnabled() bool {
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
+	}
+	return false
+}
+
 type UpstreamTunnel struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SshPolicyId   *string                `protobuf:"bytes,1,opt,name=ssh_policy_id,json=sshPolicyId,proto3,oneof" json:"ssh_policy_id,omitempty"`
@@ -1420,7 +1472,7 @@ type UpstreamTunnel struct {
 
 func (x *UpstreamTunnel) Reset() {
 	*x = UpstreamTunnel{}
-	mi := &file_routes_proto_msgTypes[10]
+	mi := &file_routes_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1432,7 +1484,7 @@ func (x *UpstreamTunnel) String() string {
 func (*UpstreamTunnel) ProtoMessage() {}
 
 func (x *UpstreamTunnel) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[10]
+	mi := &file_routes_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1445,7 +1497,7 @@ func (x *UpstreamTunnel) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpstreamTunnel.ProtoReflect.Descriptor instead.
 func (*UpstreamTunnel) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{10}
+	return file_routes_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *UpstreamTunnel) GetSshPolicyId() string {
@@ -1467,7 +1519,7 @@ type RouteWithPolicies struct {
 
 func (x *RouteWithPolicies) Reset() {
 	*x = RouteWithPolicies{}
-	mi := &file_routes_proto_msgTypes[11]
+	mi := &file_routes_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1479,7 +1531,7 @@ func (x *RouteWithPolicies) String() string {
 func (*RouteWithPolicies) ProtoMessage() {}
 
 func (x *RouteWithPolicies) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[11]
+	mi := &file_routes_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1492,7 +1544,7 @@ func (x *RouteWithPolicies) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RouteWithPolicies.ProtoReflect.Descriptor instead.
 func (*RouteWithPolicies) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{11}
+	return file_routes_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *RouteWithPolicies) GetRoute() *Route {
@@ -1518,7 +1570,7 @@ type DeleteRouteRequest struct {
 
 func (x *DeleteRouteRequest) Reset() {
 	*x = DeleteRouteRequest{}
-	mi := &file_routes_proto_msgTypes[12]
+	mi := &file_routes_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1530,7 +1582,7 @@ func (x *DeleteRouteRequest) String() string {
 func (*DeleteRouteRequest) ProtoMessage() {}
 
 func (x *DeleteRouteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[12]
+	mi := &file_routes_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1543,7 +1595,7 @@ func (x *DeleteRouteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRouteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRouteRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{12}
+	return file_routes_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *DeleteRouteRequest) GetId() string {
@@ -1561,7 +1613,7 @@ type DeleteRouteResponse struct {
 
 func (x *DeleteRouteResponse) Reset() {
 	*x = DeleteRouteResponse{}
-	mi := &file_routes_proto_msgTypes[13]
+	mi := &file_routes_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1573,7 +1625,7 @@ func (x *DeleteRouteResponse) String() string {
 func (*DeleteRouteResponse) ProtoMessage() {}
 
 func (x *DeleteRouteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[13]
+	mi := &file_routes_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1586,7 +1638,7 @@ func (x *DeleteRouteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRouteResponse.ProtoReflect.Descriptor instead.
 func (*DeleteRouteResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{13}
+	return file_routes_proto_rawDescGZIP(), []int{14}
 }
 
 type DeleteRoutesRequest struct {
@@ -1598,7 +1650,7 @@ type DeleteRoutesRequest struct {
 
 func (x *DeleteRoutesRequest) Reset() {
 	*x = DeleteRoutesRequest{}
-	mi := &file_routes_proto_msgTypes[14]
+	mi := &file_routes_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1610,7 +1662,7 @@ func (x *DeleteRoutesRequest) String() string {
 func (*DeleteRoutesRequest) ProtoMessage() {}
 
 func (x *DeleteRoutesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[14]
+	mi := &file_routes_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1623,7 +1675,7 @@ func (x *DeleteRoutesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRoutesRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRoutesRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{14}
+	return file_routes_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *DeleteRoutesRequest) GetIds() []string {
@@ -1641,7 +1693,7 @@ type DeleteRoutesResponse struct {
 
 func (x *DeleteRoutesResponse) Reset() {
 	*x = DeleteRoutesResponse{}
-	mi := &file_routes_proto_msgTypes[15]
+	mi := &file_routes_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1653,7 +1705,7 @@ func (x *DeleteRoutesResponse) String() string {
 func (*DeleteRoutesResponse) ProtoMessage() {}
 
 func (x *DeleteRoutesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[15]
+	mi := &file_routes_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1666,7 +1718,7 @@ func (x *DeleteRoutesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRoutesResponse.ProtoReflect.Descriptor instead.
 func (*DeleteRoutesResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{15}
+	return file_routes_proto_rawDescGZIP(), []int{16}
 }
 
 type GetRouteRequest struct {
@@ -1678,7 +1730,7 @@ type GetRouteRequest struct {
 
 func (x *GetRouteRequest) Reset() {
 	*x = GetRouteRequest{}
-	mi := &file_routes_proto_msgTypes[16]
+	mi := &file_routes_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1690,7 +1742,7 @@ func (x *GetRouteRequest) String() string {
 func (*GetRouteRequest) ProtoMessage() {}
 
 func (x *GetRouteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[16]
+	mi := &file_routes_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1703,7 +1755,7 @@ func (x *GetRouteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRouteRequest.ProtoReflect.Descriptor instead.
 func (*GetRouteRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{16}
+	return file_routes_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetRouteRequest) GetId() string {
@@ -1722,7 +1774,7 @@ type GetRouteResponse struct {
 
 func (x *GetRouteResponse) Reset() {
 	*x = GetRouteResponse{}
-	mi := &file_routes_proto_msgTypes[17]
+	mi := &file_routes_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1734,7 +1786,7 @@ func (x *GetRouteResponse) String() string {
 func (*GetRouteResponse) ProtoMessage() {}
 
 func (x *GetRouteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[17]
+	mi := &file_routes_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1747,7 +1799,7 @@ func (x *GetRouteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRouteResponse.ProtoReflect.Descriptor instead.
 func (*GetRouteResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{17}
+	return file_routes_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetRouteResponse) GetRoute() *Route {
@@ -1777,7 +1829,7 @@ type ListRoutesRequest struct {
 
 func (x *ListRoutesRequest) Reset() {
 	*x = ListRoutesRequest{}
-	mi := &file_routes_proto_msgTypes[18]
+	mi := &file_routes_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1789,7 +1841,7 @@ func (x *ListRoutesRequest) String() string {
 func (*ListRoutesRequest) ProtoMessage() {}
 
 func (x *ListRoutesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[18]
+	mi := &file_routes_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1802,7 +1854,7 @@ func (x *ListRoutesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRoutesRequest.ProtoReflect.Descriptor instead.
 func (*ListRoutesRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{18}
+	return file_routes_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ListRoutesRequest) GetNamespace() string {
@@ -1858,7 +1910,7 @@ type ListRoutesResponse struct {
 
 func (x *ListRoutesResponse) Reset() {
 	*x = ListRoutesResponse{}
-	mi := &file_routes_proto_msgTypes[19]
+	mi := &file_routes_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1870,7 +1922,7 @@ func (x *ListRoutesResponse) String() string {
 func (*ListRoutesResponse) ProtoMessage() {}
 
 func (x *ListRoutesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[19]
+	mi := &file_routes_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1883,7 +1935,7 @@ func (x *ListRoutesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRoutesResponse.ProtoReflect.Descriptor instead.
 func (*ListRoutesResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{19}
+	return file_routes_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ListRoutesResponse) GetRoutes() []*Route {
@@ -1912,7 +1964,7 @@ type LoadRoutesRequest struct {
 
 func (x *LoadRoutesRequest) Reset() {
 	*x = LoadRoutesRequest{}
-	mi := &file_routes_proto_msgTypes[20]
+	mi := &file_routes_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1924,7 +1976,7 @@ func (x *LoadRoutesRequest) String() string {
 func (*LoadRoutesRequest) ProtoMessage() {}
 
 func (x *LoadRoutesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[20]
+	mi := &file_routes_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1937,7 +1989,7 @@ func (x *LoadRoutesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoadRoutesRequest.ProtoReflect.Descriptor instead.
 func (*LoadRoutesRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{20}
+	return file_routes_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *LoadRoutesRequest) GetName() string {
@@ -1965,7 +2017,7 @@ type LoadRoutesResponse struct {
 
 func (x *LoadRoutesResponse) Reset() {
 	*x = LoadRoutesResponse{}
-	mi := &file_routes_proto_msgTypes[21]
+	mi := &file_routes_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1977,7 +2029,7 @@ func (x *LoadRoutesResponse) String() string {
 func (*LoadRoutesResponse) ProtoMessage() {}
 
 func (x *LoadRoutesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[21]
+	mi := &file_routes_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1990,7 +2042,7 @@ func (x *LoadRoutesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoadRoutesResponse.ProtoReflect.Descriptor instead.
 func (*LoadRoutesResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{21}
+	return file_routes_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *LoadRoutesResponse) GetRoutes() []*RouteWithPolicies {
@@ -2009,7 +2061,7 @@ type SetRouteRequest struct {
 
 func (x *SetRouteRequest) Reset() {
 	*x = SetRouteRequest{}
-	mi := &file_routes_proto_msgTypes[22]
+	mi := &file_routes_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2021,7 +2073,7 @@ func (x *SetRouteRequest) String() string {
 func (*SetRouteRequest) ProtoMessage() {}
 
 func (x *SetRouteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[22]
+	mi := &file_routes_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2034,7 +2086,7 @@ func (x *SetRouteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRouteRequest.ProtoReflect.Descriptor instead.
 func (*SetRouteRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{22}
+	return file_routes_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *SetRouteRequest) GetRoute() *Route {
@@ -2053,7 +2105,7 @@ type SetRouteResponse struct {
 
 func (x *SetRouteResponse) Reset() {
 	*x = SetRouteResponse{}
-	mi := &file_routes_proto_msgTypes[23]
+	mi := &file_routes_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2065,7 +2117,7 @@ func (x *SetRouteResponse) String() string {
 func (*SetRouteResponse) ProtoMessage() {}
 
 func (x *SetRouteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[23]
+	mi := &file_routes_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2078,7 +2130,7 @@ func (x *SetRouteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRouteResponse.ProtoReflect.Descriptor instead.
 func (*SetRouteResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{23}
+	return file_routes_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *SetRouteResponse) GetRoute() *Route {
@@ -2097,7 +2149,7 @@ type SetRoutesRequest struct {
 
 func (x *SetRoutesRequest) Reset() {
 	*x = SetRoutesRequest{}
-	mi := &file_routes_proto_msgTypes[24]
+	mi := &file_routes_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2109,7 +2161,7 @@ func (x *SetRoutesRequest) String() string {
 func (*SetRoutesRequest) ProtoMessage() {}
 
 func (x *SetRoutesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[24]
+	mi := &file_routes_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2122,7 +2174,7 @@ func (x *SetRoutesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRoutesRequest.ProtoReflect.Descriptor instead.
 func (*SetRoutesRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{24}
+	return file_routes_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *SetRoutesRequest) GetRoutes() []*Route {
@@ -2141,7 +2193,7 @@ type SetRoutesResponse struct {
 
 func (x *SetRoutesResponse) Reset() {
 	*x = SetRoutesResponse{}
-	mi := &file_routes_proto_msgTypes[25]
+	mi := &file_routes_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2153,7 +2205,7 @@ func (x *SetRoutesResponse) String() string {
 func (*SetRoutesResponse) ProtoMessage() {}
 
 func (x *SetRoutesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[25]
+	mi := &file_routes_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2166,7 +2218,7 @@ func (x *SetRoutesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRoutesResponse.ProtoReflect.Descriptor instead.
 func (*SetRoutesResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{25}
+	return file_routes_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *SetRoutesResponse) GetRoutes() []*Route {
@@ -2186,7 +2238,7 @@ type MoveRoutesRequest struct {
 
 func (x *MoveRoutesRequest) Reset() {
 	*x = MoveRoutesRequest{}
-	mi := &file_routes_proto_msgTypes[26]
+	mi := &file_routes_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2198,7 +2250,7 @@ func (x *MoveRoutesRequest) String() string {
 func (*MoveRoutesRequest) ProtoMessage() {}
 
 func (x *MoveRoutesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[26]
+	mi := &file_routes_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2211,7 +2263,7 @@ func (x *MoveRoutesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MoveRoutesRequest.ProtoReflect.Descriptor instead.
 func (*MoveRoutesRequest) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{26}
+	return file_routes_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *MoveRoutesRequest) GetRouteIds() []string {
@@ -2236,7 +2288,7 @@ type MoveRoutesResponse struct {
 
 func (x *MoveRoutesResponse) Reset() {
 	*x = MoveRoutesResponse{}
-	mi := &file_routes_proto_msgTypes[27]
+	mi := &file_routes_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2248,7 +2300,7 @@ func (x *MoveRoutesResponse) String() string {
 func (*MoveRoutesResponse) ProtoMessage() {}
 
 func (x *MoveRoutesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[27]
+	mi := &file_routes_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2261,7 +2313,7 @@ func (x *MoveRoutesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MoveRoutesResponse.ProtoReflect.Descriptor instead.
 func (*MoveRoutesResponse) Descriptor() ([]byte, []int) {
-	return file_routes_proto_rawDescGZIP(), []int{27}
+	return file_routes_proto_rawDescGZIP(), []int{28}
 }
 
 type Route_StringList struct {
@@ -2273,7 +2325,7 @@ type Route_StringList struct {
 
 func (x *Route_StringList) Reset() {
 	*x = Route_StringList{}
-	mi := &file_routes_proto_msgTypes[29]
+	mi := &file_routes_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2285,7 +2337,7 @@ func (x *Route_StringList) String() string {
 func (*Route_StringList) ProtoMessage() {}
 
 func (x *Route_StringList) ProtoReflect() protoreflect.Message {
-	mi := &file_routes_proto_msgTypes[29]
+	mi := &file_routes_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2365,7 +2417,7 @@ const file_routes_proto_rawDesc = "" +
 	"\ttoken_url\x18\x02 \x01(\tR\btokenUrl\x12G\n" +
 	"\n" +
 	"auth_style\x18\x03 \x01(\x0e2#.pomerium.dashboard.OAuth2AuthStyleH\x00R\tauthStyle\x88\x01\x01B\r\n" +
-	"\v_auth_style\"\xe1&\n" +
+	"\v_auth_style\"\xb4'\n" +
 	"\x05Route\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
 	"\fnamespace_id\x18\x1d \x01(\tR\vnamespaceId\x129\n" +
@@ -2439,7 +2491,8 @@ const file_routes_proto_rawDesc = "" +
 	"\x03mcp\x18J \x01(\v2\x17.pomerium.dashboard.MCPH#R\x03mcp\x88\x01\x01\x12;\n" +
 	"\x17healthy_panic_threshold\x18K \x01(\x05H$R\x15healthyPanicThreshold\x88\x01\x01\x12P\n" +
 	"\x0fupstream_tunnel\x18L \x01(\v2\".pomerium.dashboard.UpstreamTunnelH%R\x0eupstreamTunnel\x88\x01\x01\x12P\n" +
-	"\x0eallow_upgrades\x18M \x01(\v2$.pomerium.dashboard.Route.StringListH&R\rallowUpgrades\x88\x01\x01\x1a$\n" +
+	"\x0eallow_upgrades\x18M \x01(\v2$.pomerium.dashboard.Route.StringListH&R\rallowUpgrades\x88\x01\x01\x12Q\n" +
+	"\x11session_recording\x18N \x01(\v2$.pomerium.dashboard.SessionRecordingR\x10sessionRecording\x1a$\n" +
 	"\n" +
 	"StringList\x12\x16\n" +
 	"\x06values\x18\x01 \x03(\tR\x06values\x1aD\n" +
@@ -2488,7 +2541,11 @@ const file_routes_proto_rawDesc = "" +
 	"\x04_mcpB\x1a\n" +
 	"\x18_healthy_panic_thresholdB\x12\n" +
 	"\x10_upstream_tunnelB\x11\n" +
-	"\x0f_allow_upgradesJ\x04\b(\x10)J\x04\b2\x103J\x04\b'\x10(\"K\n" +
+	"\x0f_allow_upgradesJ\x04\b(\x10)J\x04\b2\x103J\x04\b'\x10(\"=\n" +
+	"\x10SessionRecording\x12\x1d\n" +
+	"\aenabled\x18\x01 \x01(\bH\x00R\aenabled\x88\x01\x01B\n" +
+	"\n" +
+	"\b_enabled\"K\n" +
 	"\x0eUpstreamTunnel\x12'\n" +
 	"\rssh_policy_id\x18\x01 \x01(\tH\x00R\vsshPolicyId\x88\x01\x01B\x10\n" +
 	"\x0e_ssh_policy_id\"|\n" +
@@ -2584,7 +2641,7 @@ func file_routes_proto_rawDescGZIP() []byte {
 }
 
 var file_routes_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_routes_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
+var file_routes_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
 var file_routes_proto_goTypes = []any{
 	(IssuerFormat)(0),                // 0: pomerium.dashboard.IssuerFormat
 	(BearerTokenFormat)(0),           // 1: pomerium.dashboard.BearerTokenFormat
@@ -2600,91 +2657,93 @@ var file_routes_proto_goTypes = []any{
 	(*UpstreamOAuth2)(nil),           // 11: pomerium.dashboard.UpstreamOAuth2
 	(*OAuth2Endpoint)(nil),           // 12: pomerium.dashboard.OAuth2Endpoint
 	(*Route)(nil),                    // 13: pomerium.dashboard.Route
-	(*UpstreamTunnel)(nil),           // 14: pomerium.dashboard.UpstreamTunnel
-	(*RouteWithPolicies)(nil),        // 15: pomerium.dashboard.RouteWithPolicies
-	(*DeleteRouteRequest)(nil),       // 16: pomerium.dashboard.DeleteRouteRequest
-	(*DeleteRouteResponse)(nil),      // 17: pomerium.dashboard.DeleteRouteResponse
-	(*DeleteRoutesRequest)(nil),      // 18: pomerium.dashboard.DeleteRoutesRequest
-	(*DeleteRoutesResponse)(nil),     // 19: pomerium.dashboard.DeleteRoutesResponse
-	(*GetRouteRequest)(nil),          // 20: pomerium.dashboard.GetRouteRequest
-	(*GetRouteResponse)(nil),         // 21: pomerium.dashboard.GetRouteResponse
-	(*ListRoutesRequest)(nil),        // 22: pomerium.dashboard.ListRoutesRequest
-	(*ListRoutesResponse)(nil),       // 23: pomerium.dashboard.ListRoutesResponse
-	(*LoadRoutesRequest)(nil),        // 24: pomerium.dashboard.LoadRoutesRequest
-	(*LoadRoutesResponse)(nil),       // 25: pomerium.dashboard.LoadRoutesResponse
-	(*SetRouteRequest)(nil),          // 26: pomerium.dashboard.SetRouteRequest
-	(*SetRouteResponse)(nil),         // 27: pomerium.dashboard.SetRouteResponse
-	(*SetRoutesRequest)(nil),         // 28: pomerium.dashboard.SetRoutesRequest
-	(*SetRoutesResponse)(nil),        // 29: pomerium.dashboard.SetRoutesResponse
-	(*MoveRoutesRequest)(nil),        // 30: pomerium.dashboard.MoveRoutesRequest
-	(*MoveRoutesResponse)(nil),       // 31: pomerium.dashboard.MoveRoutesResponse
-	nil,                              // 32: pomerium.dashboard.UpstreamOAuth2.AuthorizationUrlParamsEntry
-	(*Route_StringList)(nil),         // 33: pomerium.dashboard.Route.StringList
-	nil,                              // 34: pomerium.dashboard.Route.SetRequestHeadersEntry
-	nil,                              // 35: pomerium.dashboard.Route.SetResponseHeadersEntry
-	(*timestamppb.Timestamp)(nil),    // 36: google.protobuf.Timestamp
-	(*RedirectAction)(nil),           // 37: pomerium.dashboard.RedirectAction
-	(*durationpb.Duration)(nil),      // 38: google.protobuf.Duration
-	(*HealthCheck)(nil),              // 39: pomerium.dashboard.HealthCheck
-	(*Policy)(nil),                   // 40: pomerium.dashboard.Policy
+	(*SessionRecording)(nil),         // 14: pomerium.dashboard.SessionRecording
+	(*UpstreamTunnel)(nil),           // 15: pomerium.dashboard.UpstreamTunnel
+	(*RouteWithPolicies)(nil),        // 16: pomerium.dashboard.RouteWithPolicies
+	(*DeleteRouteRequest)(nil),       // 17: pomerium.dashboard.DeleteRouteRequest
+	(*DeleteRouteResponse)(nil),      // 18: pomerium.dashboard.DeleteRouteResponse
+	(*DeleteRoutesRequest)(nil),      // 19: pomerium.dashboard.DeleteRoutesRequest
+	(*DeleteRoutesResponse)(nil),     // 20: pomerium.dashboard.DeleteRoutesResponse
+	(*GetRouteRequest)(nil),          // 21: pomerium.dashboard.GetRouteRequest
+	(*GetRouteResponse)(nil),         // 22: pomerium.dashboard.GetRouteResponse
+	(*ListRoutesRequest)(nil),        // 23: pomerium.dashboard.ListRoutesRequest
+	(*ListRoutesResponse)(nil),       // 24: pomerium.dashboard.ListRoutesResponse
+	(*LoadRoutesRequest)(nil),        // 25: pomerium.dashboard.LoadRoutesRequest
+	(*LoadRoutesResponse)(nil),       // 26: pomerium.dashboard.LoadRoutesResponse
+	(*SetRouteRequest)(nil),          // 27: pomerium.dashboard.SetRouteRequest
+	(*SetRouteResponse)(nil),         // 28: pomerium.dashboard.SetRouteResponse
+	(*SetRoutesRequest)(nil),         // 29: pomerium.dashboard.SetRoutesRequest
+	(*SetRoutesResponse)(nil),        // 30: pomerium.dashboard.SetRoutesResponse
+	(*MoveRoutesRequest)(nil),        // 31: pomerium.dashboard.MoveRoutesRequest
+	(*MoveRoutesResponse)(nil),       // 32: pomerium.dashboard.MoveRoutesResponse
+	nil,                              // 33: pomerium.dashboard.UpstreamOAuth2.AuthorizationUrlParamsEntry
+	(*Route_StringList)(nil),         // 34: pomerium.dashboard.Route.StringList
+	nil,                              // 35: pomerium.dashboard.Route.SetRequestHeadersEntry
+	nil,                              // 36: pomerium.dashboard.Route.SetResponseHeadersEntry
+	(*timestamppb.Timestamp)(nil),    // 37: google.protobuf.Timestamp
+	(*RedirectAction)(nil),           // 38: pomerium.dashboard.RedirectAction
+	(*durationpb.Duration)(nil),      // 39: google.protobuf.Duration
+	(*HealthCheck)(nil),              // 40: pomerium.dashboard.HealthCheck
+	(*Policy)(nil),                   // 41: pomerium.dashboard.Policy
 }
 var file_routes_proto_depIdxs = []int32{
 	9,  // 0: pomerium.dashboard.MCP.server:type_name -> pomerium.dashboard.MCPServer
 	10, // 1: pomerium.dashboard.MCP.client:type_name -> pomerium.dashboard.MCPClient
 	11, // 2: pomerium.dashboard.MCPServer.upstream_oauth2:type_name -> pomerium.dashboard.UpstreamOAuth2
 	12, // 3: pomerium.dashboard.UpstreamOAuth2.oauth2_endpoint:type_name -> pomerium.dashboard.OAuth2Endpoint
-	32, // 4: pomerium.dashboard.UpstreamOAuth2.authorization_url_params:type_name -> pomerium.dashboard.UpstreamOAuth2.AuthorizationUrlParamsEntry
+	33, // 4: pomerium.dashboard.UpstreamOAuth2.authorization_url_params:type_name -> pomerium.dashboard.UpstreamOAuth2.AuthorizationUrlParamsEntry
 	3,  // 5: pomerium.dashboard.OAuth2Endpoint.auth_style:type_name -> pomerium.dashboard.OAuth2AuthStyle
-	36, // 6: pomerium.dashboard.Route.created_at:type_name -> google.protobuf.Timestamp
-	36, // 7: pomerium.dashboard.Route.modified_at:type_name -> google.protobuf.Timestamp
-	36, // 8: pomerium.dashboard.Route.deleted_at:type_name -> google.protobuf.Timestamp
-	37, // 9: pomerium.dashboard.Route.redirect:type_name -> pomerium.dashboard.RedirectAction
+	37, // 6: pomerium.dashboard.Route.created_at:type_name -> google.protobuf.Timestamp
+	37, // 7: pomerium.dashboard.Route.modified_at:type_name -> google.protobuf.Timestamp
+	37, // 8: pomerium.dashboard.Route.deleted_at:type_name -> google.protobuf.Timestamp
+	38, // 9: pomerium.dashboard.Route.redirect:type_name -> pomerium.dashboard.RedirectAction
 	5,  // 10: pomerium.dashboard.Route.response:type_name -> pomerium.dashboard.RouteDirectResponse
-	38, // 11: pomerium.dashboard.Route.timeout:type_name -> google.protobuf.Duration
-	38, // 12: pomerium.dashboard.Route.idle_timeout:type_name -> google.protobuf.Duration
-	34, // 13: pomerium.dashboard.Route.set_request_headers:type_name -> pomerium.dashboard.Route.SetRequestHeadersEntry
-	35, // 14: pomerium.dashboard.Route.set_response_headers:type_name -> pomerium.dashboard.Route.SetResponseHeadersEntry
+	39, // 11: pomerium.dashboard.Route.timeout:type_name -> google.protobuf.Duration
+	39, // 12: pomerium.dashboard.Route.idle_timeout:type_name -> google.protobuf.Duration
+	35, // 13: pomerium.dashboard.Route.set_request_headers:type_name -> pomerium.dashboard.Route.SetRequestHeadersEntry
+	36, // 14: pomerium.dashboard.Route.set_response_headers:type_name -> pomerium.dashboard.Route.SetResponseHeadersEntry
 	4,  // 15: pomerium.dashboard.Route.rewrite_response_headers:type_name -> pomerium.dashboard.RouteRewriteHeader
 	0,  // 16: pomerium.dashboard.Route.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
 	1,  // 17: pomerium.dashboard.Route.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
 	6,  // 18: pomerium.dashboard.Route.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
-	33, // 19: pomerium.dashboard.Route.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Route.StringList
+	34, // 19: pomerium.dashboard.Route.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Route.StringList
 	2,  // 20: pomerium.dashboard.Route.load_balancing_policy:type_name -> pomerium.dashboard.LoadBalancingPolicy
-	39, // 21: pomerium.dashboard.Route.health_checks:type_name -> pomerium.dashboard.HealthCheck
+	40, // 21: pomerium.dashboard.Route.health_checks:type_name -> pomerium.dashboard.HealthCheck
 	7,  // 22: pomerium.dashboard.Route.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
 	8,  // 23: pomerium.dashboard.Route.mcp:type_name -> pomerium.dashboard.MCP
-	14, // 24: pomerium.dashboard.Route.upstream_tunnel:type_name -> pomerium.dashboard.UpstreamTunnel
-	33, // 25: pomerium.dashboard.Route.allow_upgrades:type_name -> pomerium.dashboard.Route.StringList
-	13, // 26: pomerium.dashboard.RouteWithPolicies.route:type_name -> pomerium.dashboard.Route
-	40, // 27: pomerium.dashboard.RouteWithPolicies.policies:type_name -> pomerium.dashboard.Policy
-	13, // 28: pomerium.dashboard.GetRouteResponse.route:type_name -> pomerium.dashboard.Route
-	13, // 29: pomerium.dashboard.ListRoutesResponse.routes:type_name -> pomerium.dashboard.Route
-	15, // 30: pomerium.dashboard.LoadRoutesResponse.routes:type_name -> pomerium.dashboard.RouteWithPolicies
-	13, // 31: pomerium.dashboard.SetRouteRequest.route:type_name -> pomerium.dashboard.Route
-	13, // 32: pomerium.dashboard.SetRouteResponse.route:type_name -> pomerium.dashboard.Route
-	13, // 33: pomerium.dashboard.SetRoutesRequest.routes:type_name -> pomerium.dashboard.Route
-	13, // 34: pomerium.dashboard.SetRoutesResponse.routes:type_name -> pomerium.dashboard.Route
-	16, // 35: pomerium.dashboard.RouteService.DeleteRoute:input_type -> pomerium.dashboard.DeleteRouteRequest
-	18, // 36: pomerium.dashboard.RouteService.DeleteRoutes:input_type -> pomerium.dashboard.DeleteRoutesRequest
-	20, // 37: pomerium.dashboard.RouteService.GetRoute:input_type -> pomerium.dashboard.GetRouteRequest
-	22, // 38: pomerium.dashboard.RouteService.ListRoutes:input_type -> pomerium.dashboard.ListRoutesRequest
-	24, // 39: pomerium.dashboard.RouteService.LoadRoutes:input_type -> pomerium.dashboard.LoadRoutesRequest
-	26, // 40: pomerium.dashboard.RouteService.SetRoute:input_type -> pomerium.dashboard.SetRouteRequest
-	28, // 41: pomerium.dashboard.RouteService.SetRoutes:input_type -> pomerium.dashboard.SetRoutesRequest
-	30, // 42: pomerium.dashboard.RouteService.MoveRoutes:input_type -> pomerium.dashboard.MoveRoutesRequest
-	17, // 43: pomerium.dashboard.RouteService.DeleteRoute:output_type -> pomerium.dashboard.DeleteRouteResponse
-	19, // 44: pomerium.dashboard.RouteService.DeleteRoutes:output_type -> pomerium.dashboard.DeleteRoutesResponse
-	21, // 45: pomerium.dashboard.RouteService.GetRoute:output_type -> pomerium.dashboard.GetRouteResponse
-	23, // 46: pomerium.dashboard.RouteService.ListRoutes:output_type -> pomerium.dashboard.ListRoutesResponse
-	25, // 47: pomerium.dashboard.RouteService.LoadRoutes:output_type -> pomerium.dashboard.LoadRoutesResponse
-	27, // 48: pomerium.dashboard.RouteService.SetRoute:output_type -> pomerium.dashboard.SetRouteResponse
-	29, // 49: pomerium.dashboard.RouteService.SetRoutes:output_type -> pomerium.dashboard.SetRoutesResponse
-	31, // 50: pomerium.dashboard.RouteService.MoveRoutes:output_type -> pomerium.dashboard.MoveRoutesResponse
-	43, // [43:51] is the sub-list for method output_type
-	35, // [35:43] is the sub-list for method input_type
-	35, // [35:35] is the sub-list for extension type_name
-	35, // [35:35] is the sub-list for extension extendee
-	0,  // [0:35] is the sub-list for field type_name
+	15, // 24: pomerium.dashboard.Route.upstream_tunnel:type_name -> pomerium.dashboard.UpstreamTunnel
+	34, // 25: pomerium.dashboard.Route.allow_upgrades:type_name -> pomerium.dashboard.Route.StringList
+	14, // 26: pomerium.dashboard.Route.session_recording:type_name -> pomerium.dashboard.SessionRecording
+	13, // 27: pomerium.dashboard.RouteWithPolicies.route:type_name -> pomerium.dashboard.Route
+	41, // 28: pomerium.dashboard.RouteWithPolicies.policies:type_name -> pomerium.dashboard.Policy
+	13, // 29: pomerium.dashboard.GetRouteResponse.route:type_name -> pomerium.dashboard.Route
+	13, // 30: pomerium.dashboard.ListRoutesResponse.routes:type_name -> pomerium.dashboard.Route
+	16, // 31: pomerium.dashboard.LoadRoutesResponse.routes:type_name -> pomerium.dashboard.RouteWithPolicies
+	13, // 32: pomerium.dashboard.SetRouteRequest.route:type_name -> pomerium.dashboard.Route
+	13, // 33: pomerium.dashboard.SetRouteResponse.route:type_name -> pomerium.dashboard.Route
+	13, // 34: pomerium.dashboard.SetRoutesRequest.routes:type_name -> pomerium.dashboard.Route
+	13, // 35: pomerium.dashboard.SetRoutesResponse.routes:type_name -> pomerium.dashboard.Route
+	17, // 36: pomerium.dashboard.RouteService.DeleteRoute:input_type -> pomerium.dashboard.DeleteRouteRequest
+	19, // 37: pomerium.dashboard.RouteService.DeleteRoutes:input_type -> pomerium.dashboard.DeleteRoutesRequest
+	21, // 38: pomerium.dashboard.RouteService.GetRoute:input_type -> pomerium.dashboard.GetRouteRequest
+	23, // 39: pomerium.dashboard.RouteService.ListRoutes:input_type -> pomerium.dashboard.ListRoutesRequest
+	25, // 40: pomerium.dashboard.RouteService.LoadRoutes:input_type -> pomerium.dashboard.LoadRoutesRequest
+	27, // 41: pomerium.dashboard.RouteService.SetRoute:input_type -> pomerium.dashboard.SetRouteRequest
+	29, // 42: pomerium.dashboard.RouteService.SetRoutes:input_type -> pomerium.dashboard.SetRoutesRequest
+	31, // 43: pomerium.dashboard.RouteService.MoveRoutes:input_type -> pomerium.dashboard.MoveRoutesRequest
+	18, // 44: pomerium.dashboard.RouteService.DeleteRoute:output_type -> pomerium.dashboard.DeleteRouteResponse
+	20, // 45: pomerium.dashboard.RouteService.DeleteRoutes:output_type -> pomerium.dashboard.DeleteRoutesResponse
+	22, // 46: pomerium.dashboard.RouteService.GetRoute:output_type -> pomerium.dashboard.GetRouteResponse
+	24, // 47: pomerium.dashboard.RouteService.ListRoutes:output_type -> pomerium.dashboard.ListRoutesResponse
+	26, // 48: pomerium.dashboard.RouteService.LoadRoutes:output_type -> pomerium.dashboard.LoadRoutesResponse
+	28, // 49: pomerium.dashboard.RouteService.SetRoute:output_type -> pomerium.dashboard.SetRouteResponse
+	30, // 50: pomerium.dashboard.RouteService.SetRoutes:output_type -> pomerium.dashboard.SetRoutesResponse
+	32, // 51: pomerium.dashboard.RouteService.MoveRoutes:output_type -> pomerium.dashboard.MoveRoutesResponse
+	44, // [44:52] is the sub-list for method output_type
+	36, // [36:44] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_routes_proto_init() }
@@ -2708,14 +2767,15 @@ func file_routes_proto_init() {
 	file_routes_proto_msgTypes[8].OneofWrappers = []any{}
 	file_routes_proto_msgTypes[9].OneofWrappers = []any{}
 	file_routes_proto_msgTypes[10].OneofWrappers = []any{}
-	file_routes_proto_msgTypes[18].OneofWrappers = []any{}
+	file_routes_proto_msgTypes[11].OneofWrappers = []any{}
+	file_routes_proto_msgTypes[19].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_routes_proto_rawDesc), len(file_routes_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   32,
+			NumMessages:   33,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
