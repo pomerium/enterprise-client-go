@@ -79,6 +79,124 @@ func (CodecType) EnumDescriptor() ([]byte, []int) {
 	return file_settings_proto_rawDescGZIP(), []int{0}
 }
 
+// Action to take when Envoy receives client request with header names containing underscore characters.
+type HeadersWithUnderscoresAction int32
+
+const (
+	HeadersWithUnderscoresAction_HEADERS_WITH_UNDERSCORES_ACTION_UNKNOWN HeadersWithUnderscoresAction = 0
+	// Allow headers with underscores.
+	HeadersWithUnderscoresAction_HEADERS_WITH_UNDERSCORES_ACTION_ALLOW HeadersWithUnderscoresAction = 1
+	// ⁣Reject client request. This is the default behavior.
+	HeadersWithUnderscoresAction_HEADERS_WITH_UNDERSCORES_ACTION_REJECT_REQUEST HeadersWithUnderscoresAction = 2
+	// Drop the client header with name containing underscores.
+	HeadersWithUnderscoresAction_HEADERS_WITH_UNDERSCORES_ACTION_DROP_HEADER HeadersWithUnderscoresAction = 3
+)
+
+// Enum value maps for HeadersWithUnderscoresAction.
+var (
+	HeadersWithUnderscoresAction_name = map[int32]string{
+		0: "HEADERS_WITH_UNDERSCORES_ACTION_UNKNOWN",
+		1: "HEADERS_WITH_UNDERSCORES_ACTION_ALLOW",
+		2: "HEADERS_WITH_UNDERSCORES_ACTION_REJECT_REQUEST",
+		3: "HEADERS_WITH_UNDERSCORES_ACTION_DROP_HEADER",
+	}
+	HeadersWithUnderscoresAction_value = map[string]int32{
+		"HEADERS_WITH_UNDERSCORES_ACTION_UNKNOWN":        0,
+		"HEADERS_WITH_UNDERSCORES_ACTION_ALLOW":          1,
+		"HEADERS_WITH_UNDERSCORES_ACTION_REJECT_REQUEST": 2,
+		"HEADERS_WITH_UNDERSCORES_ACTION_DROP_HEADER":    3,
+	}
+)
+
+func (x HeadersWithUnderscoresAction) Enum() *HeadersWithUnderscoresAction {
+	p := new(HeadersWithUnderscoresAction)
+	*p = x
+	return p
+}
+
+func (x HeadersWithUnderscoresAction) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (HeadersWithUnderscoresAction) Descriptor() protoreflect.EnumDescriptor {
+	return file_settings_proto_enumTypes[1].Descriptor()
+}
+
+func (HeadersWithUnderscoresAction) Type() protoreflect.EnumType {
+	return &file_settings_proto_enumTypes[1]
+}
+
+func (x HeadersWithUnderscoresAction) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use HeadersWithUnderscoresAction.Descriptor instead.
+func (HeadersWithUnderscoresAction) EnumDescriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{1}
+}
+
+// PathWithEscapedSlashesAction determines the action for request that contain
+// %2F, %2f, %5C or %5c sequences in the URI path.
+type PathWithEscapedSlashesAction int32
+
+const (
+	PathWithEscapedSlashesAction_PATH_WITH_ESCAPED_SLASHES_ACTION_UNKNOWN PathWithEscapedSlashesAction = 0
+	// ⁣Keep escaped slashes.
+	PathWithEscapedSlashesAction_PATH_WITH_ESCAPED_SLASHES_ACTION_KEEP_UNCHANGED PathWithEscapedSlashesAction = 1
+	// ⁣Reject client request with the 400 status. This is the default behavior.
+	PathWithEscapedSlashesAction_PATH_WITH_ESCAPED_SLASHES_ACTION_REJECT_REQUEST PathWithEscapedSlashesAction = 2
+	// Unescape %2F and %5C sequences and redirect request to the new path if
+	// these sequences were present.
+	PathWithEscapedSlashesAction_PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_REDIRECT PathWithEscapedSlashesAction = 3
+	// ⁣Unescape %2F and %5C sequences.
+	PathWithEscapedSlashesAction_PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD PathWithEscapedSlashesAction = 4
+)
+
+// Enum value maps for PathWithEscapedSlashesAction.
+var (
+	PathWithEscapedSlashesAction_name = map[int32]string{
+		0: "PATH_WITH_ESCAPED_SLASHES_ACTION_UNKNOWN",
+		1: "PATH_WITH_ESCAPED_SLASHES_ACTION_KEEP_UNCHANGED",
+		2: "PATH_WITH_ESCAPED_SLASHES_ACTION_REJECT_REQUEST",
+		3: "PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_REDIRECT",
+		4: "PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD",
+	}
+	PathWithEscapedSlashesAction_value = map[string]int32{
+		"PATH_WITH_ESCAPED_SLASHES_ACTION_UNKNOWN":               0,
+		"PATH_WITH_ESCAPED_SLASHES_ACTION_KEEP_UNCHANGED":        1,
+		"PATH_WITH_ESCAPED_SLASHES_ACTION_REJECT_REQUEST":        2,
+		"PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_REDIRECT": 3,
+		"PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD":  4,
+	}
+)
+
+func (x PathWithEscapedSlashesAction) Enum() *PathWithEscapedSlashesAction {
+	p := new(PathWithEscapedSlashesAction)
+	*p = x
+	return p
+}
+
+func (x PathWithEscapedSlashesAction) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PathWithEscapedSlashesAction) Descriptor() protoreflect.EnumDescriptor {
+	return file_settings_proto_enumTypes[2].Descriptor()
+}
+
+func (PathWithEscapedSlashesAction) Type() protoreflect.EnumType {
+	return &file_settings_proto_enumTypes[2]
+}
+
+func (x PathWithEscapedSlashesAction) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PathWithEscapedSlashesAction.Descriptor instead.
+func (PathWithEscapedSlashesAction) EnumDescriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{2}
+}
+
 type ConsoleSettings struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	EnableFeedbackWidget bool                   `protobuf:"varint,1,opt,name=enable_feedback_widget,json=enableFeedbackWidget,proto3" json:"enable_feedback_widget,omitempty"`
@@ -132,7 +250,7 @@ func (x *ConsoleSettings) GetUseChangesets() bool {
 }
 
 // Settings defines the global pomerium settings
-// Next id: 128.
+// Next id: 134.
 type Settings struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Id             string                 `protobuf:"bytes,107,opt,name=id,proto3" json:"id,omitempty"`
@@ -245,8 +363,20 @@ type Settings struct {
 	AllowUpgrades                                     *Settings_StringList      `protobuf:"bytes,127,opt,name=allow_upgrades,json=allowUpgrades,proto3,oneof" json:"allow_upgrades,omitempty"`
 	EnvoyDynamicExtensions                            *Settings_StringList      `protobuf:"bytes,128,opt,name=envoy_dynamic_extensions,json=envoyDynamicExtensions,proto3,oneof" json:"envoy_dynamic_extensions,omitempty"`
 	SessionRecordingConcurrency                       *uint32                   `protobuf:"varint,129,opt,name=session_recording_concurrency,json=sessionRecordingConcurrency,proto3,oneof" json:"session_recording_concurrency,omitempty"`
-	unknownFields                                     protoimpl.UnknownFields
-	sizeCache                                         protoimpl.SizeCache
+	// Should paths be normalized according to RFC 3986 before any processing of
+	// requests by HTTP filters or routing? Defaults to true.
+	NormalizePath *bool `protobuf:"varint,130,opt,name=normalize_path,json=normalizePath,proto3,oneof" json:"normalize_path,omitempty"`
+	// Determines if adjacent slashes in the path are merged into one before any
+	// processing of requests by HTTP filters or routing. Defaults to true.
+	MergeSlashes *bool `protobuf:"varint,131,opt,name=merge_slashes,json=mergeSlashes,proto3,oneof" json:"merge_slashes,omitempty"`
+	// Action to take when request URL path contains escaped slash sequences
+	// (%2F, %2f, %5C and %5c). Defaults to rejecting requests.
+	PathWithEscapedSlashesAction *PathWithEscapedSlashesAction `protobuf:"varint,132,opt,name=path_with_escaped_slashes_action,json=pathWithEscapedSlashesAction,proto3,enum=pomerium.dashboard.PathWithEscapedSlashesAction,oneof" json:"path_with_escaped_slashes_action,omitempty"`
+	// Action to take when a client request with a header name containing
+	// underscore characters is received. Defaults to rejecting the request.
+	HeadersWithUnderscoresAction *HeadersWithUnderscoresAction `protobuf:"varint,133,opt,name=headers_with_underscores_action,json=headersWithUnderscoresAction,proto3,enum=pomerium.dashboard.HeadersWithUnderscoresAction,oneof" json:"headers_with_underscores_action,omitempty"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *Settings) Reset() {
@@ -1042,6 +1172,34 @@ func (x *Settings) GetSessionRecordingConcurrency() uint32 {
 	return 0
 }
 
+func (x *Settings) GetNormalizePath() bool {
+	if x != nil && x.NormalizePath != nil {
+		return *x.NormalizePath
+	}
+	return false
+}
+
+func (x *Settings) GetMergeSlashes() bool {
+	if x != nil && x.MergeSlashes != nil {
+		return *x.MergeSlashes
+	}
+	return false
+}
+
+func (x *Settings) GetPathWithEscapedSlashesAction() PathWithEscapedSlashesAction {
+	if x != nil && x.PathWithEscapedSlashesAction != nil {
+		return *x.PathWithEscapedSlashesAction
+	}
+	return PathWithEscapedSlashesAction_PATH_WITH_ESCAPED_SLASHES_ACTION_UNKNOWN
+}
+
+func (x *Settings) GetHeadersWithUnderscoresAction() HeadersWithUnderscoresAction {
+	if x != nil && x.HeadersWithUnderscoresAction != nil {
+		return *x.HeadersWithUnderscoresAction
+	}
+	return HeadersWithUnderscoresAction_HEADERS_WITH_UNDERSCORES_ACTION_UNKNOWN
+}
+
 type BlobStorageSettings struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	BucketUri     *string                `protobuf:"bytes,1,opt,name=bucket_uri,json=bucketUri,proto3,oneof" json:"bucket_uri,omitempty"`
@@ -1461,7 +1619,7 @@ const file_settings_proto_rawDesc = "" +
 	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"n\n" +
 	"\x0fConsoleSettings\x124\n" +
 	"\x16enable_feedback_widget\x18\x01 \x01(\bR\x14enableFeedbackWidget\x12%\n" +
-	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\x87L\n" +
+	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\xccO\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -1579,7 +1737,11 @@ const file_settings_proto_rawDesc = "" +
 	"\x15auto_apply_changesets\x18} \x01(\bH]R\x13autoApplyChangesets\x88\x01\x01\x12S\n" +
 	"\x0eallow_upgrades\x18\x7f \x01(\v2'.pomerium.dashboard.Settings.StringListH^R\rallowUpgrades\x88\x01\x01\x12g\n" +
 	"\x18envoy_dynamic_extensions\x18\x80\x01 \x01(\v2'.pomerium.dashboard.Settings.StringListH_R\x16envoyDynamicExtensions\x88\x01\x01\x12H\n" +
-	"\x1dsession_recording_concurrency\x18\x81\x01 \x01(\rH`R\x1bsessionRecordingConcurrency\x88\x01\x01\x1ai\n" +
+	"\x1dsession_recording_concurrency\x18\x81\x01 \x01(\rH`R\x1bsessionRecordingConcurrency\x88\x01\x01\x12+\n" +
+	"\x0enormalize_path\x18\x82\x01 \x01(\bHaR\rnormalizePath\x88\x01\x01\x12)\n" +
+	"\rmerge_slashes\x18\x83\x01 \x01(\bHbR\fmergeSlashes\x88\x01\x01\x12~\n" +
+	" path_with_escaped_slashes_action\x18\x84\x01 \x01(\x0e20.pomerium.dashboard.PathWithEscapedSlashesActionHcR\x1cpathWithEscapedSlashesAction\x88\x01\x01\x12}\n" +
+	"\x1fheaders_with_underscores_action\x18\x85\x01 \x01(\x0e20.pomerium.dashboard.HeadersWithUnderscoresActionHdR\x1cheadersWithUnderscoresAction\x88\x01\x01\x1ai\n" +
 	"\vCertificate\x12\x1d\n" +
 	"\n" +
 	"cert_bytes\x18\x03 \x01(\fR\tcertBytes\x12\x1b\n" +
@@ -1696,7 +1858,11 @@ const file_settings_proto_rawDesc = "" +
 	"\x16_auto_apply_changesetsB\x11\n" +
 	"\x0f_allow_upgradesB\x1b\n" +
 	"\x19_envoy_dynamic_extensionsB \n" +
-	"\x1e_session_recording_concurrencyJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
+	"\x1e_session_recording_concurrencyB\x11\n" +
+	"\x0f_normalize_pathB\x10\n" +
+	"\x0e_merge_slashesB#\n" +
+	"!_path_with_escaped_slashes_actionB\"\n" +
+	" _headers_with_underscores_actionJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
 	"\x13BlobStorageSettings\x12\"\n" +
 	"\n" +
 	"bucket_uri\x18\x01 \x01(\tH\x00R\tbucketUri\x88\x01\x01\x12*\n" +
@@ -1721,7 +1887,18 @@ const file_settings_proto_rawDesc = "" +
 	"\x0fCODEC_TYPE_AUTO\x10\x01\x12\x14\n" +
 	"\x10CODEC_TYPE_HTTP1\x10\x02\x12\x14\n" +
 	"\x10CODEC_TYPE_HTTP2\x10\x03\x12\x14\n" +
-	"\x10CODEC_TYPE_HTTP3\x10\x042\xae\x03\n" +
+	"\x10CODEC_TYPE_HTTP3\x10\x04*\xdb\x01\n" +
+	"\x1cHeadersWithUnderscoresAction\x12+\n" +
+	"'HEADERS_WITH_UNDERSCORES_ACTION_UNKNOWN\x10\x00\x12)\n" +
+	"%HEADERS_WITH_UNDERSCORES_ACTION_ALLOW\x10\x01\x122\n" +
+	".HEADERS_WITH_UNDERSCORES_ACTION_REJECT_REQUEST\x10\x02\x12/\n" +
+	"+HEADERS_WITH_UNDERSCORES_ACTION_DROP_HEADER\x10\x03*\xad\x02\n" +
+	"\x1cPathWithEscapedSlashesAction\x12,\n" +
+	"(PATH_WITH_ESCAPED_SLASHES_ACTION_UNKNOWN\x10\x00\x123\n" +
+	"/PATH_WITH_ESCAPED_SLASHES_ACTION_KEEP_UNCHANGED\x10\x01\x123\n" +
+	"/PATH_WITH_ESCAPED_SLASHES_ACTION_REJECT_REQUEST\x10\x02\x12:\n" +
+	"6PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_REDIRECT\x10\x03\x129\n" +
+	"5PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD\x10\x042\xae\x03\n" +
 	"\x0fSettingsService\x12^\n" +
 	"\vGetSettings\x12&.pomerium.dashboard.GetSettingsRequest\x1a'.pomerium.dashboard.GetSettingsResponse\x12^\n" +
 	"\vSetSettings\x12&.pomerium.dashboard.SetSettingsRequest\x1a'.pomerium.dashboard.SetSettingsResponse\x12f\n" +
@@ -1740,86 +1917,90 @@ func file_settings_proto_rawDescGZIP() []byte {
 	return file_settings_proto_rawDescData
 }
 
-var file_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_settings_proto_goTypes = []any{
 	(CodecType)(0),                     // 0: pomerium.dashboard.CodecType
-	(*ConsoleSettings)(nil),            // 1: pomerium.dashboard.ConsoleSettings
-	(*Settings)(nil),                   // 2: pomerium.dashboard.Settings
-	(*BlobStorageSettings)(nil),        // 3: pomerium.dashboard.BlobStorageSettings
-	(*GetConsoleSettingsRequest)(nil),  // 4: pomerium.dashboard.GetConsoleSettingsRequest
-	(*GetConsoleSettingsResponse)(nil), // 5: pomerium.dashboard.GetConsoleSettingsResponse
-	(*GetSettingsRequest)(nil),         // 6: pomerium.dashboard.GetSettingsRequest
-	(*GetSettingsResponse)(nil),        // 7: pomerium.dashboard.GetSettingsResponse
-	(*SetSettingsRequest)(nil),         // 8: pomerium.dashboard.SetSettingsRequest
-	(*SetSettingsResponse)(nil),        // 9: pomerium.dashboard.SetSettingsResponse
-	(*Settings_Certificate)(nil),       // 10: pomerium.dashboard.Settings.Certificate
-	(*Settings_StringList)(nil),        // 11: pomerium.dashboard.Settings.StringList
-	nil,                                // 12: pomerium.dashboard.Settings.RequestParamsEntry
-	nil,                                // 13: pomerium.dashboard.Settings.SetResponseHeadersEntry
-	nil,                                // 14: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	(*timestamppb.Timestamp)(nil),      // 15: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),        // 16: google.protobuf.Duration
-	(*JwtGroupsFilter)(nil),            // 17: pomerium.dashboard.JwtGroupsFilter
-	(IssuerFormat)(0),                  // 18: pomerium.dashboard.IssuerFormat
-	(*structpb.Struct)(nil),            // 19: google.protobuf.Struct
-	(BearerTokenFormat)(0),             // 20: pomerium.dashboard.BearerTokenFormat
-	(*CircuitBreakerThresholds)(nil),   // 21: pomerium.dashboard.CircuitBreakerThresholds
+	(HeadersWithUnderscoresAction)(0),  // 1: pomerium.dashboard.HeadersWithUnderscoresAction
+	(PathWithEscapedSlashesAction)(0),  // 2: pomerium.dashboard.PathWithEscapedSlashesAction
+	(*ConsoleSettings)(nil),            // 3: pomerium.dashboard.ConsoleSettings
+	(*Settings)(nil),                   // 4: pomerium.dashboard.Settings
+	(*BlobStorageSettings)(nil),        // 5: pomerium.dashboard.BlobStorageSettings
+	(*GetConsoleSettingsRequest)(nil),  // 6: pomerium.dashboard.GetConsoleSettingsRequest
+	(*GetConsoleSettingsResponse)(nil), // 7: pomerium.dashboard.GetConsoleSettingsResponse
+	(*GetSettingsRequest)(nil),         // 8: pomerium.dashboard.GetSettingsRequest
+	(*GetSettingsResponse)(nil),        // 9: pomerium.dashboard.GetSettingsResponse
+	(*SetSettingsRequest)(nil),         // 10: pomerium.dashboard.SetSettingsRequest
+	(*SetSettingsResponse)(nil),        // 11: pomerium.dashboard.SetSettingsResponse
+	(*Settings_Certificate)(nil),       // 12: pomerium.dashboard.Settings.Certificate
+	(*Settings_StringList)(nil),        // 13: pomerium.dashboard.Settings.StringList
+	nil,                                // 14: pomerium.dashboard.Settings.RequestParamsEntry
+	nil,                                // 15: pomerium.dashboard.Settings.SetResponseHeadersEntry
+	nil,                                // 16: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	(*timestamppb.Timestamp)(nil),      // 17: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),        // 18: google.protobuf.Duration
+	(*JwtGroupsFilter)(nil),            // 19: pomerium.dashboard.JwtGroupsFilter
+	(IssuerFormat)(0),                  // 20: pomerium.dashboard.IssuerFormat
+	(*structpb.Struct)(nil),            // 21: google.protobuf.Struct
+	(BearerTokenFormat)(0),             // 22: pomerium.dashboard.BearerTokenFormat
+	(*CircuitBreakerThresholds)(nil),   // 23: pomerium.dashboard.CircuitBreakerThresholds
 }
 var file_settings_proto_depIdxs = []int32{
-	15, // 0: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
-	16, // 1: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
-	16, // 2: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
-	16, // 3: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
-	10, // 4: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
-	16, // 5: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
-	16, // 6: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
-	16, // 7: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
-	16, // 8: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
-	16, // 9: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
-	16, // 10: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
-	12, // 11: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
-	13, // 12: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
-	14, // 13: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	17, // 14: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
-	18, // 15: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
-	16, // 16: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
-	16, // 17: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
-	16, // 18: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
-	16, // 19: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
-	19, // 20: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
-	16, // 21: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
-	16, // 22: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
-	11, // 23: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	11, // 24: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	20, // 25: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
-	11, // 26: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
+	17, // 0: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
+	18, // 1: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
+	18, // 2: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
+	18, // 3: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
+	12, // 4: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
+	18, // 5: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
+	18, // 6: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
+	18, // 7: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
+	18, // 8: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
+	18, // 9: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
+	18, // 10: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
+	14, // 11: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
+	15, // 12: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
+	16, // 13: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	19, // 14: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
+	20, // 15: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
+	18, // 16: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
+	18, // 17: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
+	18, // 18: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
+	18, // 19: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
+	21, // 20: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
+	18, // 21: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
+	18, // 22: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
+	13, // 23: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	13, // 24: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	22, // 25: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
+	13, // 26: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
 	0,  // 27: pomerium.dashboard.Settings.codec_type:type_name -> pomerium.dashboard.CodecType
-	21, // 28: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
-	11, // 29: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
-	11, // 30: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
-	11, // 31: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
-	11, // 32: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
-	3,  // 33: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
-	11, // 34: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
-	11, // 35: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
-	1,  // 36: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
-	2,  // 37: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	2,  // 38: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
-	2,  // 39: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	6,  // 40: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	8,  // 41: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
-	6,  // 42: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	4,  // 43: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
-	7,  // 44: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	9,  // 45: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
-	7,  // 46: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	5,  // 47: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
-	44, // [44:48] is the sub-list for method output_type
-	40, // [40:44] is the sub-list for method input_type
-	40, // [40:40] is the sub-list for extension type_name
-	40, // [40:40] is the sub-list for extension extendee
-	0,  // [0:40] is the sub-list for field type_name
+	23, // 28: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
+	13, // 29: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
+	13, // 30: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
+	13, // 31: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
+	13, // 32: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
+	5,  // 33: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
+	13, // 34: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
+	13, // 35: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
+	2,  // 36: pomerium.dashboard.Settings.path_with_escaped_slashes_action:type_name -> pomerium.dashboard.PathWithEscapedSlashesAction
+	1,  // 37: pomerium.dashboard.Settings.headers_with_underscores_action:type_name -> pomerium.dashboard.HeadersWithUnderscoresAction
+	3,  // 38: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
+	4,  // 39: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	4,  // 40: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
+	4,  // 41: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	8,  // 42: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	10, // 43: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
+	8,  // 44: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	6,  // 45: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
+	9,  // 46: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	11, // 47: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
+	9,  // 48: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	7,  // 49: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
+	46, // [46:50] is the sub-list for method output_type
+	42, // [42:46] is the sub-list for method input_type
+	42, // [42:42] is the sub-list for extension type_name
+	42, // [42:42] is the sub-list for extension extendee
+	0,  // [0:42] is the sub-list for field type_name
 }
 
 func init() { file_settings_proto_init() }
@@ -1836,7 +2017,7 @@ func file_settings_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_settings_proto_rawDesc), len(file_settings_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      3,
 			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
