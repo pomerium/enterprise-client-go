@@ -867,16 +867,15 @@ func (x *SessionRecordingMetadata) GetSize() uint64 {
 
 type SSHRecordingMetadata struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	UncompressedSize uint64                 `protobuf:"varint,3,opt,name=uncompressed_size,json=uncompressedSize,proto3" json:"uncompressed_size,omitempty"`
-	StartTime        *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	LoginName        string                 `protobuf:"bytes,7,opt,name=login_name,json=loginName,proto3" json:"login_name,omitempty"`
-	UpstreamHostname string                 `protobuf:"bytes,8,opt,name=upstream_hostname,json=upstreamHostname,proto3" json:"upstream_hostname,omitempty"`
-	SessionId        string                 `protobuf:"bytes,9,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	UserId           string                 `protobuf:"bytes,10,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	StreamId         uint64                 `protobuf:"varint,11,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	RouteName        string                 `protobuf:"bytes,12,opt,name=route_name,json=routeName,proto3" json:"route_name,omitempty"`
-	PtyInfo          *SSHDownstreamPTYInfo  `protobuf:"bytes,13,opt,name=pty_info,json=ptyInfo,proto3" json:"pty_info,omitempty"`
-	Metadata         map[string]string      `protobuf:"bytes,14,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	StartTime        *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	LoginName        string                 `protobuf:"bytes,2,opt,name=login_name,json=loginName,proto3" json:"login_name,omitempty"`
+	UpstreamHostname string                 `protobuf:"bytes,3,opt,name=upstream_hostname,json=upstreamHostname,proto3" json:"upstream_hostname,omitempty"`
+	SessionId        string                 `protobuf:"bytes,4,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	UserId           string                 `protobuf:"bytes,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	StreamId         uint64                 `protobuf:"varint,6,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	RouteName        string                 `protobuf:"bytes,7,opt,name=route_name,json=routeName,proto3" json:"route_name,omitempty"`
+	PtyInfo          *SSHDownstreamPTYInfo  `protobuf:"bytes,8,opt,name=pty_info,json=ptyInfo,proto3" json:"pty_info,omitempty"`
+	Metadata         map[string]string      `protobuf:"bytes,9,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -909,13 +908,6 @@ func (x *SSHRecordingMetadata) ProtoReflect() protoreflect.Message {
 // Deprecated: Use SSHRecordingMetadata.ProtoReflect.Descriptor instead.
 func (*SSHRecordingMetadata) Descriptor() ([]byte, []int) {
 	return file_recording_data_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *SSHRecordingMetadata) GetUncompressedSize() uint64 {
-	if x != nil {
-		return x.UncompressedSize
-	}
-	return 0
 }
 
 func (x *SSHRecordingMetadata) GetStartTime() *timestamppb.Timestamp {
@@ -1132,23 +1124,21 @@ const file_recording_data_proto_rawDesc = "" +
 	"\x18SessionRecordingMetadata\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12$\n" +
 	"\x02md\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\x02md\x12\x12\n" +
-	"\x04size\x18\x03 \x01(\x04R\x04size\"\x82\x04\n" +
-	"\x14SSHRecordingMetadata\x12+\n" +
-	"\x11uncompressed_size\x18\x03 \x01(\x04R\x10uncompressedSize\x129\n" +
+	"\x04size\x18\x03 \x01(\x04R\x04size\"\xd5\x03\n" +
+	"\x14SSHRecordingMetadata\x129\n" +
 	"\n" +
-	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12\x1d\n" +
+	"start_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12\x1d\n" +
 	"\n" +
-	"login_name\x18\a \x01(\tR\tloginName\x12+\n" +
-	"\x11upstream_hostname\x18\b \x01(\tR\x10upstreamHostname\x12\x1d\n" +
+	"login_name\x18\x02 \x01(\tR\tloginName\x12+\n" +
+	"\x11upstream_hostname\x18\x03 \x01(\tR\x10upstreamHostname\x12\x1d\n" +
 	"\n" +
-	"session_id\x18\t \x01(\tR\tsessionId\x12\x17\n" +
-	"\auser_id\x18\n" +
-	" \x01(\tR\x06userId\x12\x1b\n" +
-	"\tstream_id\x18\v \x01(\x04R\bstreamId\x12\x1d\n" +
+	"session_id\x18\x04 \x01(\tR\tsessionId\x12\x17\n" +
+	"\auser_id\x18\x05 \x01(\tR\x06userId\x12\x1b\n" +
+	"\tstream_id\x18\x06 \x01(\x04R\bstreamId\x12\x1d\n" +
 	"\n" +
-	"route_name\x18\f \x01(\tR\trouteName\x12:\n" +
-	"\bpty_info\x18\r \x01(\v2\x1f.recording.SSHDownstreamPTYInfoR\aptyInfo\x12I\n" +
-	"\bmetadata\x18\x0e \x03(\v2-.recording.SSHRecordingMetadata.MetadataEntryR\bmetadata\x1a;\n" +
+	"route_name\x18\a \x01(\tR\trouteName\x12:\n" +
+	"\bpty_info\x18\b \x01(\v2\x1f.recording.SSHDownstreamPTYInfoR\aptyInfo\x12I\n" +
+	"\bmetadata\x18\t \x03(\v2-.recording.SSHRecordingMetadata.MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xc5\x01\n" +
