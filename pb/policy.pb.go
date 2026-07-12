@@ -212,10 +212,11 @@ func (x *Policy) GetNamespaceName() string {
 }
 
 type DeletePolicyRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                       protoimpl.MessageState `protogen:"open.v1"`
+	Id                          string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	RemoveFromAnyAssignedRoutes bool                   `protobuf:"varint,2,opt,name=remove_from_any_assigned_routes,json=removeFromAnyAssignedRoutes,proto3" json:"remove_from_any_assigned_routes,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *DeletePolicyRequest) Reset() {
@@ -253,6 +254,13 @@ func (x *DeletePolicyRequest) GetId() string {
 		return x.Id
 	}
 	return ""
+}
+
+func (x *DeletePolicyRequest) GetRemoveFromAnyAssignedRoutes() bool {
+	if x != nil {
+		return x.RemoveFromAnyAssignedRoutes
+	}
+	return false
 }
 
 type DeletePolicyResponse struct {
@@ -643,9 +651,10 @@ const file_policy_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\v2\x1a.google.protobuf.ListValueR\x05value:\x028\x01\x1a9\n" +
 	"\vRoutesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"%\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"k\n" +
 	"\x13DeletePolicyRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x16\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12D\n" +
+	"\x1fremove_from_any_assigned_routes\x18\x02 \x01(\bR\x1bremoveFromAnyAssignedRoutes\"\x16\n" +
 	"\x14DeletePolicyResponse\"\"\n" +
 	"\x10GetPolicyRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"G\n" +
