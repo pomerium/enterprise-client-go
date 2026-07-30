@@ -198,11 +198,13 @@ func (PathWithEscapedSlashesAction) EnumDescriptor() ([]byte, []int) {
 }
 
 type ConsoleSettings struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	EnableFeedbackWidget bool                   `protobuf:"varint,1,opt,name=enable_feedback_widget,json=enableFeedbackWidget,proto3" json:"enable_feedback_widget,omitempty"`
-	UseChangesets        bool                   `protobuf:"varint,2,opt,name=use_changesets,json=useChangesets,proto3" json:"use_changesets,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	EnableFeedbackWidget    bool                   `protobuf:"varint,1,opt,name=enable_feedback_widget,json=enableFeedbackWidget,proto3" json:"enable_feedback_widget,omitempty"`
+	UseChangesets           bool                   `protobuf:"varint,2,opt,name=use_changesets,json=useChangesets,proto3" json:"use_changesets,omitempty"`
+	EnableRemoteDiagnostics bool                   `protobuf:"varint,3,opt,name=enable_remote_diagnostics,json=enableRemoteDiagnostics,proto3" json:"enable_remote_diagnostics,omitempty"`
+	InstallationId          string                 `protobuf:"bytes,4,opt,name=installation_id,json=installationId,proto3" json:"installation_id,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ConsoleSettings) Reset() {
@@ -247,6 +249,20 @@ func (x *ConsoleSettings) GetUseChangesets() bool {
 		return x.UseChangesets
 	}
 	return false
+}
+
+func (x *ConsoleSettings) GetEnableRemoteDiagnostics() bool {
+	if x != nil {
+		return x.EnableRemoteDiagnostics
+	}
+	return false
+}
+
+func (x *ConsoleSettings) GetInstallationId() string {
+	if x != nil {
+		return x.InstallationId
+	}
+	return ""
 }
 
 // Settings defines the global pomerium settings
@@ -1616,10 +1632,12 @@ var File_settings_proto protoreflect.FileDescriptor
 
 const file_settings_proto_rawDesc = "" +
 	"\n" +
-	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"n\n" +
+	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"\xd3\x01\n" +
 	"\x0fConsoleSettings\x124\n" +
 	"\x16enable_feedback_widget\x18\x01 \x01(\bR\x14enableFeedbackWidget\x12%\n" +
-	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\"\xccO\n" +
+	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\x12:\n" +
+	"\x19enable_remote_diagnostics\x18\x03 \x01(\bR\x17enableRemoteDiagnostics\x12'\n" +
+	"\x0finstallation_id\x18\x04 \x01(\tR\x0einstallationId\"\xccO\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +

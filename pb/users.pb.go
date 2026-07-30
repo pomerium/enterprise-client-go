@@ -165,6 +165,7 @@ func (x *GroupInfo) GetName() string {
 // UserInfo defines the metadata for a directory user in the databroker
 type UserInfo struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
+	Issuer         string                 `protobuf:"bytes,8,opt,name=issuer,proto3" json:"issuer,omitempty"`
 	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Email          string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
@@ -204,6 +205,13 @@ func (x *UserInfo) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UserInfo.ProtoReflect.Descriptor instead.
 func (*UserInfo) Descriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *UserInfo) GetIssuer() string {
+	if x != nil {
+		return x.Issuer
+	}
+	return ""
 }
 
 func (x *UserInfo) GetId() string {
@@ -2124,8 +2132,9 @@ const file_users_proto_rawDesc = "" +
 	"public_key\x18\x06 \x01(\tR\tpublicKey\"/\n" +
 	"\tGroupInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\xc4\x02\n" +
-	"\bUserInfo\x12\x0e\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xdc\x02\n" +
+	"\bUserInfo\x12\x16\n" +
+	"\x06issuer\x18\b \x01(\tR\x06issuer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x16\n" +
