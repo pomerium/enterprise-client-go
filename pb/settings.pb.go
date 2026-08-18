@@ -265,8 +265,96 @@ func (x *ConsoleSettings) GetInstallationId() string {
 	return ""
 }
 
+// IdentityProvider declares an additional identity provider. Today it is
+// usable only to verify JWT bearer tokens issued by non-interactive workloads
+// (Kubernetes projected service-account tokens, GitHub Actions OIDC, SPIFFE
+// JWT-SVIDs, …) on routes whose bearer_token_format is BEARER_TOKEN_FORMAT_JWT.
+// It does not replace the interactive SSO identity provider (the idp_* fields).
+//
+// Providers are declared as a map in Settings; the map key is the provider
+// name, referenced from Route.identity_providers. Authorization on the verified
+// claims is left to PPL (claim/...).
+type IdentityProvider struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The `iss` claim tokens must carry. Required, and unique across providers.
+	// Used both to select the matching provider for an incoming token and (with
+	// OIDC discovery) to fetch the signing keys.
+	Issuer string `protobuf:"bytes,1,opt,name=issuer,proto3" json:"issuer,omitempty"`
+	// Optional explicit JWKS URL. When set, OIDC discovery is skipped and keys
+	// are fetched directly from this URL. Useful when the issuer URL is not
+	// externally routable (e.g. Kubernetes' `kubernetes.default.svc.cluster.local`).
+	JwksUrl string `protobuf:"bytes,2,opt,name=jwks_url,json=jwksUrl,proto3" json:"jwks_url,omitempty"`
+	// Allowed JWT signing algorithms. When empty, defaults to {RS256, ES256,
+	// EdDSA}. `none` and HMAC (HS*) algorithms are rejected.
+	SupportedAlgs []string `protobuf:"bytes,3,rep,name=supported_algs,json=supportedAlgs,proto3" json:"supported_algs,omitempty"`
+	// Audiences accepted on tokens from this provider. Required and non-empty:
+	// at least one must intersect the token's `aud` claim. Fail-closed — an
+	// empty set rejects all tokens.
+	Audiences     []string `protobuf:"bytes,4,rep,name=audiences,proto3" json:"audiences,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IdentityProvider) Reset() {
+	*x = IdentityProvider{}
+	mi := &file_settings_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IdentityProvider) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IdentityProvider) ProtoMessage() {}
+
+func (x *IdentityProvider) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IdentityProvider.ProtoReflect.Descriptor instead.
+func (*IdentityProvider) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *IdentityProvider) GetIssuer() string {
+	if x != nil {
+		return x.Issuer
+	}
+	return ""
+}
+
+func (x *IdentityProvider) GetJwksUrl() string {
+	if x != nil {
+		return x.JwksUrl
+	}
+	return ""
+}
+
+func (x *IdentityProvider) GetSupportedAlgs() []string {
+	if x != nil {
+		return x.SupportedAlgs
+	}
+	return nil
+}
+
+func (x *IdentityProvider) GetAudiences() []string {
+	if x != nil {
+		return x.Audiences
+	}
+	return nil
+}
+
 // Settings defines the global pomerium settings
-// Next id: 134.
+// Next id: 135.
 type Settings struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Id             string                 `protobuf:"bytes,107,opt,name=id,proto3" json:"id,omitempty"`
@@ -391,13 +479,18 @@ type Settings struct {
 	// Action to take when a client request with a header name containing
 	// underscore characters is received. Defaults to rejecting the request.
 	HeadersWithUnderscoresAction *HeadersWithUnderscoresAction `protobuf:"varint,133,opt,name=headers_with_underscores_action,json=headersWithUnderscoresAction,proto3,enum=pomerium.dashboard.HeadersWithUnderscoresAction,oneof" json:"headers_with_underscores_action,omitempty"`
-	unknownFields                protoimpl.UnknownFields
-	sizeCache                    protoimpl.SizeCache
+	// Additional identity providers, keyed by provider name. Currently usable
+	// only to verify JWT bearer tokens from non-interactive workloads on routes
+	// whose bearer_token_format is BEARER_TOKEN_FORMAT_JWT; the interactive SSO
+	// provider is still configured via the idp_* fields.
+	IdentityProviders map[string]*IdentityProvider `protobuf:"bytes,134,rep,name=identity_providers,json=identityProviders,proto3" json:"identity_providers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Settings) Reset() {
 	*x = Settings{}
-	mi := &file_settings_proto_msgTypes[1]
+	mi := &file_settings_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -409,7 +502,7 @@ func (x *Settings) String() string {
 func (*Settings) ProtoMessage() {}
 
 func (x *Settings) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[1]
+	mi := &file_settings_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -422,7 +515,7 @@ func (x *Settings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Settings.ProtoReflect.Descriptor instead.
 func (*Settings) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{1}
+	return file_settings_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Settings) GetId() string {
@@ -1216,6 +1309,13 @@ func (x *Settings) GetHeadersWithUnderscoresAction() HeadersWithUnderscoresActio
 	return HeadersWithUnderscoresAction_HEADERS_WITH_UNDERSCORES_ACTION_UNKNOWN
 }
 
+func (x *Settings) GetIdentityProviders() map[string]*IdentityProvider {
+	if x != nil {
+		return x.IdentityProviders
+	}
+	return nil
+}
+
 type BlobStorageSettings struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	BucketUri     *string                `protobuf:"bytes,1,opt,name=bucket_uri,json=bucketUri,proto3,oneof" json:"bucket_uri,omitempty"`
@@ -1226,7 +1326,7 @@ type BlobStorageSettings struct {
 
 func (x *BlobStorageSettings) Reset() {
 	*x = BlobStorageSettings{}
-	mi := &file_settings_proto_msgTypes[2]
+	mi := &file_settings_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1238,7 +1338,7 @@ func (x *BlobStorageSettings) String() string {
 func (*BlobStorageSettings) ProtoMessage() {}
 
 func (x *BlobStorageSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[2]
+	mi := &file_settings_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1251,7 +1351,7 @@ func (x *BlobStorageSettings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlobStorageSettings.ProtoReflect.Descriptor instead.
 func (*BlobStorageSettings) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{2}
+	return file_settings_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *BlobStorageSettings) GetBucketUri() string {
@@ -1276,7 +1376,7 @@ type GetConsoleSettingsRequest struct {
 
 func (x *GetConsoleSettingsRequest) Reset() {
 	*x = GetConsoleSettingsRequest{}
-	mi := &file_settings_proto_msgTypes[3]
+	mi := &file_settings_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1288,7 +1388,7 @@ func (x *GetConsoleSettingsRequest) String() string {
 func (*GetConsoleSettingsRequest) ProtoMessage() {}
 
 func (x *GetConsoleSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[3]
+	mi := &file_settings_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1301,7 +1401,7 @@ func (x *GetConsoleSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConsoleSettingsRequest.ProtoReflect.Descriptor instead.
 func (*GetConsoleSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{3}
+	return file_settings_proto_rawDescGZIP(), []int{4}
 }
 
 type GetConsoleSettingsResponse struct {
@@ -1313,7 +1413,7 @@ type GetConsoleSettingsResponse struct {
 
 func (x *GetConsoleSettingsResponse) Reset() {
 	*x = GetConsoleSettingsResponse{}
-	mi := &file_settings_proto_msgTypes[4]
+	mi := &file_settings_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1325,7 +1425,7 @@ func (x *GetConsoleSettingsResponse) String() string {
 func (*GetConsoleSettingsResponse) ProtoMessage() {}
 
 func (x *GetConsoleSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[4]
+	mi := &file_settings_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1338,7 +1438,7 @@ func (x *GetConsoleSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConsoleSettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetConsoleSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{4}
+	return file_settings_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetConsoleSettingsResponse) GetConsoleSettings() *ConsoleSettings {
@@ -1357,7 +1457,7 @@ type GetSettingsRequest struct {
 
 func (x *GetSettingsRequest) Reset() {
 	*x = GetSettingsRequest{}
-	mi := &file_settings_proto_msgTypes[5]
+	mi := &file_settings_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1369,7 +1469,7 @@ func (x *GetSettingsRequest) String() string {
 func (*GetSettingsRequest) ProtoMessage() {}
 
 func (x *GetSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[5]
+	mi := &file_settings_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1382,7 +1482,7 @@ func (x *GetSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSettingsRequest.ProtoReflect.Descriptor instead.
 func (*GetSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{5}
+	return file_settings_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetSettingsRequest) GetClusterId() string {
@@ -1401,7 +1501,7 @@ type GetSettingsResponse struct {
 
 func (x *GetSettingsResponse) Reset() {
 	*x = GetSettingsResponse{}
-	mi := &file_settings_proto_msgTypes[6]
+	mi := &file_settings_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1413,7 +1513,7 @@ func (x *GetSettingsResponse) String() string {
 func (*GetSettingsResponse) ProtoMessage() {}
 
 func (x *GetSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[6]
+	mi := &file_settings_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1426,7 +1526,7 @@ func (x *GetSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{6}
+	return file_settings_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetSettingsResponse) GetSettings() *Settings {
@@ -1445,7 +1545,7 @@ type SetSettingsRequest struct {
 
 func (x *SetSettingsRequest) Reset() {
 	*x = SetSettingsRequest{}
-	mi := &file_settings_proto_msgTypes[7]
+	mi := &file_settings_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1457,7 +1557,7 @@ func (x *SetSettingsRequest) String() string {
 func (*SetSettingsRequest) ProtoMessage() {}
 
 func (x *SetSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[7]
+	mi := &file_settings_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1470,7 +1570,7 @@ func (x *SetSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSettingsRequest.ProtoReflect.Descriptor instead.
 func (*SetSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{7}
+	return file_settings_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SetSettingsRequest) GetSettings() *Settings {
@@ -1489,7 +1589,7 @@ type SetSettingsResponse struct {
 
 func (x *SetSettingsResponse) Reset() {
 	*x = SetSettingsResponse{}
-	mi := &file_settings_proto_msgTypes[8]
+	mi := &file_settings_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1501,7 +1601,7 @@ func (x *SetSettingsResponse) String() string {
 func (*SetSettingsResponse) ProtoMessage() {}
 
 func (x *SetSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[8]
+	mi := &file_settings_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1514,7 +1614,7 @@ func (x *SetSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSettingsResponse.ProtoReflect.Descriptor instead.
 func (*SetSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{8}
+	return file_settings_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SetSettingsResponse) GetSettings() *Settings {
@@ -1535,7 +1635,7 @@ type Settings_Certificate struct {
 
 func (x *Settings_Certificate) Reset() {
 	*x = Settings_Certificate{}
-	mi := &file_settings_proto_msgTypes[9]
+	mi := &file_settings_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1547,7 +1647,7 @@ func (x *Settings_Certificate) String() string {
 func (*Settings_Certificate) ProtoMessage() {}
 
 func (x *Settings_Certificate) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[9]
+	mi := &file_settings_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1560,7 +1660,7 @@ func (x *Settings_Certificate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Settings_Certificate.ProtoReflect.Descriptor instead.
 func (*Settings_Certificate) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{1, 0}
+	return file_settings_proto_rawDescGZIP(), []int{2, 0}
 }
 
 func (x *Settings_Certificate) GetCertBytes() []byte {
@@ -1593,7 +1693,7 @@ type Settings_StringList struct {
 
 func (x *Settings_StringList) Reset() {
 	*x = Settings_StringList{}
-	mi := &file_settings_proto_msgTypes[10]
+	mi := &file_settings_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1605,7 +1705,7 @@ func (x *Settings_StringList) String() string {
 func (*Settings_StringList) ProtoMessage() {}
 
 func (x *Settings_StringList) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[10]
+	mi := &file_settings_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1618,7 +1718,7 @@ func (x *Settings_StringList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Settings_StringList.ProtoReflect.Descriptor instead.
 func (*Settings_StringList) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{1, 1}
+	return file_settings_proto_rawDescGZIP(), []int{2, 1}
 }
 
 func (x *Settings_StringList) GetValues() []string {
@@ -1637,7 +1737,12 @@ const file_settings_proto_rawDesc = "" +
 	"\x16enable_feedback_widget\x18\x01 \x01(\bR\x14enableFeedbackWidget\x12%\n" +
 	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\x12:\n" +
 	"\x19enable_remote_diagnostics\x18\x03 \x01(\bR\x17enableRemoteDiagnostics\x12'\n" +
-	"\x0finstallation_id\x18\x04 \x01(\tR\x0einstallationId\"\xccO\n" +
+	"\x0finstallation_id\x18\x04 \x01(\tR\x0einstallationId\"\x8a\x01\n" +
+	"\x10IdentityProvider\x12\x16\n" +
+	"\x06issuer\x18\x01 \x01(\tR\x06issuer\x12\x19\n" +
+	"\bjwks_url\x18\x02 \x01(\tR\ajwksUrl\x12%\n" +
+	"\x0esupported_algs\x18\x03 \x03(\tR\rsupportedAlgs\x12\x1c\n" +
+	"\taudiences\x18\x04 \x03(\tR\taudiences\"\x9dQ\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -1759,7 +1864,8 @@ const file_settings_proto_rawDesc = "" +
 	"\x0enormalize_path\x18\x82\x01 \x01(\bHaR\rnormalizePath\x88\x01\x01\x12)\n" +
 	"\rmerge_slashes\x18\x83\x01 \x01(\bHbR\fmergeSlashes\x88\x01\x01\x12~\n" +
 	" path_with_escaped_slashes_action\x18\x84\x01 \x01(\x0e20.pomerium.dashboard.PathWithEscapedSlashesActionHcR\x1cpathWithEscapedSlashesAction\x88\x01\x01\x12}\n" +
-	"\x1fheaders_with_underscores_action\x18\x85\x01 \x01(\x0e20.pomerium.dashboard.HeadersWithUnderscoresActionHdR\x1cheadersWithUnderscoresAction\x88\x01\x01\x1ai\n" +
+	"\x1fheaders_with_underscores_action\x18\x85\x01 \x01(\x0e20.pomerium.dashboard.HeadersWithUnderscoresActionHdR\x1cheadersWithUnderscoresAction\x88\x01\x01\x12c\n" +
+	"\x12identity_providers\x18\x86\x01 \x03(\v23.pomerium.dashboard.Settings.IdentityProvidersEntryR\x11identityProviders\x1ai\n" +
 	"\vCertificate\x12\x1d\n" +
 	"\n" +
 	"cert_bytes\x18\x03 \x01(\fR\tcertBytes\x12\x1b\n" +
@@ -1776,7 +1882,10 @@ const file_settings_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1aC\n" +
 	"\x15JwtClaimsHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01B\r\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1aj\n" +
+	"\x16IdentityProvidersEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12:\n" +
+	"\x05value\x18\x02 \x01(\v2$.pomerium.dashboard.IdentityProviderR\x05value:\x028\x01B\r\n" +
 	"\v_cluster_idB\x12\n" +
 	"\x10_installation_idB\f\n" +
 	"\n" +
@@ -1936,89 +2045,93 @@ func file_settings_proto_rawDescGZIP() []byte {
 }
 
 var file_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_settings_proto_goTypes = []any{
 	(CodecType)(0),                     // 0: pomerium.dashboard.CodecType
 	(HeadersWithUnderscoresAction)(0),  // 1: pomerium.dashboard.HeadersWithUnderscoresAction
 	(PathWithEscapedSlashesAction)(0),  // 2: pomerium.dashboard.PathWithEscapedSlashesAction
 	(*ConsoleSettings)(nil),            // 3: pomerium.dashboard.ConsoleSettings
-	(*Settings)(nil),                   // 4: pomerium.dashboard.Settings
-	(*BlobStorageSettings)(nil),        // 5: pomerium.dashboard.BlobStorageSettings
-	(*GetConsoleSettingsRequest)(nil),  // 6: pomerium.dashboard.GetConsoleSettingsRequest
-	(*GetConsoleSettingsResponse)(nil), // 7: pomerium.dashboard.GetConsoleSettingsResponse
-	(*GetSettingsRequest)(nil),         // 8: pomerium.dashboard.GetSettingsRequest
-	(*GetSettingsResponse)(nil),        // 9: pomerium.dashboard.GetSettingsResponse
-	(*SetSettingsRequest)(nil),         // 10: pomerium.dashboard.SetSettingsRequest
-	(*SetSettingsResponse)(nil),        // 11: pomerium.dashboard.SetSettingsResponse
-	(*Settings_Certificate)(nil),       // 12: pomerium.dashboard.Settings.Certificate
-	(*Settings_StringList)(nil),        // 13: pomerium.dashboard.Settings.StringList
-	nil,                                // 14: pomerium.dashboard.Settings.RequestParamsEntry
-	nil,                                // 15: pomerium.dashboard.Settings.SetResponseHeadersEntry
-	nil,                                // 16: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	(*timestamppb.Timestamp)(nil),      // 17: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),        // 18: google.protobuf.Duration
-	(*JwtGroupsFilter)(nil),            // 19: pomerium.dashboard.JwtGroupsFilter
-	(IssuerFormat)(0),                  // 20: pomerium.dashboard.IssuerFormat
-	(*structpb.Struct)(nil),            // 21: google.protobuf.Struct
-	(BearerTokenFormat)(0),             // 22: pomerium.dashboard.BearerTokenFormat
-	(*CircuitBreakerThresholds)(nil),   // 23: pomerium.dashboard.CircuitBreakerThresholds
+	(*IdentityProvider)(nil),           // 4: pomerium.dashboard.IdentityProvider
+	(*Settings)(nil),                   // 5: pomerium.dashboard.Settings
+	(*BlobStorageSettings)(nil),        // 6: pomerium.dashboard.BlobStorageSettings
+	(*GetConsoleSettingsRequest)(nil),  // 7: pomerium.dashboard.GetConsoleSettingsRequest
+	(*GetConsoleSettingsResponse)(nil), // 8: pomerium.dashboard.GetConsoleSettingsResponse
+	(*GetSettingsRequest)(nil),         // 9: pomerium.dashboard.GetSettingsRequest
+	(*GetSettingsResponse)(nil),        // 10: pomerium.dashboard.GetSettingsResponse
+	(*SetSettingsRequest)(nil),         // 11: pomerium.dashboard.SetSettingsRequest
+	(*SetSettingsResponse)(nil),        // 12: pomerium.dashboard.SetSettingsResponse
+	(*Settings_Certificate)(nil),       // 13: pomerium.dashboard.Settings.Certificate
+	(*Settings_StringList)(nil),        // 14: pomerium.dashboard.Settings.StringList
+	nil,                                // 15: pomerium.dashboard.Settings.RequestParamsEntry
+	nil,                                // 16: pomerium.dashboard.Settings.SetResponseHeadersEntry
+	nil,                                // 17: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	nil,                                // 18: pomerium.dashboard.Settings.IdentityProvidersEntry
+	(*timestamppb.Timestamp)(nil),      // 19: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),        // 20: google.protobuf.Duration
+	(*JwtGroupsFilter)(nil),            // 21: pomerium.dashboard.JwtGroupsFilter
+	(IssuerFormat)(0),                  // 22: pomerium.dashboard.IssuerFormat
+	(*structpb.Struct)(nil),            // 23: google.protobuf.Struct
+	(BearerTokenFormat)(0),             // 24: pomerium.dashboard.BearerTokenFormat
+	(*CircuitBreakerThresholds)(nil),   // 25: pomerium.dashboard.CircuitBreakerThresholds
 }
 var file_settings_proto_depIdxs = []int32{
-	17, // 0: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
-	18, // 1: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
-	18, // 2: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
-	18, // 3: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
-	12, // 4: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
-	18, // 5: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
-	18, // 6: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
-	18, // 7: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
-	18, // 8: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
-	18, // 9: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
-	18, // 10: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
-	14, // 11: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
-	15, // 12: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
-	16, // 13: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	19, // 14: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
-	20, // 15: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
-	18, // 16: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
-	18, // 17: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
-	18, // 18: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
-	18, // 19: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
-	21, // 20: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
-	18, // 21: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
-	18, // 22: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
-	13, // 23: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	13, // 24: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	22, // 25: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
-	13, // 26: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
+	19, // 0: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
+	20, // 1: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
+	20, // 2: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
+	20, // 3: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
+	13, // 4: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
+	20, // 5: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
+	20, // 6: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
+	20, // 7: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
+	20, // 8: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
+	20, // 9: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
+	20, // 10: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
+	15, // 11: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
+	16, // 12: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
+	17, // 13: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	21, // 14: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
+	22, // 15: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
+	20, // 16: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
+	20, // 17: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
+	20, // 18: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
+	20, // 19: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
+	23, // 20: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
+	20, // 21: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
+	20, // 22: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
+	14, // 23: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	14, // 24: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	24, // 25: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
+	14, // 26: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
 	0,  // 27: pomerium.dashboard.Settings.codec_type:type_name -> pomerium.dashboard.CodecType
-	23, // 28: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
-	13, // 29: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
-	13, // 30: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
-	13, // 31: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
-	13, // 32: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
-	5,  // 33: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
-	13, // 34: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
-	13, // 35: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
+	25, // 28: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
+	14, // 29: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
+	14, // 30: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
+	14, // 31: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
+	14, // 32: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
+	6,  // 33: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
+	14, // 34: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
+	14, // 35: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
 	2,  // 36: pomerium.dashboard.Settings.path_with_escaped_slashes_action:type_name -> pomerium.dashboard.PathWithEscapedSlashesAction
 	1,  // 37: pomerium.dashboard.Settings.headers_with_underscores_action:type_name -> pomerium.dashboard.HeadersWithUnderscoresAction
-	3,  // 38: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
-	4,  // 39: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	4,  // 40: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
-	4,  // 41: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	8,  // 42: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	10, // 43: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
-	8,  // 44: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	6,  // 45: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
-	9,  // 46: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	11, // 47: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
-	9,  // 48: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	7,  // 49: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
-	46, // [46:50] is the sub-list for method output_type
-	42, // [42:46] is the sub-list for method input_type
-	42, // [42:42] is the sub-list for extension type_name
-	42, // [42:42] is the sub-list for extension extendee
-	0,  // [0:42] is the sub-list for field type_name
+	18, // 38: pomerium.dashboard.Settings.identity_providers:type_name -> pomerium.dashboard.Settings.IdentityProvidersEntry
+	3,  // 39: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
+	5,  // 40: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	5,  // 41: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
+	5,  // 42: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	4,  // 43: pomerium.dashboard.Settings.IdentityProvidersEntry.value:type_name -> pomerium.dashboard.IdentityProvider
+	9,  // 44: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	11, // 45: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
+	9,  // 46: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	7,  // 47: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
+	10, // 48: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	12, // 49: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
+	10, // 50: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	8,  // 51: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
+	48, // [48:52] is the sub-list for method output_type
+	44, // [44:48] is the sub-list for method input_type
+	44, // [44:44] is the sub-list for extension type_name
+	44, // [44:44] is the sub-list for extension extendee
+	0,  // [0:44] is the sub-list for field type_name
 }
 
 func init() { file_settings_proto_init() }
@@ -2027,16 +2140,16 @@ func file_settings_proto_init() {
 		return
 	}
 	file_routes_proto_init()
-	file_settings_proto_msgTypes[1].OneofWrappers = []any{}
 	file_settings_proto_msgTypes[2].OneofWrappers = []any{}
-	file_settings_proto_msgTypes[5].OneofWrappers = []any{}
+	file_settings_proto_msgTypes[3].OneofWrappers = []any{}
+	file_settings_proto_msgTypes[6].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_settings_proto_rawDesc), len(file_settings_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   14,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
