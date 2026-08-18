@@ -81,6 +81,7 @@ const (
 	BearerTokenFormat_BEARER_TOKEN_FORMAT_DEFAULT            BearerTokenFormat = 1
 	BearerTokenFormat_BEARER_TOKEN_FORMAT_IDP_ACCESS_TOKEN   BearerTokenFormat = 2
 	BearerTokenFormat_BEARER_TOKEN_FORMAT_IDP_IDENTITY_TOKEN BearerTokenFormat = 3
+	BearerTokenFormat_BEARER_TOKEN_FORMAT_JWT                BearerTokenFormat = 4
 )
 
 // Enum value maps for BearerTokenFormat.
@@ -90,12 +91,14 @@ var (
 		1: "BEARER_TOKEN_FORMAT_DEFAULT",
 		2: "BEARER_TOKEN_FORMAT_IDP_ACCESS_TOKEN",
 		3: "BEARER_TOKEN_FORMAT_IDP_IDENTITY_TOKEN",
+		4: "BEARER_TOKEN_FORMAT_JWT",
 	}
 	BearerTokenFormat_value = map[string]int32{
 		"BEARER_TOKEN_FORMAT_UNKNOWN":            0,
 		"BEARER_TOKEN_FORMAT_DEFAULT":            1,
 		"BEARER_TOKEN_FORMAT_IDP_ACCESS_TOKEN":   2,
 		"BEARER_TOKEN_FORMAT_IDP_IDENTITY_TOKEN": 3,
+		"BEARER_TOKEN_FORMAT_JWT":                4,
 	}
 )
 
@@ -848,7 +851,7 @@ func (x *OAuth2Endpoint) GetAuthStyle() OAuth2AuthStyle {
 }
 
 // Route defines a proxy route's settings and policy associations
-// Next ID: 78
+// Next ID: 80
 type Route struct {
 	state       protoimpl.MessageState `protogen:"open.v1"`
 	Id          string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -923,8 +926,13 @@ type Route struct {
 	UpstreamTunnel                 *UpstreamTunnel           `protobuf:"bytes,76,opt,name=upstream_tunnel,json=upstreamTunnel,proto3,oneof" json:"upstream_tunnel,omitempty"`
 	AllowUpgrades                  *Route_StringList         `protobuf:"bytes,77,opt,name=allow_upgrades,json=allowUpgrades,proto3,oneof" json:"allow_upgrades,omitempty"`
 	SessionRecording               *SessionRecording         `protobuf:"bytes,78,opt,name=session_recording,json=sessionRecording,proto3" json:"session_recording,omitempty"`
-	unknownFields                  protoimpl.UnknownFields
-	sizeCache                      protoimpl.SizeCache
+	// Names of the identity_providers whose JWT bearer tokens this route accepts
+	// (when bearer_token_format is BEARER_TOKEN_FORMAT_JWT). Each entry must be a
+	// key in Settings.identity_providers. When empty, all configured providers
+	// are accepted.
+	IdentityProviders []string `protobuf:"bytes,79,rep,name=identity_providers,json=identityProviders,proto3" json:"identity_providers,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Route) Reset() {
@@ -1415,6 +1423,13 @@ func (x *Route) GetAllowUpgrades() *Route_StringList {
 func (x *Route) GetSessionRecording() *SessionRecording {
 	if x != nil {
 		return x.SessionRecording
+	}
+	return nil
+}
+
+func (x *Route) GetIdentityProviders() []string {
+	if x != nil {
+		return x.IdentityProviders
 	}
 	return nil
 }
@@ -2417,7 +2432,7 @@ const file_routes_proto_rawDesc = "" +
 	"\ttoken_url\x18\x02 \x01(\tR\btokenUrl\x12G\n" +
 	"\n" +
 	"auth_style\x18\x03 \x01(\x0e2#.pomerium.dashboard.OAuth2AuthStyleH\x00R\tauthStyle\x88\x01\x01B\r\n" +
-	"\v_auth_style\"\xb4'\n" +
+	"\v_auth_style\"\xe3'\n" +
 	"\x05Route\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
 	"\fnamespace_id\x18\x1d \x01(\tR\vnamespaceId\x129\n" +
@@ -2492,7 +2507,8 @@ const file_routes_proto_rawDesc = "" +
 	"\x17healthy_panic_threshold\x18K \x01(\x05H$R\x15healthyPanicThreshold\x88\x01\x01\x12P\n" +
 	"\x0fupstream_tunnel\x18L \x01(\v2\".pomerium.dashboard.UpstreamTunnelH%R\x0eupstreamTunnel\x88\x01\x01\x12P\n" +
 	"\x0eallow_upgrades\x18M \x01(\v2$.pomerium.dashboard.Route.StringListH&R\rallowUpgrades\x88\x01\x01\x12Q\n" +
-	"\x11session_recording\x18N \x01(\v2$.pomerium.dashboard.SessionRecordingR\x10sessionRecording\x1a$\n" +
+	"\x11session_recording\x18N \x01(\v2$.pomerium.dashboard.SessionRecordingR\x10sessionRecording\x12-\n" +
+	"\x12identity_providers\x18O \x03(\tR\x11identityProviders\x1a$\n" +
 	"\n" +
 	"StringList\x12\x16\n" +
 	"\x06values\x18\x01 \x03(\tR\x06values\x1aD\n" +
@@ -2598,12 +2614,13 @@ const file_routes_proto_rawDesc = "" +
 	"\x12MoveRoutesResponse*1\n" +
 	"\fIssuerFormat\x12\x12\n" +
 	"\x0eIssuerHostOnly\x10\x00\x12\r\n" +
-	"\tIssuerURI\x10\x01*\xab\x01\n" +
+	"\tIssuerURI\x10\x01*\xc8\x01\n" +
 	"\x11BearerTokenFormat\x12\x1f\n" +
 	"\x1bBEARER_TOKEN_FORMAT_UNKNOWN\x10\x00\x12\x1f\n" +
 	"\x1bBEARER_TOKEN_FORMAT_DEFAULT\x10\x01\x12(\n" +
 	"$BEARER_TOKEN_FORMAT_IDP_ACCESS_TOKEN\x10\x02\x12*\n" +
-	"&BEARER_TOKEN_FORMAT_IDP_IDENTITY_TOKEN\x10\x03*\xf5\x01\n" +
+	"&BEARER_TOKEN_FORMAT_IDP_IDENTITY_TOKEN\x10\x03\x12\x1b\n" +
+	"\x17BEARER_TOKEN_FORMAT_JWT\x10\x04*\xf5\x01\n" +
 	"\x13LoadBalancingPolicy\x12%\n" +
 	"!LOAD_BALANCING_POLICY_UNSPECIFIED\x10\x00\x12%\n" +
 	"!LOAD_BALANCING_POLICY_ROUND_ROBIN\x10\x01\x12 \n" +
