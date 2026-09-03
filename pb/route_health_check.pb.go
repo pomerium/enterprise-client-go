@@ -246,14 +246,14 @@ type HealthCheck struct {
 	// interval Envoy will add interval_jitter to the wait time.
 	IntervalJitter *durationpb.Duration `protobuf:"bytes,3,opt,name=interval_jitter,json=intervalJitter,proto3" json:"interval_jitter,omitempty"`
 	// An optional jitter amount as a percentage of interval_ms. If specified,
-	// during every interval Envoy will add “interval_ms“ *
-	// “interval_jitter_percent“ / 100 to the wait time.
+	// during every interval Envoy will add ``interval_ms`` *
+	// ``interval_jitter_percent`` / 100 to the wait time.
 	//
 	// If interval_jitter_ms and interval_jitter_percent are both set, both of
 	// them will be used to increase the wait time.
 	IntervalJitterPercent uint32 `protobuf:"varint,18,opt,name=interval_jitter_percent,json=intervalJitterPercent,proto3" json:"interval_jitter_percent,omitempty"`
 	// The number of unhealthy health checks required before a host is marked
-	// unhealthy. Note that for “http“ health checking if a host responds with a
+	// unhealthy. Note that for ``http`` health checking if a host responds with a
 	// code not in :ref:`expected_statuses
 	// <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`
 	// or :ref:`retriable_statuses
@@ -509,7 +509,7 @@ type HealthCheck_HttpHealthCheck struct {
 	Host string `protobuf:"bytes,1,opt,name=host,proto3" json:"host,omitempty"`
 	// Specifies the HTTP path that will be requested during health checking.
 	// For example
-	// “/healthcheck“.
+	// ``/healthcheck``.
 	Path string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
 	// Specifies a list of HTTP response statuses considered healthy. If
 	// provided, replaces default 200-only policy - 200 must be included
