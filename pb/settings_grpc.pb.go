@@ -19,10 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SettingsService_GetSettings_FullMethodName         = "/pomerium.dashboard.SettingsService/GetSettings"
-	SettingsService_SetSettings_FullMethodName         = "/pomerium.dashboard.SettingsService/SetSettings"
+	SettingsService_ActivateLicense_FullMethodName     = "/pomerium.dashboard.SettingsService/ActivateLicense"
+	SettingsService_AddLicense_FullMethodName          = "/pomerium.dashboard.SettingsService/AddLicense"
+	SettingsService_DeleteLicense_FullMethodName       = "/pomerium.dashboard.SettingsService/DeleteLicense"
 	SettingsService_GetBrandingSettings_FullMethodName = "/pomerium.dashboard.SettingsService/GetBrandingSettings"
 	SettingsService_GetConsoleSettings_FullMethodName  = "/pomerium.dashboard.SettingsService/GetConsoleSettings"
+	SettingsService_GetSettings_FullMethodName         = "/pomerium.dashboard.SettingsService/GetSettings"
+	SettingsService_ListLicenses_FullMethodName        = "/pomerium.dashboard.SettingsService/ListLicenses"
+	SettingsService_SetSettings_FullMethodName         = "/pomerium.dashboard.SettingsService/SetSettings"
 )
 
 // SettingsServiceClient is the client API for SettingsService service.
@@ -31,14 +35,22 @@ const (
 //
 // SettingsService manages global pomerium settings
 type SettingsServiceClient interface {
-	// GetSettings retrieves the currently applied settings
-	GetSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*GetSettingsResponse, error)
-	// SetSettings applies new global settings
-	SetSettings(ctx context.Context, in *SetSettingsRequest, opts ...grpc.CallOption) (*SetSettingsResponse, error)
+	// ActivateLicense activates a license.
+	ActivateLicense(ctx context.Context, in *ActivateLicenseRequest, opts ...grpc.CallOption) (*ActivateLicenseResponse, error)
+	// AddLicense adds a license.
+	AddLicense(ctx context.Context, in *AddLicenseRequest, opts ...grpc.CallOption) (*AddLicenseResponse, error)
+	// DeleteLicense deletes a license.
+	DeleteLicense(ctx context.Context, in *DeleteLicenseRequest, opts ...grpc.CallOption) (*DeleteLicenseResponse, error)
 	// GetBrandingSettings retrieves just the branding part of the settings
 	GetBrandingSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*GetSettingsResponse, error)
 	// GetConsoleSettings retrieves the console settings.
 	GetConsoleSettings(ctx context.Context, in *GetConsoleSettingsRequest, opts ...grpc.CallOption) (*GetConsoleSettingsResponse, error)
+	// GetSettings retrieves the currently applied settings
+	GetSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*GetSettingsResponse, error)
+	// ListLicenses lists all the licenses.
+	ListLicenses(ctx context.Context, in *ListLicensesRequest, opts ...grpc.CallOption) (*ListLicensesResponse, error)
+	// SetSettings applies new global settings
+	SetSettings(ctx context.Context, in *SetSettingsRequest, opts ...grpc.CallOption) (*SetSettingsResponse, error)
 }
 
 type settingsServiceClient struct {
@@ -49,20 +61,30 @@ func NewSettingsServiceClient(cc grpc.ClientConnInterface) SettingsServiceClient
 	return &settingsServiceClient{cc}
 }
 
-func (c *settingsServiceClient) GetSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*GetSettingsResponse, error) {
+func (c *settingsServiceClient) ActivateLicense(ctx context.Context, in *ActivateLicenseRequest, opts ...grpc.CallOption) (*ActivateLicenseResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetSettingsResponse)
-	err := c.cc.Invoke(ctx, SettingsService_GetSettings_FullMethodName, in, out, cOpts...)
+	out := new(ActivateLicenseResponse)
+	err := c.cc.Invoke(ctx, SettingsService_ActivateLicense_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *settingsServiceClient) SetSettings(ctx context.Context, in *SetSettingsRequest, opts ...grpc.CallOption) (*SetSettingsResponse, error) {
+func (c *settingsServiceClient) AddLicense(ctx context.Context, in *AddLicenseRequest, opts ...grpc.CallOption) (*AddLicenseResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetSettingsResponse)
-	err := c.cc.Invoke(ctx, SettingsService_SetSettings_FullMethodName, in, out, cOpts...)
+	out := new(AddLicenseResponse)
+	err := c.cc.Invoke(ctx, SettingsService_AddLicense_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsServiceClient) DeleteLicense(ctx context.Context, in *DeleteLicenseRequest, opts ...grpc.CallOption) (*DeleteLicenseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteLicenseResponse)
+	err := c.cc.Invoke(ctx, SettingsService_DeleteLicense_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -89,20 +111,58 @@ func (c *settingsServiceClient) GetConsoleSettings(ctx context.Context, in *GetC
 	return out, nil
 }
 
+func (c *settingsServiceClient) GetSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*GetSettingsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSettingsResponse)
+	err := c.cc.Invoke(ctx, SettingsService_GetSettings_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsServiceClient) ListLicenses(ctx context.Context, in *ListLicensesRequest, opts ...grpc.CallOption) (*ListLicensesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLicensesResponse)
+	err := c.cc.Invoke(ctx, SettingsService_ListLicenses_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsServiceClient) SetSettings(ctx context.Context, in *SetSettingsRequest, opts ...grpc.CallOption) (*SetSettingsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetSettingsResponse)
+	err := c.cc.Invoke(ctx, SettingsService_SetSettings_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServiceServer is the server API for SettingsService service.
 // All implementations should embed UnimplementedSettingsServiceServer
 // for forward compatibility.
 //
 // SettingsService manages global pomerium settings
 type SettingsServiceServer interface {
-	// GetSettings retrieves the currently applied settings
-	GetSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error)
-	// SetSettings applies new global settings
-	SetSettings(context.Context, *SetSettingsRequest) (*SetSettingsResponse, error)
+	// ActivateLicense activates a license.
+	ActivateLicense(context.Context, *ActivateLicenseRequest) (*ActivateLicenseResponse, error)
+	// AddLicense adds a license.
+	AddLicense(context.Context, *AddLicenseRequest) (*AddLicenseResponse, error)
+	// DeleteLicense deletes a license.
+	DeleteLicense(context.Context, *DeleteLicenseRequest) (*DeleteLicenseResponse, error)
 	// GetBrandingSettings retrieves just the branding part of the settings
 	GetBrandingSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error)
 	// GetConsoleSettings retrieves the console settings.
 	GetConsoleSettings(context.Context, *GetConsoleSettingsRequest) (*GetConsoleSettingsResponse, error)
+	// GetSettings retrieves the currently applied settings
+	GetSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error)
+	// ListLicenses lists all the licenses.
+	ListLicenses(context.Context, *ListLicensesRequest) (*ListLicensesResponse, error)
+	// SetSettings applies new global settings
+	SetSettings(context.Context, *SetSettingsRequest) (*SetSettingsResponse, error)
 }
 
 // UnimplementedSettingsServiceServer should be embedded to have
@@ -112,17 +172,29 @@ type SettingsServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSettingsServiceServer struct{}
 
-func (UnimplementedSettingsServiceServer) GetSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetSettings not implemented")
+func (UnimplementedSettingsServiceServer) ActivateLicense(context.Context, *ActivateLicenseRequest) (*ActivateLicenseResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ActivateLicense not implemented")
 }
-func (UnimplementedSettingsServiceServer) SetSettings(context.Context, *SetSettingsRequest) (*SetSettingsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SetSettings not implemented")
+func (UnimplementedSettingsServiceServer) AddLicense(context.Context, *AddLicenseRequest) (*AddLicenseResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AddLicense not implemented")
+}
+func (UnimplementedSettingsServiceServer) DeleteLicense(context.Context, *DeleteLicenseRequest) (*DeleteLicenseResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteLicense not implemented")
 }
 func (UnimplementedSettingsServiceServer) GetBrandingSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBrandingSettings not implemented")
 }
 func (UnimplementedSettingsServiceServer) GetConsoleSettings(context.Context, *GetConsoleSettingsRequest) (*GetConsoleSettingsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetConsoleSettings not implemented")
+}
+func (UnimplementedSettingsServiceServer) GetSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSettings not implemented")
+}
+func (UnimplementedSettingsServiceServer) ListLicenses(context.Context, *ListLicensesRequest) (*ListLicensesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListLicenses not implemented")
+}
+func (UnimplementedSettingsServiceServer) SetSettings(context.Context, *SetSettingsRequest) (*SetSettingsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetSettings not implemented")
 }
 func (UnimplementedSettingsServiceServer) testEmbeddedByValue() {}
 
@@ -144,38 +216,56 @@ func RegisterSettingsServiceServer(s grpc.ServiceRegistrar, srv SettingsServiceS
 	s.RegisterService(&SettingsService_ServiceDesc, srv)
 }
 
-func _SettingsService_GetSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSettingsRequest)
+func _SettingsService_ActivateLicense_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ActivateLicenseRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingsServiceServer).GetSettings(ctx, in)
+		return srv.(SettingsServiceServer).ActivateLicense(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SettingsService_GetSettings_FullMethodName,
+		FullMethod: SettingsService_ActivateLicense_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServiceServer).GetSettings(ctx, req.(*GetSettingsRequest))
+		return srv.(SettingsServiceServer).ActivateLicense(ctx, req.(*ActivateLicenseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SettingsService_SetSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetSettingsRequest)
+func _SettingsService_AddLicense_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddLicenseRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingsServiceServer).SetSettings(ctx, in)
+		return srv.(SettingsServiceServer).AddLicense(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SettingsService_SetSettings_FullMethodName,
+		FullMethod: SettingsService_AddLicense_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServiceServer).SetSettings(ctx, req.(*SetSettingsRequest))
+		return srv.(SettingsServiceServer).AddLicense(ctx, req.(*AddLicenseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingsService_DeleteLicense_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteLicenseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).DeleteLicense(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_DeleteLicense_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).DeleteLicense(ctx, req.(*DeleteLicenseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -216,6 +306,60 @@ func _SettingsService_GetConsoleSettings_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingsService_GetSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSettingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).GetSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_GetSettings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).GetSettings(ctx, req.(*GetSettingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingsService_ListLicenses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLicensesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).ListLicenses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_ListLicenses_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).ListLicenses(ctx, req.(*ListLicensesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingsService_SetSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetSettingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).SetSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_SetSettings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).SetSettings(ctx, req.(*SetSettingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SettingsService_ServiceDesc is the grpc.ServiceDesc for SettingsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -224,12 +368,16 @@ var SettingsService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SettingsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetSettings",
-			Handler:    _SettingsService_GetSettings_Handler,
+			MethodName: "ActivateLicense",
+			Handler:    _SettingsService_ActivateLicense_Handler,
 		},
 		{
-			MethodName: "SetSettings",
-			Handler:    _SettingsService_SetSettings_Handler,
+			MethodName: "AddLicense",
+			Handler:    _SettingsService_AddLicense_Handler,
+		},
+		{
+			MethodName: "DeleteLicense",
+			Handler:    _SettingsService_DeleteLicense_Handler,
 		},
 		{
 			MethodName: "GetBrandingSettings",
@@ -238,6 +386,18 @@ var SettingsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetConsoleSettings",
 			Handler:    _SettingsService_GetConsoleSettings_Handler,
+		},
+		{
+			MethodName: "GetSettings",
+			Handler:    _SettingsService_GetSettings_Handler,
+		},
+		{
+			MethodName: "ListLicenses",
+			Handler:    _SettingsService_ListLicenses_Handler,
+		},
+		{
+			MethodName: "SetSettings",
+			Handler:    _SettingsService_SetSettings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

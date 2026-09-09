@@ -24,6 +24,61 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type LicenseStatus int32
+
+const (
+	LicenseStatus_LICENSE_STATUS_UNKNOWN LicenseStatus = 0
+	LicenseStatus_LICENSE_STATUS_OK      LicenseStatus = 1
+	LicenseStatus_LICENSE_STATUS_MISSING LicenseStatus = 2
+	LicenseStatus_LICENSE_STATUS_EXPIRED LicenseStatus = 3
+	LicenseStatus_LICENSE_STATUS_INVALID LicenseStatus = 4
+)
+
+// Enum value maps for LicenseStatus.
+var (
+	LicenseStatus_name = map[int32]string{
+		0: "LICENSE_STATUS_UNKNOWN",
+		1: "LICENSE_STATUS_OK",
+		2: "LICENSE_STATUS_MISSING",
+		3: "LICENSE_STATUS_EXPIRED",
+		4: "LICENSE_STATUS_INVALID",
+	}
+	LicenseStatus_value = map[string]int32{
+		"LICENSE_STATUS_UNKNOWN": 0,
+		"LICENSE_STATUS_OK":      1,
+		"LICENSE_STATUS_MISSING": 2,
+		"LICENSE_STATUS_EXPIRED": 3,
+		"LICENSE_STATUS_INVALID": 4,
+	}
+)
+
+func (x LicenseStatus) Enum() *LicenseStatus {
+	p := new(LicenseStatus)
+	*p = x
+	return p
+}
+
+func (x LicenseStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LicenseStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_settings_proto_enumTypes[0].Descriptor()
+}
+
+func (LicenseStatus) Type() protoreflect.EnumType {
+	return &file_settings_proto_enumTypes[0]
+}
+
+func (x LicenseStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LicenseStatus.Descriptor instead.
+func (LicenseStatus) EnumDescriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{0}
+}
+
 type CodecType int32
 
 const (
@@ -63,11 +118,11 @@ func (x CodecType) String() string {
 }
 
 func (CodecType) Descriptor() protoreflect.EnumDescriptor {
-	return file_settings_proto_enumTypes[0].Descriptor()
+	return file_settings_proto_enumTypes[1].Descriptor()
 }
 
 func (CodecType) Type() protoreflect.EnumType {
-	return &file_settings_proto_enumTypes[0]
+	return &file_settings_proto_enumTypes[1]
 }
 
 func (x CodecType) Number() protoreflect.EnumNumber {
@@ -76,7 +131,7 @@ func (x CodecType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CodecType.Descriptor instead.
 func (CodecType) EnumDescriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{0}
+	return file_settings_proto_rawDescGZIP(), []int{1}
 }
 
 // Action to take when Envoy receives client request with header names containing underscore characters.
@@ -119,11 +174,11 @@ func (x HeadersWithUnderscoresAction) String() string {
 }
 
 func (HeadersWithUnderscoresAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_settings_proto_enumTypes[1].Descriptor()
+	return file_settings_proto_enumTypes[2].Descriptor()
 }
 
 func (HeadersWithUnderscoresAction) Type() protoreflect.EnumType {
-	return &file_settings_proto_enumTypes[1]
+	return &file_settings_proto_enumTypes[2]
 }
 
 func (x HeadersWithUnderscoresAction) Number() protoreflect.EnumNumber {
@@ -132,7 +187,7 @@ func (x HeadersWithUnderscoresAction) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HeadersWithUnderscoresAction.Descriptor instead.
 func (HeadersWithUnderscoresAction) EnumDescriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{1}
+	return file_settings_proto_rawDescGZIP(), []int{2}
 }
 
 // PathWithEscapedSlashesAction determines the action for request that contain
@@ -181,11 +236,11 @@ func (x PathWithEscapedSlashesAction) String() string {
 }
 
 func (PathWithEscapedSlashesAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_settings_proto_enumTypes[2].Descriptor()
+	return file_settings_proto_enumTypes[3].Descriptor()
 }
 
 func (PathWithEscapedSlashesAction) Type() protoreflect.EnumType {
-	return &file_settings_proto_enumTypes[2]
+	return &file_settings_proto_enumTypes[3]
 }
 
 func (x PathWithEscapedSlashesAction) Number() protoreflect.EnumNumber {
@@ -194,7 +249,227 @@ func (x PathWithEscapedSlashesAction) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PathWithEscapedSlashesAction.Descriptor instead.
 func (PathWithEscapedSlashesAction) EnumDescriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{3}
+}
+
+type LicenseOptions struct {
+	state                       protoimpl.MessageState `protogen:"open.v1"`
+	ReadonlyAfterExpiry         bool                   `protobuf:"varint,1,opt,name=readonly_after_expiry,json=readonlyAfterExpiry,proto3" json:"readonly_after_expiry,omitempty"`
+	AllowOfflineVerification    bool                   `protobuf:"varint,2,opt,name=allow_offline_verification,json=allowOfflineVerification,proto3" json:"allow_offline_verification,omitempty"`
+	CanDisableRemoteDiagnostics bool                   `protobuf:"varint,3,opt,name=can_disable_remote_diagnostics,json=canDisableRemoteDiagnostics,proto3" json:"can_disable_remote_diagnostics,omitempty"`
+	Mau                         uint64                 `protobuf:"varint,4,opt,name=mau,proto3" json:"mau,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
+}
+
+func (x *LicenseOptions) Reset() {
+	*x = LicenseOptions{}
+	mi := &file_settings_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LicenseOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LicenseOptions) ProtoMessage() {}
+
+func (x *LicenseOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LicenseOptions.ProtoReflect.Descriptor instead.
+func (*LicenseOptions) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *LicenseOptions) GetReadonlyAfterExpiry() bool {
+	if x != nil {
+		return x.ReadonlyAfterExpiry
+	}
+	return false
+}
+
+func (x *LicenseOptions) GetAllowOfflineVerification() bool {
+	if x != nil {
+		return x.AllowOfflineVerification
+	}
+	return false
+}
+
+func (x *LicenseOptions) GetCanDisableRemoteDiagnostics() bool {
+	if x != nil {
+		return x.CanDisableRemoteDiagnostics
+	}
+	return false
+}
+
+func (x *LicenseOptions) GetMau() uint64 {
+	if x != nil {
+		return x.Mau
+	}
+	return 0
+}
+
+type License struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ModifiedAt    *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=modified_at,json=modifiedAt,proto3" json:"modified_at,omitempty"`
+	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	Active        bool                   `protobuf:"varint,5,opt,name=active,proto3" json:"active,omitempty"`
+	Key           string                 `protobuf:"bytes,6,opt,name=key,proto3" json:"key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *License) Reset() {
+	*x = License{}
+	mi := &file_settings_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *License) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*License) ProtoMessage() {}
+
+func (x *License) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use License.ProtoReflect.Descriptor instead.
+func (*License) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *License) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *License) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *License) GetModifiedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ModifiedAt
+	}
+	return nil
+}
+
+func (x *License) GetDeletedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletedAt
+	}
+	return nil
+}
+
+func (x *License) GetActive() bool {
+	if x != nil {
+		return x.Active
+	}
+	return false
+}
+
+func (x *License) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+type LicenseInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        LicenseStatus          `protobuf:"varint,1,opt,name=status,proto3,enum=pomerium.dashboard.LicenseStatus" json:"status,omitempty"`
+	StatusReason  *string                `protobuf:"bytes,2,opt,name=status_reason,json=statusReason,proto3,oneof" json:"status_reason,omitempty"`
+	Options       *LicenseOptions        `protobuf:"bytes,3,opt,name=options,proto3" json:"options,omitempty"`
+	Expiry        *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=expiry,proto3,oneof" json:"expiry,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LicenseInfo) Reset() {
+	*x = LicenseInfo{}
+	mi := &file_settings_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LicenseInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LicenseInfo) ProtoMessage() {}
+
+func (x *LicenseInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LicenseInfo.ProtoReflect.Descriptor instead.
+func (*LicenseInfo) Descriptor() ([]byte, []int) {
 	return file_settings_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *LicenseInfo) GetStatus() LicenseStatus {
+	if x != nil {
+		return x.Status
+	}
+	return LicenseStatus_LICENSE_STATUS_UNKNOWN
+}
+
+func (x *LicenseInfo) GetStatusReason() string {
+	if x != nil && x.StatusReason != nil {
+		return *x.StatusReason
+	}
+	return ""
+}
+
+func (x *LicenseInfo) GetOptions() *LicenseOptions {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+func (x *LicenseInfo) GetExpiry() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Expiry
+	}
+	return nil
 }
 
 type ConsoleSettings struct {
@@ -203,13 +478,15 @@ type ConsoleSettings struct {
 	UseChangesets           bool                   `protobuf:"varint,2,opt,name=use_changesets,json=useChangesets,proto3" json:"use_changesets,omitempty"`
 	EnableRemoteDiagnostics bool                   `protobuf:"varint,3,opt,name=enable_remote_diagnostics,json=enableRemoteDiagnostics,proto3" json:"enable_remote_diagnostics,omitempty"`
 	InstallationId          string                 `protobuf:"bytes,4,opt,name=installation_id,json=installationId,proto3" json:"installation_id,omitempty"`
+	LicenseInfo             *LicenseInfo           `protobuf:"bytes,5,opt,name=license_info,json=licenseInfo,proto3" json:"license_info,omitempty"`
+	ZeroBaseUrl             string                 `protobuf:"bytes,6,opt,name=zero_base_url,json=zeroBaseUrl,proto3" json:"zero_base_url,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ConsoleSettings) Reset() {
 	*x = ConsoleSettings{}
-	mi := &file_settings_proto_msgTypes[0]
+	mi := &file_settings_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -221,7 +498,7 @@ func (x *ConsoleSettings) String() string {
 func (*ConsoleSettings) ProtoMessage() {}
 
 func (x *ConsoleSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[0]
+	mi := &file_settings_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -234,7 +511,7 @@ func (x *ConsoleSettings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsoleSettings.ProtoReflect.Descriptor instead.
 func (*ConsoleSettings) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{0}
+	return file_settings_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ConsoleSettings) GetEnableFeedbackWidget() bool {
@@ -261,6 +538,20 @@ func (x *ConsoleSettings) GetEnableRemoteDiagnostics() bool {
 func (x *ConsoleSettings) GetInstallationId() string {
 	if x != nil {
 		return x.InstallationId
+	}
+	return ""
+}
+
+func (x *ConsoleSettings) GetLicenseInfo() *LicenseInfo {
+	if x != nil {
+		return x.LicenseInfo
+	}
+	return nil
+}
+
+func (x *ConsoleSettings) GetZeroBaseUrl() string {
+	if x != nil {
+		return x.ZeroBaseUrl
 	}
 	return ""
 }
@@ -297,7 +588,7 @@ type IdentityProvider struct {
 
 func (x *IdentityProvider) Reset() {
 	*x = IdentityProvider{}
-	mi := &file_settings_proto_msgTypes[1]
+	mi := &file_settings_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -309,7 +600,7 @@ func (x *IdentityProvider) String() string {
 func (*IdentityProvider) ProtoMessage() {}
 
 func (x *IdentityProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[1]
+	mi := &file_settings_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -322,7 +613,7 @@ func (x *IdentityProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IdentityProvider.ProtoReflect.Descriptor instead.
 func (*IdentityProvider) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{1}
+	return file_settings_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *IdentityProvider) GetIssuer() string {
@@ -490,7 +781,7 @@ type Settings struct {
 
 func (x *Settings) Reset() {
 	*x = Settings{}
-	mi := &file_settings_proto_msgTypes[2]
+	mi := &file_settings_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -502,7 +793,7 @@ func (x *Settings) String() string {
 func (*Settings) ProtoMessage() {}
 
 func (x *Settings) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[2]
+	mi := &file_settings_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -515,7 +806,7 @@ func (x *Settings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Settings.ProtoReflect.Descriptor instead.
 func (*Settings) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{2}
+	return file_settings_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Settings) GetId() string {
@@ -1326,7 +1617,7 @@ type BlobStorageSettings struct {
 
 func (x *BlobStorageSettings) Reset() {
 	*x = BlobStorageSettings{}
-	mi := &file_settings_proto_msgTypes[3]
+	mi := &file_settings_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1338,7 +1629,7 @@ func (x *BlobStorageSettings) String() string {
 func (*BlobStorageSettings) ProtoMessage() {}
 
 func (x *BlobStorageSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[3]
+	mi := &file_settings_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1351,7 +1642,7 @@ func (x *BlobStorageSettings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlobStorageSettings.ProtoReflect.Descriptor instead.
 func (*BlobStorageSettings) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{3}
+	return file_settings_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *BlobStorageSettings) GetBucketUri() string {
@@ -1368,6 +1659,254 @@ func (x *BlobStorageSettings) GetManagedPrefix() string {
 	return ""
 }
 
+type ActivateLicenseRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	LicenseId     string                 `protobuf:"bytes,1,opt,name=license_id,json=licenseId,proto3" json:"license_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivateLicenseRequest) Reset() {
+	*x = ActivateLicenseRequest{}
+	mi := &file_settings_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateLicenseRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateLicenseRequest) ProtoMessage() {}
+
+func (x *ActivateLicenseRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateLicenseRequest.ProtoReflect.Descriptor instead.
+func (*ActivateLicenseRequest) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ActivateLicenseRequest) GetLicenseId() string {
+	if x != nil {
+		return x.LicenseId
+	}
+	return ""
+}
+
+type ActivateLicenseResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivateLicenseResponse) Reset() {
+	*x = ActivateLicenseResponse{}
+	mi := &file_settings_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateLicenseResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateLicenseResponse) ProtoMessage() {}
+
+func (x *ActivateLicenseResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateLicenseResponse.ProtoReflect.Descriptor instead.
+func (*ActivateLicenseResponse) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{8}
+}
+
+type AddLicenseRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	License       *License               `protobuf:"bytes,1,opt,name=license,proto3" json:"license,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddLicenseRequest) Reset() {
+	*x = AddLicenseRequest{}
+	mi := &file_settings_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddLicenseRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddLicenseRequest) ProtoMessage() {}
+
+func (x *AddLicenseRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddLicenseRequest.ProtoReflect.Descriptor instead.
+func (*AddLicenseRequest) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *AddLicenseRequest) GetLicense() *License {
+	if x != nil {
+		return x.License
+	}
+	return nil
+}
+
+type AddLicenseResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	License       *License               `protobuf:"bytes,2,opt,name=license,proto3" json:"license,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddLicenseResponse) Reset() {
+	*x = AddLicenseResponse{}
+	mi := &file_settings_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddLicenseResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddLicenseResponse) ProtoMessage() {}
+
+func (x *AddLicenseResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddLicenseResponse.ProtoReflect.Descriptor instead.
+func (*AddLicenseResponse) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *AddLicenseResponse) GetLicense() *License {
+	if x != nil {
+		return x.License
+	}
+	return nil
+}
+
+type DeleteLicenseRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	LicenseId     string                 `protobuf:"bytes,1,opt,name=license_id,json=licenseId,proto3" json:"license_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteLicenseRequest) Reset() {
+	*x = DeleteLicenseRequest{}
+	mi := &file_settings_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteLicenseRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteLicenseRequest) ProtoMessage() {}
+
+func (x *DeleteLicenseRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteLicenseRequest.ProtoReflect.Descriptor instead.
+func (*DeleteLicenseRequest) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *DeleteLicenseRequest) GetLicenseId() string {
+	if x != nil {
+		return x.LicenseId
+	}
+	return ""
+}
+
+type DeleteLicenseResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteLicenseResponse) Reset() {
+	*x = DeleteLicenseResponse{}
+	mi := &file_settings_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteLicenseResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteLicenseResponse) ProtoMessage() {}
+
+func (x *DeleteLicenseResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteLicenseResponse.ProtoReflect.Descriptor instead.
+func (*DeleteLicenseResponse) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{12}
+}
+
 type GetConsoleSettingsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -1376,7 +1915,7 @@ type GetConsoleSettingsRequest struct {
 
 func (x *GetConsoleSettingsRequest) Reset() {
 	*x = GetConsoleSettingsRequest{}
-	mi := &file_settings_proto_msgTypes[4]
+	mi := &file_settings_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1388,7 +1927,7 @@ func (x *GetConsoleSettingsRequest) String() string {
 func (*GetConsoleSettingsRequest) ProtoMessage() {}
 
 func (x *GetConsoleSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[4]
+	mi := &file_settings_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1401,7 +1940,7 @@ func (x *GetConsoleSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConsoleSettingsRequest.ProtoReflect.Descriptor instead.
 func (*GetConsoleSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{4}
+	return file_settings_proto_rawDescGZIP(), []int{13}
 }
 
 type GetConsoleSettingsResponse struct {
@@ -1413,7 +1952,7 @@ type GetConsoleSettingsResponse struct {
 
 func (x *GetConsoleSettingsResponse) Reset() {
 	*x = GetConsoleSettingsResponse{}
-	mi := &file_settings_proto_msgTypes[5]
+	mi := &file_settings_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1425,7 +1964,7 @@ func (x *GetConsoleSettingsResponse) String() string {
 func (*GetConsoleSettingsResponse) ProtoMessage() {}
 
 func (x *GetConsoleSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[5]
+	mi := &file_settings_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1438,7 +1977,7 @@ func (x *GetConsoleSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConsoleSettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetConsoleSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{5}
+	return file_settings_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetConsoleSettingsResponse) GetConsoleSettings() *ConsoleSettings {
@@ -1457,7 +1996,7 @@ type GetSettingsRequest struct {
 
 func (x *GetSettingsRequest) Reset() {
 	*x = GetSettingsRequest{}
-	mi := &file_settings_proto_msgTypes[6]
+	mi := &file_settings_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1469,7 +2008,7 @@ func (x *GetSettingsRequest) String() string {
 func (*GetSettingsRequest) ProtoMessage() {}
 
 func (x *GetSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[6]
+	mi := &file_settings_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1482,7 +2021,7 @@ func (x *GetSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSettingsRequest.ProtoReflect.Descriptor instead.
 func (*GetSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{6}
+	return file_settings_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetSettingsRequest) GetClusterId() string {
@@ -1501,7 +2040,7 @@ type GetSettingsResponse struct {
 
 func (x *GetSettingsResponse) Reset() {
 	*x = GetSettingsResponse{}
-	mi := &file_settings_proto_msgTypes[7]
+	mi := &file_settings_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1513,7 +2052,7 @@ func (x *GetSettingsResponse) String() string {
 func (*GetSettingsResponse) ProtoMessage() {}
 
 func (x *GetSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[7]
+	mi := &file_settings_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1526,12 +2065,92 @@ func (x *GetSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{7}
+	return file_settings_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetSettingsResponse) GetSettings() *Settings {
 	if x != nil {
 		return x.Settings
+	}
+	return nil
+}
+
+type ListLicensesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLicensesRequest) Reset() {
+	*x = ListLicensesRequest{}
+	mi := &file_settings_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLicensesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLicensesRequest) ProtoMessage() {}
+
+func (x *ListLicensesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLicensesRequest.ProtoReflect.Descriptor instead.
+func (*ListLicensesRequest) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{17}
+}
+
+type ListLicensesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Licenses      []*License             `protobuf:"bytes,1,rep,name=licenses,proto3" json:"licenses,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLicensesResponse) Reset() {
+	*x = ListLicensesResponse{}
+	mi := &file_settings_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLicensesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLicensesResponse) ProtoMessage() {}
+
+func (x *ListLicensesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLicensesResponse.ProtoReflect.Descriptor instead.
+func (*ListLicensesResponse) Descriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *ListLicensesResponse) GetLicenses() []*License {
+	if x != nil {
+		return x.Licenses
 	}
 	return nil
 }
@@ -1545,7 +2164,7 @@ type SetSettingsRequest struct {
 
 func (x *SetSettingsRequest) Reset() {
 	*x = SetSettingsRequest{}
-	mi := &file_settings_proto_msgTypes[8]
+	mi := &file_settings_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1557,7 +2176,7 @@ func (x *SetSettingsRequest) String() string {
 func (*SetSettingsRequest) ProtoMessage() {}
 
 func (x *SetSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[8]
+	mi := &file_settings_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1570,7 +2189,7 @@ func (x *SetSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSettingsRequest.ProtoReflect.Descriptor instead.
 func (*SetSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{8}
+	return file_settings_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *SetSettingsRequest) GetSettings() *Settings {
@@ -1589,7 +2208,7 @@ type SetSettingsResponse struct {
 
 func (x *SetSettingsResponse) Reset() {
 	*x = SetSettingsResponse{}
-	mi := &file_settings_proto_msgTypes[9]
+	mi := &file_settings_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1601,7 +2220,7 @@ func (x *SetSettingsResponse) String() string {
 func (*SetSettingsResponse) ProtoMessage() {}
 
 func (x *SetSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[9]
+	mi := &file_settings_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1614,7 +2233,7 @@ func (x *SetSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSettingsResponse.ProtoReflect.Descriptor instead.
 func (*SetSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{9}
+	return file_settings_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *SetSettingsResponse) GetSettings() *Settings {
@@ -1635,7 +2254,7 @@ type Settings_Certificate struct {
 
 func (x *Settings_Certificate) Reset() {
 	*x = Settings_Certificate{}
-	mi := &file_settings_proto_msgTypes[10]
+	mi := &file_settings_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1647,7 +2266,7 @@ func (x *Settings_Certificate) String() string {
 func (*Settings_Certificate) ProtoMessage() {}
 
 func (x *Settings_Certificate) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[10]
+	mi := &file_settings_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1660,7 +2279,7 @@ func (x *Settings_Certificate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Settings_Certificate.ProtoReflect.Descriptor instead.
 func (*Settings_Certificate) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{2, 0}
+	return file_settings_proto_rawDescGZIP(), []int{5, 0}
 }
 
 func (x *Settings_Certificate) GetCertBytes() []byte {
@@ -1693,7 +2312,7 @@ type Settings_StringList struct {
 
 func (x *Settings_StringList) Reset() {
 	*x = Settings_StringList{}
-	mi := &file_settings_proto_msgTypes[11]
+	mi := &file_settings_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1705,7 +2324,7 @@ func (x *Settings_StringList) String() string {
 func (*Settings_StringList) ProtoMessage() {}
 
 func (x *Settings_StringList) ProtoReflect() protoreflect.Message {
-	mi := &file_settings_proto_msgTypes[11]
+	mi := &file_settings_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1718,7 +2337,7 @@ func (x *Settings_StringList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Settings_StringList.ProtoReflect.Descriptor instead.
 func (*Settings_StringList) Descriptor() ([]byte, []int) {
-	return file_settings_proto_rawDescGZIP(), []int{2, 1}
+	return file_settings_proto_rawDescGZIP(), []int{5, 1}
 }
 
 func (x *Settings_StringList) GetValues() []string {
@@ -1732,12 +2351,36 @@ var File_settings_proto protoreflect.FileDescriptor
 
 const file_settings_proto_rawDesc = "" +
 	"\n" +
-	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"\xd3\x01\n" +
+	"\x0esettings.proto\x12\x12pomerium.dashboard\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\froutes.proto\"\xd9\x01\n" +
+	"\x0eLicenseOptions\x122\n" +
+	"\x15readonly_after_expiry\x18\x01 \x01(\bR\x13readonlyAfterExpiry\x12<\n" +
+	"\x1aallow_offline_verification\x18\x02 \x01(\bR\x18allowOfflineVerification\x12C\n" +
+	"\x1ecan_disable_remote_diagnostics\x18\x03 \x01(\bR\x1bcanDisableRemoteDiagnostics\x12\x10\n" +
+	"\x03mau\x18\x04 \x01(\x04R\x03mau\"\xf6\x01\n" +
+	"\aLicense\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x129\n" +
+	"\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12;\n" +
+	"\vmodified_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"modifiedAt\x129\n" +
+	"\n" +
+	"deleted_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\x12\x16\n" +
+	"\x06active\x18\x05 \x01(\bR\x06active\x12\x10\n" +
+	"\x03key\x18\x06 \x01(\tR\x03key\"\x86\x02\n" +
+	"\vLicenseInfo\x129\n" +
+	"\x06status\x18\x01 \x01(\x0e2!.pomerium.dashboard.LicenseStatusR\x06status\x12(\n" +
+	"\rstatus_reason\x18\x02 \x01(\tH\x00R\fstatusReason\x88\x01\x01\x12<\n" +
+	"\aoptions\x18\x03 \x01(\v2\".pomerium.dashboard.LicenseOptionsR\aoptions\x127\n" +
+	"\x06expiry\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\x06expiry\x88\x01\x01B\x10\n" +
+	"\x0e_status_reasonB\t\n" +
+	"\a_expiry\"\xbb\x02\n" +
 	"\x0fConsoleSettings\x124\n" +
 	"\x16enable_feedback_widget\x18\x01 \x01(\bR\x14enableFeedbackWidget\x12%\n" +
 	"\x0euse_changesets\x18\x02 \x01(\bR\ruseChangesets\x12:\n" +
 	"\x19enable_remote_diagnostics\x18\x03 \x01(\bR\x17enableRemoteDiagnostics\x12'\n" +
-	"\x0finstallation_id\x18\x04 \x01(\tR\x0einstallationId\"\x8a\x01\n" +
+	"\x0finstallation_id\x18\x04 \x01(\tR\x0einstallationId\x12B\n" +
+	"\flicense_info\x18\x05 \x01(\v2\x1f.pomerium.dashboard.LicenseInfoR\vlicenseInfo\x12\"\n" +
+	"\rzero_base_url\x18\x06 \x01(\tR\vzeroBaseUrl\"\x8a\x01\n" +
 	"\x10IdentityProvider\x12\x16\n" +
 	"\x06issuer\x18\x01 \x01(\tR\x06issuer\x12\x19\n" +
 	"\bjwks_url\x18\x02 \x01(\tR\ajwksUrl\x12%\n" +
@@ -1995,7 +2638,19 @@ const file_settings_proto_rawDesc = "" +
 	"bucket_uri\x18\x01 \x01(\tH\x00R\tbucketUri\x88\x01\x01\x12*\n" +
 	"\x0emanaged_prefix\x18\x02 \x01(\tH\x01R\rmanagedPrefix\x88\x01\x01B\r\n" +
 	"\v_bucket_uriB\x11\n" +
-	"\x0f_managed_prefix\"\x1b\n" +
+	"\x0f_managed_prefix\"7\n" +
+	"\x16ActivateLicenseRequest\x12\x1d\n" +
+	"\n" +
+	"license_id\x18\x01 \x01(\tR\tlicenseId\"\x19\n" +
+	"\x17ActivateLicenseResponse\"J\n" +
+	"\x11AddLicenseRequest\x125\n" +
+	"\alicense\x18\x01 \x01(\v2\x1b.pomerium.dashboard.LicenseR\alicense\"K\n" +
+	"\x12AddLicenseResponse\x125\n" +
+	"\alicense\x18\x02 \x01(\v2\x1b.pomerium.dashboard.LicenseR\alicense\"5\n" +
+	"\x14DeleteLicenseRequest\x12\x1d\n" +
+	"\n" +
+	"license_id\x18\x01 \x01(\tR\tlicenseId\"\x17\n" +
+	"\x15DeleteLicenseResponse\"\x1b\n" +
 	"\x19GetConsoleSettingsRequest\"l\n" +
 	"\x1aGetConsoleSettingsResponse\x12N\n" +
 	"\x10console_settings\x18\x01 \x01(\v2#.pomerium.dashboard.ConsoleSettingsR\x0fconsoleSettings\"G\n" +
@@ -2004,11 +2659,20 @@ const file_settings_proto_rawDesc = "" +
 	"cluster_id\x18\x01 \x01(\tH\x00R\tclusterId\x88\x01\x01B\r\n" +
 	"\v_cluster_id\"O\n" +
 	"\x13GetSettingsResponse\x128\n" +
-	"\bsettings\x18\x01 \x01(\v2\x1c.pomerium.dashboard.SettingsR\bsettings\"N\n" +
+	"\bsettings\x18\x01 \x01(\v2\x1c.pomerium.dashboard.SettingsR\bsettings\"\x15\n" +
+	"\x13ListLicensesRequest\"O\n" +
+	"\x14ListLicensesResponse\x127\n" +
+	"\blicenses\x18\x01 \x03(\v2\x1b.pomerium.dashboard.LicenseR\blicenses\"N\n" +
 	"\x12SetSettingsRequest\x128\n" +
 	"\bsettings\x18\x01 \x01(\v2\x1c.pomerium.dashboard.SettingsR\bsettings\"O\n" +
 	"\x13SetSettingsResponse\x128\n" +
-	"\bsettings\x18\x01 \x01(\v2\x1c.pomerium.dashboard.SettingsR\bsettings*z\n" +
+	"\bsettings\x18\x01 \x01(\v2\x1c.pomerium.dashboard.SettingsR\bsettings*\x96\x01\n" +
+	"\rLicenseStatus\x12\x1a\n" +
+	"\x16LICENSE_STATUS_UNKNOWN\x10\x00\x12\x15\n" +
+	"\x11LICENSE_STATUS_OK\x10\x01\x12\x1a\n" +
+	"\x16LICENSE_STATUS_MISSING\x10\x02\x12\x1a\n" +
+	"\x16LICENSE_STATUS_EXPIRED\x10\x03\x12\x1a\n" +
+	"\x16LICENSE_STATUS_INVALID\x10\x04*z\n" +
 	"\tCodecType\x12\x16\n" +
 	"\x12CODEC_TYPE_UNKNOWN\x10\x00\x12\x13\n" +
 	"\x0fCODEC_TYPE_AUTO\x10\x01\x12\x14\n" +
@@ -2025,12 +2689,17 @@ const file_settings_proto_rawDesc = "" +
 	"/PATH_WITH_ESCAPED_SLASHES_ACTION_KEEP_UNCHANGED\x10\x01\x123\n" +
 	"/PATH_WITH_ESCAPED_SLASHES_ACTION_REJECT_REQUEST\x10\x02\x12:\n" +
 	"6PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_REDIRECT\x10\x03\x129\n" +
-	"5PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD\x10\x042\xae\x03\n" +
-	"\x0fSettingsService\x12^\n" +
-	"\vGetSettings\x12&.pomerium.dashboard.GetSettingsRequest\x1a'.pomerium.dashboard.GetSettingsResponse\x12^\n" +
-	"\vSetSettings\x12&.pomerium.dashboard.SetSettingsRequest\x1a'.pomerium.dashboard.SetSettingsResponse\x12f\n" +
+	"5PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD\x10\x042\xc0\x06\n" +
+	"\x0fSettingsService\x12j\n" +
+	"\x0fActivateLicense\x12*.pomerium.dashboard.ActivateLicenseRequest\x1a+.pomerium.dashboard.ActivateLicenseResponse\x12[\n" +
+	"\n" +
+	"AddLicense\x12%.pomerium.dashboard.AddLicenseRequest\x1a&.pomerium.dashboard.AddLicenseResponse\x12d\n" +
+	"\rDeleteLicense\x12(.pomerium.dashboard.DeleteLicenseRequest\x1a).pomerium.dashboard.DeleteLicenseResponse\x12f\n" +
 	"\x13GetBrandingSettings\x12&.pomerium.dashboard.GetSettingsRequest\x1a'.pomerium.dashboard.GetSettingsResponse\x12s\n" +
-	"\x12GetConsoleSettings\x12-.pomerium.dashboard.GetConsoleSettingsRequest\x1a..pomerium.dashboard.GetConsoleSettingsResponseB-Z+github.com/pomerium/pomerium-console/pkg/pbb\x06proto3"
+	"\x12GetConsoleSettings\x12-.pomerium.dashboard.GetConsoleSettingsRequest\x1a..pomerium.dashboard.GetConsoleSettingsResponse\x12^\n" +
+	"\vGetSettings\x12&.pomerium.dashboard.GetSettingsRequest\x1a'.pomerium.dashboard.GetSettingsResponse\x12a\n" +
+	"\fListLicenses\x12'.pomerium.dashboard.ListLicensesRequest\x1a(.pomerium.dashboard.ListLicensesResponse\x12^\n" +
+	"\vSetSettings\x12&.pomerium.dashboard.SetSettingsRequest\x1a'.pomerium.dashboard.SetSettingsResponseB-Z+github.com/pomerium/pomerium-console/pkg/pbb\x06proto3"
 
 var (
 	file_settings_proto_rawDescOnce sync.Once
@@ -2044,94 +2713,124 @@ func file_settings_proto_rawDescGZIP() []byte {
 	return file_settings_proto_rawDescData
 }
 
-var file_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_settings_proto_goTypes = []any{
-	(CodecType)(0),                     // 0: pomerium.dashboard.CodecType
-	(HeadersWithUnderscoresAction)(0),  // 1: pomerium.dashboard.HeadersWithUnderscoresAction
-	(PathWithEscapedSlashesAction)(0),  // 2: pomerium.dashboard.PathWithEscapedSlashesAction
-	(*ConsoleSettings)(nil),            // 3: pomerium.dashboard.ConsoleSettings
-	(*IdentityProvider)(nil),           // 4: pomerium.dashboard.IdentityProvider
-	(*Settings)(nil),                   // 5: pomerium.dashboard.Settings
-	(*BlobStorageSettings)(nil),        // 6: pomerium.dashboard.BlobStorageSettings
-	(*GetConsoleSettingsRequest)(nil),  // 7: pomerium.dashboard.GetConsoleSettingsRequest
-	(*GetConsoleSettingsResponse)(nil), // 8: pomerium.dashboard.GetConsoleSettingsResponse
-	(*GetSettingsRequest)(nil),         // 9: pomerium.dashboard.GetSettingsRequest
-	(*GetSettingsResponse)(nil),        // 10: pomerium.dashboard.GetSettingsResponse
-	(*SetSettingsRequest)(nil),         // 11: pomerium.dashboard.SetSettingsRequest
-	(*SetSettingsResponse)(nil),        // 12: pomerium.dashboard.SetSettingsResponse
-	(*Settings_Certificate)(nil),       // 13: pomerium.dashboard.Settings.Certificate
-	(*Settings_StringList)(nil),        // 14: pomerium.dashboard.Settings.StringList
-	nil,                                // 15: pomerium.dashboard.Settings.RequestParamsEntry
-	nil,                                // 16: pomerium.dashboard.Settings.SetResponseHeadersEntry
-	nil,                                // 17: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	nil,                                // 18: pomerium.dashboard.Settings.IdentityProvidersEntry
-	(*timestamppb.Timestamp)(nil),      // 19: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),        // 20: google.protobuf.Duration
-	(*JwtGroupsFilter)(nil),            // 21: pomerium.dashboard.JwtGroupsFilter
-	(IssuerFormat)(0),                  // 22: pomerium.dashboard.IssuerFormat
-	(*structpb.Struct)(nil),            // 23: google.protobuf.Struct
-	(BearerTokenFormat)(0),             // 24: pomerium.dashboard.BearerTokenFormat
-	(*CircuitBreakerThresholds)(nil),   // 25: pomerium.dashboard.CircuitBreakerThresholds
+	(LicenseStatus)(0),                 // 0: pomerium.dashboard.LicenseStatus
+	(CodecType)(0),                     // 1: pomerium.dashboard.CodecType
+	(HeadersWithUnderscoresAction)(0),  // 2: pomerium.dashboard.HeadersWithUnderscoresAction
+	(PathWithEscapedSlashesAction)(0),  // 3: pomerium.dashboard.PathWithEscapedSlashesAction
+	(*LicenseOptions)(nil),             // 4: pomerium.dashboard.LicenseOptions
+	(*License)(nil),                    // 5: pomerium.dashboard.License
+	(*LicenseInfo)(nil),                // 6: pomerium.dashboard.LicenseInfo
+	(*ConsoleSettings)(nil),            // 7: pomerium.dashboard.ConsoleSettings
+	(*IdentityProvider)(nil),           // 8: pomerium.dashboard.IdentityProvider
+	(*Settings)(nil),                   // 9: pomerium.dashboard.Settings
+	(*BlobStorageSettings)(nil),        // 10: pomerium.dashboard.BlobStorageSettings
+	(*ActivateLicenseRequest)(nil),     // 11: pomerium.dashboard.ActivateLicenseRequest
+	(*ActivateLicenseResponse)(nil),    // 12: pomerium.dashboard.ActivateLicenseResponse
+	(*AddLicenseRequest)(nil),          // 13: pomerium.dashboard.AddLicenseRequest
+	(*AddLicenseResponse)(nil),         // 14: pomerium.dashboard.AddLicenseResponse
+	(*DeleteLicenseRequest)(nil),       // 15: pomerium.dashboard.DeleteLicenseRequest
+	(*DeleteLicenseResponse)(nil),      // 16: pomerium.dashboard.DeleteLicenseResponse
+	(*GetConsoleSettingsRequest)(nil),  // 17: pomerium.dashboard.GetConsoleSettingsRequest
+	(*GetConsoleSettingsResponse)(nil), // 18: pomerium.dashboard.GetConsoleSettingsResponse
+	(*GetSettingsRequest)(nil),         // 19: pomerium.dashboard.GetSettingsRequest
+	(*GetSettingsResponse)(nil),        // 20: pomerium.dashboard.GetSettingsResponse
+	(*ListLicensesRequest)(nil),        // 21: pomerium.dashboard.ListLicensesRequest
+	(*ListLicensesResponse)(nil),       // 22: pomerium.dashboard.ListLicensesResponse
+	(*SetSettingsRequest)(nil),         // 23: pomerium.dashboard.SetSettingsRequest
+	(*SetSettingsResponse)(nil),        // 24: pomerium.dashboard.SetSettingsResponse
+	(*Settings_Certificate)(nil),       // 25: pomerium.dashboard.Settings.Certificate
+	(*Settings_StringList)(nil),        // 26: pomerium.dashboard.Settings.StringList
+	nil,                                // 27: pomerium.dashboard.Settings.RequestParamsEntry
+	nil,                                // 28: pomerium.dashboard.Settings.SetResponseHeadersEntry
+	nil,                                // 29: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	nil,                                // 30: pomerium.dashboard.Settings.IdentityProvidersEntry
+	(*timestamppb.Timestamp)(nil),      // 31: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),        // 32: google.protobuf.Duration
+	(*JwtGroupsFilter)(nil),            // 33: pomerium.dashboard.JwtGroupsFilter
+	(IssuerFormat)(0),                  // 34: pomerium.dashboard.IssuerFormat
+	(*structpb.Struct)(nil),            // 35: google.protobuf.Struct
+	(BearerTokenFormat)(0),             // 36: pomerium.dashboard.BearerTokenFormat
+	(*CircuitBreakerThresholds)(nil),   // 37: pomerium.dashboard.CircuitBreakerThresholds
 }
 var file_settings_proto_depIdxs = []int32{
-	19, // 0: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
-	20, // 1: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
-	20, // 2: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
-	20, // 3: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
-	13, // 4: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
-	20, // 5: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
-	20, // 6: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
-	20, // 7: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
-	20, // 8: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
-	20, // 9: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
-	20, // 10: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
-	15, // 11: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
-	16, // 12: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
-	17, // 13: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	21, // 14: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
-	22, // 15: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
-	20, // 16: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
-	20, // 17: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
-	20, // 18: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
-	20, // 19: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
-	23, // 20: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
-	20, // 21: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
-	20, // 22: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
-	14, // 23: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	14, // 24: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	24, // 25: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
-	14, // 26: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
-	0,  // 27: pomerium.dashboard.Settings.codec_type:type_name -> pomerium.dashboard.CodecType
-	25, // 28: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
-	14, // 29: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
-	14, // 30: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
-	14, // 31: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
-	14, // 32: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
-	6,  // 33: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
-	14, // 34: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
-	14, // 35: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
-	2,  // 36: pomerium.dashboard.Settings.path_with_escaped_slashes_action:type_name -> pomerium.dashboard.PathWithEscapedSlashesAction
-	1,  // 37: pomerium.dashboard.Settings.headers_with_underscores_action:type_name -> pomerium.dashboard.HeadersWithUnderscoresAction
-	18, // 38: pomerium.dashboard.Settings.identity_providers:type_name -> pomerium.dashboard.Settings.IdentityProvidersEntry
-	3,  // 39: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
-	5,  // 40: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	5,  // 41: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
-	5,  // 42: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	4,  // 43: pomerium.dashboard.Settings.IdentityProvidersEntry.value:type_name -> pomerium.dashboard.IdentityProvider
-	9,  // 44: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	11, // 45: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
-	9,  // 46: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	7,  // 47: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
-	10, // 48: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	12, // 49: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
-	10, // 50: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	8,  // 51: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
-	48, // [48:52] is the sub-list for method output_type
-	44, // [44:48] is the sub-list for method input_type
-	44, // [44:44] is the sub-list for extension type_name
-	44, // [44:44] is the sub-list for extension extendee
-	0,  // [0:44] is the sub-list for field type_name
+	31, // 0: pomerium.dashboard.License.created_at:type_name -> google.protobuf.Timestamp
+	31, // 1: pomerium.dashboard.License.modified_at:type_name -> google.protobuf.Timestamp
+	31, // 2: pomerium.dashboard.License.deleted_at:type_name -> google.protobuf.Timestamp
+	0,  // 3: pomerium.dashboard.LicenseInfo.status:type_name -> pomerium.dashboard.LicenseStatus
+	4,  // 4: pomerium.dashboard.LicenseInfo.options:type_name -> pomerium.dashboard.LicenseOptions
+	31, // 5: pomerium.dashboard.LicenseInfo.expiry:type_name -> google.protobuf.Timestamp
+	6,  // 6: pomerium.dashboard.ConsoleSettings.license_info:type_name -> pomerium.dashboard.LicenseInfo
+	31, // 7: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
+	32, // 8: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
+	32, // 9: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
+	32, // 10: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
+	25, // 11: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
+	32, // 12: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
+	32, // 13: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
+	32, // 14: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
+	32, // 15: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
+	32, // 16: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
+	32, // 17: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
+	27, // 18: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
+	28, // 19: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
+	29, // 20: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	33, // 21: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
+	34, // 22: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
+	32, // 23: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
+	32, // 24: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
+	32, // 25: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
+	32, // 26: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
+	35, // 27: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
+	32, // 28: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
+	32, // 29: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
+	26, // 30: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	26, // 31: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	36, // 32: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
+	26, // 33: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
+	1,  // 34: pomerium.dashboard.Settings.codec_type:type_name -> pomerium.dashboard.CodecType
+	37, // 35: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
+	26, // 36: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
+	26, // 37: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
+	26, // 38: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
+	26, // 39: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
+	10, // 40: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
+	26, // 41: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
+	26, // 42: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
+	3,  // 43: pomerium.dashboard.Settings.path_with_escaped_slashes_action:type_name -> pomerium.dashboard.PathWithEscapedSlashesAction
+	2,  // 44: pomerium.dashboard.Settings.headers_with_underscores_action:type_name -> pomerium.dashboard.HeadersWithUnderscoresAction
+	30, // 45: pomerium.dashboard.Settings.identity_providers:type_name -> pomerium.dashboard.Settings.IdentityProvidersEntry
+	5,  // 46: pomerium.dashboard.AddLicenseRequest.license:type_name -> pomerium.dashboard.License
+	5,  // 47: pomerium.dashboard.AddLicenseResponse.license:type_name -> pomerium.dashboard.License
+	7,  // 48: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
+	9,  // 49: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	5,  // 50: pomerium.dashboard.ListLicensesResponse.licenses:type_name -> pomerium.dashboard.License
+	9,  // 51: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
+	9,  // 52: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	8,  // 53: pomerium.dashboard.Settings.IdentityProvidersEntry.value:type_name -> pomerium.dashboard.IdentityProvider
+	11, // 54: pomerium.dashboard.SettingsService.ActivateLicense:input_type -> pomerium.dashboard.ActivateLicenseRequest
+	13, // 55: pomerium.dashboard.SettingsService.AddLicense:input_type -> pomerium.dashboard.AddLicenseRequest
+	15, // 56: pomerium.dashboard.SettingsService.DeleteLicense:input_type -> pomerium.dashboard.DeleteLicenseRequest
+	19, // 57: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	17, // 58: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
+	19, // 59: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	21, // 60: pomerium.dashboard.SettingsService.ListLicenses:input_type -> pomerium.dashboard.ListLicensesRequest
+	23, // 61: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
+	12, // 62: pomerium.dashboard.SettingsService.ActivateLicense:output_type -> pomerium.dashboard.ActivateLicenseResponse
+	14, // 63: pomerium.dashboard.SettingsService.AddLicense:output_type -> pomerium.dashboard.AddLicenseResponse
+	16, // 64: pomerium.dashboard.SettingsService.DeleteLicense:output_type -> pomerium.dashboard.DeleteLicenseResponse
+	20, // 65: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	18, // 66: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
+	20, // 67: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	22, // 68: pomerium.dashboard.SettingsService.ListLicenses:output_type -> pomerium.dashboard.ListLicensesResponse
+	24, // 69: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
+	62, // [62:70] is the sub-list for method output_type
+	54, // [54:62] is the sub-list for method input_type
+	54, // [54:54] is the sub-list for extension type_name
+	54, // [54:54] is the sub-list for extension extendee
+	0,  // [0:54] is the sub-list for field type_name
 }
 
 func init() { file_settings_proto_init() }
@@ -2141,15 +2840,16 @@ func file_settings_proto_init() {
 	}
 	file_routes_proto_init()
 	file_settings_proto_msgTypes[2].OneofWrappers = []any{}
-	file_settings_proto_msgTypes[3].OneofWrappers = []any{}
+	file_settings_proto_msgTypes[5].OneofWrappers = []any{}
 	file_settings_proto_msgTypes[6].OneofWrappers = []any{}
+	file_settings_proto_msgTypes[15].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_settings_proto_rawDesc), len(file_settings_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   16,
+			NumEnums:      4,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

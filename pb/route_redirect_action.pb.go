@@ -295,10 +295,10 @@ func (RedirectAction_RedirectResponseCode) EnumDescriptor() ([]byte, []int) {
 type RedirectAction struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// When the scheme redirection take place, the following rules apply:
-	//  1. If the source URI scheme is “http“ and the port is explicitly
-	//     set to “:80“, the port will be removed after the redirection
-	//  2. If the source URI scheme is “https“ and the port is explicitly
-	//     set to “:443“, the port will be removed after the redirection
+	//  1. If the source URI scheme is ``http`` and the port is explicitly
+	//     set to ``:80``, the port will be removed after the redirection
+	//  2. If the source URI scheme is ``https`` and the port is explicitly
+	//     set to ``:443``, the port will be removed after the redirection
 	//
 	// Types that are valid to be assigned to SchemeRewriteSpecifier:
 	//
@@ -471,12 +471,12 @@ type RedirectAction_PathRedirect struct {
 	//
 	// For example, let's say we have the following routes:
 	//
-	//   - match: { path: "/old-path-1" }
-	//     redirect: { path_redirect: "/new-path-1" }
-	//   - match: { path: "/old-path-2" }
-	//     redirect: { path_redirect: "/new-path-2", strip-query: "true" }
-	//   - match: { path: "/old-path-3" }
-	//     redirect: { path_redirect: "/new-path-3?foo=1", strip_query: "true" }
+	// - match: { path: "/old-path-1" }
+	//   redirect: { path_redirect: "/new-path-1" }
+	// - match: { path: "/old-path-2" }
+	//   redirect: { path_redirect: "/new-path-2", strip-query: "true" }
+	// - match: { path: "/old-path-3" }
+	//   redirect: { path_redirect: "/new-path-3?foo=1", strip_query: "true" }
 	//
 	// 1. if request uri is "/old-path-1?bar=1", users will be redirected to
 	// "/new-path-1?bar=1"
@@ -494,9 +494,9 @@ type RedirectAction_PrefixRewrite struct {
 	//
 	// .. attention::
 	//
-	//	Pay attention to the use of trailing slashes as mentioned in
-	//	:ref:`RouteAction's prefix_rewrite
-	//	<envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`.
+	//   Pay attention to the use of trailing slashes as mentioned in
+	//   :ref:`RouteAction's prefix_rewrite
+	//   <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`.
 	PrefixRewrite string `protobuf:"bytes,5,opt,name=prefix_rewrite,json=prefixRewrite,proto3,oneof"`
 }
 
@@ -510,24 +510,23 @@ type RedirectAction_RegexRewrite struct {
 	//
 	// Examples using Google's `RE2 <https://github.com/google/re2>`_ engine:
 	//
-	//   - The path pattern “^/service/([^/]+)(/.*)$“ paired with a substitution
-	//     string of “\2/instance/\1“ would transform “/service/foo/v1/api“
-	//     into “/v1/api/instance/foo“.
+	// * The path pattern ``^/service/([^/]+)(/.*)$`` paired with a substitution
+	//   string of ``\2/instance/\1`` would transform ``/service/foo/v1/api``
+	//   into ``/v1/api/instance/foo``.
 	//
-	//   - The pattern “one“ paired with a substitution string of “two“ would
-	//     transform “/xxx/one/yyy/one/zzz“ into “/xxx/two/yyy/two/zzz“.
+	// * The pattern ``one`` paired with a substitution string of ``two`` would
+	//   transform ``/xxx/one/yyy/one/zzz`` into ``/xxx/two/yyy/two/zzz``.
 	//
-	//   - The pattern “^(.*?)one(.*)$“ paired with a substitution string of
-	//     “\1two\2“ would replace only the first occurrence of “one“,
-	//     transforming path “/xxx/one/yyy/one/zzz“ into
-	//     “/xxx/two/yyy/one/zzz“.
+	// * The pattern ``^(.*?)one(.*)$`` paired with a substitution string of
+	//   ``\1two\2`` would replace only the first occurrence of ``one``,
+	//   transforming path ``/xxx/one/yyy/one/zzz`` into
+	//   ``/xxx/two/yyy/one/zzz``.
 	//
-	// * The pattern “(?i)/xxx/“ paired with a substitution string of
-	// “/yyy/“
-	//
-	//	would do a case-insensitive match and transform path ``/aaa/XxX/bbb``
-	//	to
-	//	``/aaa/yyy/bbb``.
+	// * The pattern ``(?i)/xxx/`` paired with a substitution string of
+	// ``/yyy/``
+	//   would do a case-insensitive match and transform path ``/aaa/XxX/bbb``
+	//   to
+	//   ``/aaa/yyy/bbb``.
 	RegexRewrite *RedirectAction_RegexMatchAndSubstitute `protobuf:"bytes,9,opt,name=regex_rewrite,json=regexRewrite,proto3,oneof"`
 }
 
@@ -558,7 +557,7 @@ type RedirectAction_RegexMatchAndSubstitute struct {
 	// defined by the chosen regular expression engine. Google's `RE2
 	// <https://github.com/google/re2>`_ regular expression engine uses a
 	// backslash followed by the capture group number to denote a numbered
-	// capture group. E.g., “\1“ refers to capture group 1, and “\2“ refers
+	// capture group. E.g., ``\1`` refers to capture group 1, and ``\2`` refers
 	// to capture group 2.
 	Substitution  string `protobuf:"bytes,2,opt,name=substitution,proto3" json:"substitution,omitempty"`
 	unknownFields protoimpl.UnknownFields
