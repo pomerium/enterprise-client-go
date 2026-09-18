@@ -19,14 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RouteService_DeleteRoute_FullMethodName  = "/pomerium.dashboard.RouteService/DeleteRoute"
-	RouteService_DeleteRoutes_FullMethodName = "/pomerium.dashboard.RouteService/DeleteRoutes"
-	RouteService_GetRoute_FullMethodName     = "/pomerium.dashboard.RouteService/GetRoute"
-	RouteService_ListRoutes_FullMethodName   = "/pomerium.dashboard.RouteService/ListRoutes"
-	RouteService_LoadRoutes_FullMethodName   = "/pomerium.dashboard.RouteService/LoadRoutes"
-	RouteService_SetRoute_FullMethodName     = "/pomerium.dashboard.RouteService/SetRoute"
-	RouteService_SetRoutes_FullMethodName    = "/pomerium.dashboard.RouteService/SetRoutes"
-	RouteService_MoveRoutes_FullMethodName   = "/pomerium.dashboard.RouteService/MoveRoutes"
+	RouteService_DeleteRoute_FullMethodName         = "/pomerium.dashboard.RouteService/DeleteRoute"
+	RouteService_DeleteRoutes_FullMethodName        = "/pomerium.dashboard.RouteService/DeleteRoutes"
+	RouteService_GetRoute_FullMethodName            = "/pomerium.dashboard.RouteService/GetRoute"
+	RouteService_GetUnmanagedRoute_FullMethodName   = "/pomerium.dashboard.RouteService/GetUnmanagedRoute"
+	RouteService_ListRoutes_FullMethodName          = "/pomerium.dashboard.RouteService/ListRoutes"
+	RouteService_ListUnmanagedRoutes_FullMethodName = "/pomerium.dashboard.RouteService/ListUnmanagedRoutes"
+	RouteService_LoadRoutes_FullMethodName          = "/pomerium.dashboard.RouteService/LoadRoutes"
+	RouteService_SetRoute_FullMethodName            = "/pomerium.dashboard.RouteService/SetRoute"
+	RouteService_SetRoutes_FullMethodName           = "/pomerium.dashboard.RouteService/SetRoutes"
+	RouteService_MoveRoutes_FullMethodName          = "/pomerium.dashboard.RouteService/MoveRoutes"
 )
 
 // RouteServiceClient is the client API for RouteService service.
@@ -41,8 +43,12 @@ type RouteServiceClient interface {
 	DeleteRoutes(ctx context.Context, in *DeleteRoutesRequest, opts ...grpc.CallOption) (*DeleteRoutesResponse, error)
 	// GetRoute retrieves an existing route
 	GetRoute(ctx context.Context, in *GetRouteRequest, opts ...grpc.CallOption) (*GetRouteResponse, error)
+	// GetUnmanagedRoute retrieves an unmanaged route.
+	GetUnmanagedRoute(ctx context.Context, in *GetUnmanagedRouteRequest, opts ...grpc.CallOption) (*GetUnmanagedRouteResponse, error)
 	// ListRoutes lists routes based on ListRoutesRequest
 	ListRoutes(ctx context.Context, in *ListRoutesRequest, opts ...grpc.CallOption) (*ListRoutesResponse, error)
+	// ListUnmanagedRoutes lists routes based on ListUnmanagedRoutesRequest
+	ListUnmanagedRoutes(ctx context.Context, in *ListUnmanagedRoutesRequest, opts ...grpc.CallOption) (*ListUnmanagedRoutesResponse, error)
 	// LoadRoutes imports routes from an existing OSS configuration
 	LoadRoutes(ctx context.Context, in *LoadRoutesRequest, opts ...grpc.CallOption) (*LoadRoutesResponse, error)
 	// SetRoute creates or, if id is defined, updates an existing route
@@ -91,10 +97,30 @@ func (c *routeServiceClient) GetRoute(ctx context.Context, in *GetRouteRequest, 
 	return out, nil
 }
 
+func (c *routeServiceClient) GetUnmanagedRoute(ctx context.Context, in *GetUnmanagedRouteRequest, opts ...grpc.CallOption) (*GetUnmanagedRouteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUnmanagedRouteResponse)
+	err := c.cc.Invoke(ctx, RouteService_GetUnmanagedRoute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *routeServiceClient) ListRoutes(ctx context.Context, in *ListRoutesRequest, opts ...grpc.CallOption) (*ListRoutesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListRoutesResponse)
 	err := c.cc.Invoke(ctx, RouteService_ListRoutes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *routeServiceClient) ListUnmanagedRoutes(ctx context.Context, in *ListUnmanagedRoutesRequest, opts ...grpc.CallOption) (*ListUnmanagedRoutesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListUnmanagedRoutesResponse)
+	err := c.cc.Invoke(ctx, RouteService_ListUnmanagedRoutes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -153,8 +179,12 @@ type RouteServiceServer interface {
 	DeleteRoutes(context.Context, *DeleteRoutesRequest) (*DeleteRoutesResponse, error)
 	// GetRoute retrieves an existing route
 	GetRoute(context.Context, *GetRouteRequest) (*GetRouteResponse, error)
+	// GetUnmanagedRoute retrieves an unmanaged route.
+	GetUnmanagedRoute(context.Context, *GetUnmanagedRouteRequest) (*GetUnmanagedRouteResponse, error)
 	// ListRoutes lists routes based on ListRoutesRequest
 	ListRoutes(context.Context, *ListRoutesRequest) (*ListRoutesResponse, error)
+	// ListUnmanagedRoutes lists routes based on ListUnmanagedRoutesRequest
+	ListUnmanagedRoutes(context.Context, *ListUnmanagedRoutesRequest) (*ListUnmanagedRoutesResponse, error)
 	// LoadRoutes imports routes from an existing OSS configuration
 	LoadRoutes(context.Context, *LoadRoutesRequest) (*LoadRoutesResponse, error)
 	// SetRoute creates or, if id is defined, updates an existing route
@@ -181,8 +211,14 @@ func (UnimplementedRouteServiceServer) DeleteRoutes(context.Context, *DeleteRout
 func (UnimplementedRouteServiceServer) GetRoute(context.Context, *GetRouteRequest) (*GetRouteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetRoute not implemented")
 }
+func (UnimplementedRouteServiceServer) GetUnmanagedRoute(context.Context, *GetUnmanagedRouteRequest) (*GetUnmanagedRouteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUnmanagedRoute not implemented")
+}
 func (UnimplementedRouteServiceServer) ListRoutes(context.Context, *ListRoutesRequest) (*ListRoutesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListRoutes not implemented")
+}
+func (UnimplementedRouteServiceServer) ListUnmanagedRoutes(context.Context, *ListUnmanagedRoutesRequest) (*ListUnmanagedRoutesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListUnmanagedRoutes not implemented")
 }
 func (UnimplementedRouteServiceServer) LoadRoutes(context.Context, *LoadRoutesRequest) (*LoadRoutesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method LoadRoutes not implemented")
@@ -270,6 +306,24 @@ func _RouteService_GetRoute_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RouteService_GetUnmanagedRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUnmanagedRouteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RouteServiceServer).GetUnmanagedRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RouteService_GetUnmanagedRoute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RouteServiceServer).GetUnmanagedRoute(ctx, req.(*GetUnmanagedRouteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RouteService_ListRoutes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRoutesRequest)
 	if err := dec(in); err != nil {
@@ -284,6 +338,24 @@ func _RouteService_ListRoutes_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RouteServiceServer).ListRoutes(ctx, req.(*ListRoutesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RouteService_ListUnmanagedRoutes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUnmanagedRoutesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RouteServiceServer).ListUnmanagedRoutes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RouteService_ListUnmanagedRoutes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RouteServiceServer).ListUnmanagedRoutes(ctx, req.(*ListUnmanagedRoutesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -380,8 +452,16 @@ var RouteService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RouteService_GetRoute_Handler,
 		},
 		{
+			MethodName: "GetUnmanagedRoute",
+			Handler:    _RouteService_GetUnmanagedRoute_Handler,
+		},
+		{
 			MethodName: "ListRoutes",
 			Handler:    _RouteService_ListRoutes_Handler,
+		},
+		{
+			MethodName: "ListUnmanagedRoutes",
+			Handler:    _RouteService_ListUnmanagedRoutes_Handler,
 		},
 		{
 			MethodName: "LoadRoutes",
