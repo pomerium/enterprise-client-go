@@ -2936,6 +2936,245 @@ var _ interface {
 	ErrorName() string
 } = GetRouteResponseValidationError{}
 
+// Validate checks the field values on GetUnmanagedRouteRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetUnmanagedRouteRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUnmanagedRouteRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUnmanagedRouteRequestMultiError, or nil if none found.
+func (m *GetUnmanagedRouteRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUnmanagedRouteRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if m.ClusterId != nil {
+		// no validation rules for ClusterId
+	}
+
+	if len(errors) > 0 {
+		return GetUnmanagedRouteRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUnmanagedRouteRequestMultiError is an error wrapping multiple validation
+// errors returned by GetUnmanagedRouteRequest.ValidateAll() if the designated
+// constraints aren't met.
+type GetUnmanagedRouteRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUnmanagedRouteRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUnmanagedRouteRequestMultiError) AllErrors() []error { return m }
+
+// GetUnmanagedRouteRequestValidationError is the validation error returned by
+// GetUnmanagedRouteRequest.Validate if the designated constraints aren't met.
+type GetUnmanagedRouteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUnmanagedRouteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUnmanagedRouteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUnmanagedRouteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUnmanagedRouteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUnmanagedRouteRequestValidationError) ErrorName() string {
+	return "GetUnmanagedRouteRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUnmanagedRouteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUnmanagedRouteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUnmanagedRouteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUnmanagedRouteRequestValidationError{}
+
+// Validate checks the field values on GetUnmanagedRouteResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetUnmanagedRouteResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUnmanagedRouteResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUnmanagedRouteResponseMultiError, or nil if none found.
+func (m *GetUnmanagedRouteResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUnmanagedRouteResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetRoute()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetUnmanagedRouteResponseValidationError{
+					field:  "Route",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetUnmanagedRouteResponseValidationError{
+					field:  "Route",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetRoute()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetUnmanagedRouteResponseValidationError{
+				field:  "Route",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetUnmanagedRouteResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUnmanagedRouteResponseMultiError is an error wrapping multiple validation
+// errors returned by GetUnmanagedRouteResponse.ValidateAll() if the
+// designated constraints aren't met.
+type GetUnmanagedRouteResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUnmanagedRouteResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUnmanagedRouteResponseMultiError) AllErrors() []error { return m }
+
+// GetUnmanagedRouteResponseValidationError is the validation error returned by
+// GetUnmanagedRouteResponse.Validate if the designated constraints aren't met.
+type GetUnmanagedRouteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUnmanagedRouteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUnmanagedRouteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUnmanagedRouteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUnmanagedRouteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUnmanagedRouteResponseValidationError) ErrorName() string {
+	return "GetUnmanagedRouteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUnmanagedRouteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUnmanagedRouteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUnmanagedRouteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUnmanagedRouteResponseValidationError{}
+
 // Validate checks the field values on ListRoutesRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -3197,6 +3436,263 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ListRoutesResponseValidationError{}
+
+// Validate checks the field values on ListUnmanagedRoutesRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListUnmanagedRoutesRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListUnmanagedRoutesRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListUnmanagedRoutesRequestMultiError, or nil if none found.
+func (m *ListUnmanagedRoutesRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListUnmanagedRoutesRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.ClusterId != nil {
+		// no validation rules for ClusterId
+	}
+
+	if m.Offset != nil {
+		// no validation rules for Offset
+	}
+
+	if m.Limit != nil {
+		// no validation rules for Limit
+	}
+
+	if m.OrderBy != nil {
+		// no validation rules for OrderBy
+	}
+
+	if len(errors) > 0 {
+		return ListUnmanagedRoutesRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListUnmanagedRoutesRequestMultiError is an error wrapping multiple
+// validation errors returned by ListUnmanagedRoutesRequest.ValidateAll() if
+// the designated constraints aren't met.
+type ListUnmanagedRoutesRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListUnmanagedRoutesRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListUnmanagedRoutesRequestMultiError) AllErrors() []error { return m }
+
+// ListUnmanagedRoutesRequestValidationError is the validation error returned
+// by ListUnmanagedRoutesRequest.Validate if the designated constraints aren't met.
+type ListUnmanagedRoutesRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListUnmanagedRoutesRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListUnmanagedRoutesRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListUnmanagedRoutesRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListUnmanagedRoutesRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListUnmanagedRoutesRequestValidationError) ErrorName() string {
+	return "ListUnmanagedRoutesRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListUnmanagedRoutesRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListUnmanagedRoutesRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListUnmanagedRoutesRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListUnmanagedRoutesRequestValidationError{}
+
+// Validate checks the field values on ListUnmanagedRoutesResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListUnmanagedRoutesResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListUnmanagedRoutesResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListUnmanagedRoutesResponseMultiError, or nil if none found.
+func (m *ListUnmanagedRoutesResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListUnmanagedRoutesResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetRoutes() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListUnmanagedRoutesResponseValidationError{
+						field:  fmt.Sprintf("Routes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListUnmanagedRoutesResponseValidationError{
+						field:  fmt.Sprintf("Routes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListUnmanagedRoutesResponseValidationError{
+					field:  fmt.Sprintf("Routes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for TotalCount
+
+	if len(errors) > 0 {
+		return ListUnmanagedRoutesResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListUnmanagedRoutesResponseMultiError is an error wrapping multiple
+// validation errors returned by ListUnmanagedRoutesResponse.ValidateAll() if
+// the designated constraints aren't met.
+type ListUnmanagedRoutesResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListUnmanagedRoutesResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListUnmanagedRoutesResponseMultiError) AllErrors() []error { return m }
+
+// ListUnmanagedRoutesResponseValidationError is the validation error returned
+// by ListUnmanagedRoutesResponse.Validate if the designated constraints
+// aren't met.
+type ListUnmanagedRoutesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListUnmanagedRoutesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListUnmanagedRoutesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListUnmanagedRoutesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListUnmanagedRoutesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListUnmanagedRoutesResponseValidationError) ErrorName() string {
+	return "ListUnmanagedRoutesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListUnmanagedRoutesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListUnmanagedRoutesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListUnmanagedRoutesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListUnmanagedRoutesResponseValidationError{}
 
 // Validate checks the field values on LoadRoutesRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the

@@ -19,14 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SettingsService_ActivateLicense_FullMethodName     = "/pomerium.dashboard.SettingsService/ActivateLicense"
-	SettingsService_AddLicense_FullMethodName          = "/pomerium.dashboard.SettingsService/AddLicense"
-	SettingsService_DeleteLicense_FullMethodName       = "/pomerium.dashboard.SettingsService/DeleteLicense"
-	SettingsService_GetBrandingSettings_FullMethodName = "/pomerium.dashboard.SettingsService/GetBrandingSettings"
-	SettingsService_GetConsoleSettings_FullMethodName  = "/pomerium.dashboard.SettingsService/GetConsoleSettings"
-	SettingsService_GetSettings_FullMethodName         = "/pomerium.dashboard.SettingsService/GetSettings"
-	SettingsService_ListLicenses_FullMethodName        = "/pomerium.dashboard.SettingsService/ListLicenses"
-	SettingsService_SetSettings_FullMethodName         = "/pomerium.dashboard.SettingsService/SetSettings"
+	SettingsService_ActivateLicense_FullMethodName       = "/pomerium.dashboard.SettingsService/ActivateLicense"
+	SettingsService_AddLicense_FullMethodName            = "/pomerium.dashboard.SettingsService/AddLicense"
+	SettingsService_DeleteLicense_FullMethodName         = "/pomerium.dashboard.SettingsService/DeleteLicense"
+	SettingsService_GetBrandingSettings_FullMethodName   = "/pomerium.dashboard.SettingsService/GetBrandingSettings"
+	SettingsService_GetConsoleSettings_FullMethodName    = "/pomerium.dashboard.SettingsService/GetConsoleSettings"
+	SettingsService_GetSettings_FullMethodName           = "/pomerium.dashboard.SettingsService/GetSettings"
+	SettingsService_GetUnmanagedSettings_FullMethodName  = "/pomerium.dashboard.SettingsService/GetUnmanagedSettings"
+	SettingsService_ListLicenses_FullMethodName          = "/pomerium.dashboard.SettingsService/ListLicenses"
+	SettingsService_ListUnmanagedSettings_FullMethodName = "/pomerium.dashboard.SettingsService/ListUnmanagedSettings"
+	SettingsService_SetSettings_FullMethodName           = "/pomerium.dashboard.SettingsService/SetSettings"
 )
 
 // SettingsServiceClient is the client API for SettingsService service.
@@ -47,8 +49,12 @@ type SettingsServiceClient interface {
 	GetConsoleSettings(ctx context.Context, in *GetConsoleSettingsRequest, opts ...grpc.CallOption) (*GetConsoleSettingsResponse, error)
 	// GetSettings retrieves the currently applied settings
 	GetSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*GetSettingsResponse, error)
+	// GetUnmanagedSettings retrieves the unmanaged settings for a cluster.
+	GetUnmanagedSettings(ctx context.Context, in *GetUnmanagedSettingsRequest, opts ...grpc.CallOption) (*GetUnmanagedSettingsResponse, error)
 	// ListLicenses lists all the licenses.
 	ListLicenses(ctx context.Context, in *ListLicensesRequest, opts ...grpc.CallOption) (*ListLicensesResponse, error)
+	// ListUnmanagedSettings lists all the unmanaged settings for a cluster.
+	ListUnmanagedSettings(ctx context.Context, in *ListUnmanagedSettingsRequest, opts ...grpc.CallOption) (*ListUnmanagedSettingsResponse, error)
 	// SetSettings applies new global settings
 	SetSettings(ctx context.Context, in *SetSettingsRequest, opts ...grpc.CallOption) (*SetSettingsResponse, error)
 }
@@ -121,10 +127,30 @@ func (c *settingsServiceClient) GetSettings(ctx context.Context, in *GetSettings
 	return out, nil
 }
 
+func (c *settingsServiceClient) GetUnmanagedSettings(ctx context.Context, in *GetUnmanagedSettingsRequest, opts ...grpc.CallOption) (*GetUnmanagedSettingsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUnmanagedSettingsResponse)
+	err := c.cc.Invoke(ctx, SettingsService_GetUnmanagedSettings_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *settingsServiceClient) ListLicenses(ctx context.Context, in *ListLicensesRequest, opts ...grpc.CallOption) (*ListLicensesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListLicensesResponse)
 	err := c.cc.Invoke(ctx, SettingsService_ListLicenses_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsServiceClient) ListUnmanagedSettings(ctx context.Context, in *ListUnmanagedSettingsRequest, opts ...grpc.CallOption) (*ListUnmanagedSettingsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListUnmanagedSettingsResponse)
+	err := c.cc.Invoke(ctx, SettingsService_ListUnmanagedSettings_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -159,8 +185,12 @@ type SettingsServiceServer interface {
 	GetConsoleSettings(context.Context, *GetConsoleSettingsRequest) (*GetConsoleSettingsResponse, error)
 	// GetSettings retrieves the currently applied settings
 	GetSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error)
+	// GetUnmanagedSettings retrieves the unmanaged settings for a cluster.
+	GetUnmanagedSettings(context.Context, *GetUnmanagedSettingsRequest) (*GetUnmanagedSettingsResponse, error)
 	// ListLicenses lists all the licenses.
 	ListLicenses(context.Context, *ListLicensesRequest) (*ListLicensesResponse, error)
+	// ListUnmanagedSettings lists all the unmanaged settings for a cluster.
+	ListUnmanagedSettings(context.Context, *ListUnmanagedSettingsRequest) (*ListUnmanagedSettingsResponse, error)
 	// SetSettings applies new global settings
 	SetSettings(context.Context, *SetSettingsRequest) (*SetSettingsResponse, error)
 }
@@ -190,8 +220,14 @@ func (UnimplementedSettingsServiceServer) GetConsoleSettings(context.Context, *G
 func (UnimplementedSettingsServiceServer) GetSettings(context.Context, *GetSettingsRequest) (*GetSettingsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetSettings not implemented")
 }
+func (UnimplementedSettingsServiceServer) GetUnmanagedSettings(context.Context, *GetUnmanagedSettingsRequest) (*GetUnmanagedSettingsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUnmanagedSettings not implemented")
+}
 func (UnimplementedSettingsServiceServer) ListLicenses(context.Context, *ListLicensesRequest) (*ListLicensesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListLicenses not implemented")
+}
+func (UnimplementedSettingsServiceServer) ListUnmanagedSettings(context.Context, *ListUnmanagedSettingsRequest) (*ListUnmanagedSettingsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListUnmanagedSettings not implemented")
 }
 func (UnimplementedSettingsServiceServer) SetSettings(context.Context, *SetSettingsRequest) (*SetSettingsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetSettings not implemented")
@@ -324,6 +360,24 @@ func _SettingsService_GetSettings_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingsService_GetUnmanagedSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUnmanagedSettingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).GetUnmanagedSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_GetUnmanagedSettings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).GetUnmanagedSettings(ctx, req.(*GetUnmanagedSettingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SettingsService_ListLicenses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListLicensesRequest)
 	if err := dec(in); err != nil {
@@ -338,6 +392,24 @@ func _SettingsService_ListLicenses_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SettingsServiceServer).ListLicenses(ctx, req.(*ListLicensesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingsService_ListUnmanagedSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUnmanagedSettingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).ListUnmanagedSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_ListUnmanagedSettings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).ListUnmanagedSettings(ctx, req.(*ListUnmanagedSettingsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -392,8 +464,16 @@ var SettingsService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SettingsService_GetSettings_Handler,
 		},
 		{
+			MethodName: "GetUnmanagedSettings",
+			Handler:    _SettingsService_GetUnmanagedSettings_Handler,
+		},
+		{
 			MethodName: "ListLicenses",
 			Handler:    _SettingsService_ListLicenses_Handler,
+		},
+		{
+			MethodName: "ListUnmanagedSettings",
+			Handler:    _SettingsService_ListUnmanagedSettings_Handler,
 		},
 		{
 			MethodName: "SetSettings",
