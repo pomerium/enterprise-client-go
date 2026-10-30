@@ -252,6 +252,66 @@ func (PathWithEscapedSlashesAction) EnumDescriptor() ([]byte, []int) {
 	return file_settings_proto_rawDescGZIP(), []int{3}
 }
 
+// LicenseType is the license type for Pomerium.
+type LicenseType int32
+
+const (
+	LicenseType_LICENSE_TYPE_UNKNOWN LicenseType = 0
+	// Open Source Edition
+	LicenseType_LICENSE_TYPE_OPEN_SOURCE LicenseType = 1
+	// Community Edition
+	LicenseType_LICENSE_TYPE_COMMUNITY LicenseType = 2
+	// Commercial Edition
+	LicenseType_LICENSE_TYPE_COMMERCIAL LicenseType = 3
+	// Commercial Trial Edition
+	LicenseType_LICENSE_TYPE_COMMERCIAL_TRIAL LicenseType = 4
+)
+
+// Enum value maps for LicenseType.
+var (
+	LicenseType_name = map[int32]string{
+		0: "LICENSE_TYPE_UNKNOWN",
+		1: "LICENSE_TYPE_OPEN_SOURCE",
+		2: "LICENSE_TYPE_COMMUNITY",
+		3: "LICENSE_TYPE_COMMERCIAL",
+		4: "LICENSE_TYPE_COMMERCIAL_TRIAL",
+	}
+	LicenseType_value = map[string]int32{
+		"LICENSE_TYPE_UNKNOWN":          0,
+		"LICENSE_TYPE_OPEN_SOURCE":      1,
+		"LICENSE_TYPE_COMMUNITY":        2,
+		"LICENSE_TYPE_COMMERCIAL":       3,
+		"LICENSE_TYPE_COMMERCIAL_TRIAL": 4,
+	}
+)
+
+func (x LicenseType) Enum() *LicenseType {
+	p := new(LicenseType)
+	*p = x
+	return p
+}
+
+func (x LicenseType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LicenseType) Descriptor() protoreflect.EnumDescriptor {
+	return file_settings_proto_enumTypes[4].Descriptor()
+}
+
+func (LicenseType) Type() protoreflect.EnumType {
+	return &file_settings_proto_enumTypes[4]
+}
+
+func (x LicenseType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LicenseType.Descriptor instead.
+func (LicenseType) EnumDescriptor() ([]byte, []int) {
+	return file_settings_proto_rawDescGZIP(), []int{4}
+}
+
 type LicenseOptions struct {
 	state                       protoimpl.MessageState `protogen:"open.v1"`
 	ReadonlyAfterExpiry         bool                   `protobuf:"varint,1,opt,name=readonly_after_expiry,json=readonlyAfterExpiry,proto3" json:"readonly_after_expiry,omitempty"`
@@ -645,7 +705,7 @@ func (x *IdentityProvider) GetAudiences() []string {
 }
 
 // Settings defines the global pomerium settings
-// Next id: 135.
+// Next id: 138.
 type Settings struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Id             string                 `protobuf:"bytes,107,opt,name=id,proto3" json:"id,omitempty"`
@@ -777,8 +837,10 @@ type Settings struct {
 	// provider is still configured via the idp_* fields.
 	IdentityProviders        map[string]*IdentityProvider `protobuf:"bytes,134,rep,name=identity_providers,json=identityProviders,proto3" json:"identity_providers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	ReadonlyConsoleAudiences *Settings_StringList         `protobuf:"bytes,135,opt,name=readonly_console_audiences,json=readonlyConsoleAudiences,proto3,oneof" json:"readonly_console_audiences,omitempty"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	// License type for Pomerium.
+	LicenseType   *LicenseType `protobuf:"varint,137,opt,name=license_type,json=licenseType,proto3,enum=pomerium.dashboard.LicenseType,oneof" json:"license_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Settings) Reset() {
@@ -1621,6 +1683,13 @@ func (x *Settings) GetReadonlyConsoleAudiences() *Settings_StringList {
 		return x.ReadonlyConsoleAudiences
 	}
 	return nil
+}
+
+func (x *Settings) GetLicenseType() LicenseType {
+	if x != nil && x.LicenseType != nil {
+		return *x.LicenseType
+	}
+	return LicenseType_LICENSE_TYPE_UNKNOWN
 }
 
 type BlobStorageSettings struct {
@@ -2617,7 +2686,7 @@ const file_settings_proto_rawDesc = "" +
 	"\x06issuer\x18\x01 \x01(\tR\x06issuer\x12\x19\n" +
 	"\bjwks_url\x18\x02 \x01(\tR\ajwksUrl\x12%\n" +
 	"\x0esupported_algs\x18\x03 \x03(\tR\rsupportedAlgs\x12\x1c\n" +
-	"\taudiences\x18\x04 \x03(\tR\taudiences\"\xcbS\n" +
+	"\taudiences\x18\x04 \x03(\tR\taudiences\"\xa6T\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -2742,7 +2811,8 @@ const file_settings_proto_rawDesc = "" +
 	" path_with_escaped_slashes_action\x18\x84\x01 \x01(\x0e20.pomerium.dashboard.PathWithEscapedSlashesActionHdR\x1cpathWithEscapedSlashesAction\x88\x01\x01\x12}\n" +
 	"\x1fheaders_with_underscores_action\x18\x85\x01 \x01(\x0e20.pomerium.dashboard.HeadersWithUnderscoresActionHeR\x1cheadersWithUnderscoresAction\x88\x01\x01\x12c\n" +
 	"\x12identity_providers\x18\x86\x01 \x03(\v23.pomerium.dashboard.Settings.IdentityProvidersEntryR\x11identityProviders\x12k\n" +
-	"\x1areadonly_console_audiences\x18\x87\x01 \x01(\v2'.pomerium.dashboard.Settings.StringListHfR\x18readonlyConsoleAudiences\x88\x01\x01\x1ai\n" +
+	"\x1areadonly_console_audiences\x18\x87\x01 \x01(\v2'.pomerium.dashboard.Settings.StringListHfR\x18readonlyConsoleAudiences\x88\x01\x01\x12H\n" +
+	"\flicense_type\x18\x89\x01 \x01(\x0e2\x1f.pomerium.dashboard.LicenseTypeHgR\vlicenseType\x88\x01\x01\x1ai\n" +
 	"\vCertificate\x12\x1d\n" +
 	"\n" +
 	"cert_bytes\x18\x03 \x01(\fR\tcertBytes\x12\x1b\n" +
@@ -2868,7 +2938,8 @@ const file_settings_proto_rawDesc = "" +
 	"\x0e_merge_slashesB#\n" +
 	"!_path_with_escaped_slashes_actionB\"\n" +
 	" _headers_with_underscores_actionB\x1d\n" +
-	"\x1b_readonly_console_audiencesJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
+	"\x1b_readonly_console_audiencesB\x0f\n" +
+	"\r_license_typeJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
 	"\x13BlobStorageSettings\x12\"\n" +
 	"\n" +
 	"bucket_uri\x18\x01 \x01(\tH\x00R\tbucketUri\x88\x01\x01\x12*\n" +
@@ -2946,7 +3017,13 @@ const file_settings_proto_rawDesc = "" +
 	"/PATH_WITH_ESCAPED_SLASHES_ACTION_KEEP_UNCHANGED\x10\x01\x123\n" +
 	"/PATH_WITH_ESCAPED_SLASHES_ACTION_REJECT_REQUEST\x10\x02\x12:\n" +
 	"6PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_REDIRECT\x10\x03\x129\n" +
-	"5PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD\x10\x042\xb9\b\n" +
+	"5PATH_WITH_ESCAPED_SLASHES_ACTION_UNESCAPE_AND_FORWARD\x10\x04*\xa1\x01\n" +
+	"\vLicenseType\x12\x18\n" +
+	"\x14LICENSE_TYPE_UNKNOWN\x10\x00\x12\x1c\n" +
+	"\x18LICENSE_TYPE_OPEN_SOURCE\x10\x01\x12\x1a\n" +
+	"\x16LICENSE_TYPE_COMMUNITY\x10\x02\x12\x1b\n" +
+	"\x17LICENSE_TYPE_COMMERCIAL\x10\x03\x12!\n" +
+	"\x1dLICENSE_TYPE_COMMERCIAL_TRIAL\x10\x042\xb9\b\n" +
 	"\x0fSettingsService\x12j\n" +
 	"\x0fActivateLicense\x12*.pomerium.dashboard.ActivateLicenseRequest\x1a+.pomerium.dashboard.ActivateLicenseResponse\x12[\n" +
 	"\n" +
@@ -2972,136 +3049,138 @@ func file_settings_proto_rawDescGZIP() []byte {
 	return file_settings_proto_rawDescData
 }
 
-var file_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_settings_proto_goTypes = []any{
 	(LicenseStatus)(0),                    // 0: pomerium.dashboard.LicenseStatus
 	(CodecType)(0),                        // 1: pomerium.dashboard.CodecType
 	(HeadersWithUnderscoresAction)(0),     // 2: pomerium.dashboard.HeadersWithUnderscoresAction
 	(PathWithEscapedSlashesAction)(0),     // 3: pomerium.dashboard.PathWithEscapedSlashesAction
-	(*LicenseOptions)(nil),                // 4: pomerium.dashboard.LicenseOptions
-	(*License)(nil),                       // 5: pomerium.dashboard.License
-	(*LicenseInfo)(nil),                   // 6: pomerium.dashboard.LicenseInfo
-	(*ConsoleSettings)(nil),               // 7: pomerium.dashboard.ConsoleSettings
-	(*IdentityProvider)(nil),              // 8: pomerium.dashboard.IdentityProvider
-	(*Settings)(nil),                      // 9: pomerium.dashboard.Settings
-	(*BlobStorageSettings)(nil),           // 10: pomerium.dashboard.BlobStorageSettings
-	(*ActivateLicenseRequest)(nil),        // 11: pomerium.dashboard.ActivateLicenseRequest
-	(*ActivateLicenseResponse)(nil),       // 12: pomerium.dashboard.ActivateLicenseResponse
-	(*AddLicenseRequest)(nil),             // 13: pomerium.dashboard.AddLicenseRequest
-	(*AddLicenseResponse)(nil),            // 14: pomerium.dashboard.AddLicenseResponse
-	(*DeleteLicenseRequest)(nil),          // 15: pomerium.dashboard.DeleteLicenseRequest
-	(*DeleteLicenseResponse)(nil),         // 16: pomerium.dashboard.DeleteLicenseResponse
-	(*GetConsoleSettingsRequest)(nil),     // 17: pomerium.dashboard.GetConsoleSettingsRequest
-	(*GetConsoleSettingsResponse)(nil),    // 18: pomerium.dashboard.GetConsoleSettingsResponse
-	(*GetSettingsRequest)(nil),            // 19: pomerium.dashboard.GetSettingsRequest
-	(*GetSettingsResponse)(nil),           // 20: pomerium.dashboard.GetSettingsResponse
-	(*GetUnmanagedSettingsRequest)(nil),   // 21: pomerium.dashboard.GetUnmanagedSettingsRequest
-	(*GetUnmanagedSettingsResponse)(nil),  // 22: pomerium.dashboard.GetUnmanagedSettingsResponse
-	(*ListLicensesRequest)(nil),           // 23: pomerium.dashboard.ListLicensesRequest
-	(*ListLicensesResponse)(nil),          // 24: pomerium.dashboard.ListLicensesResponse
-	(*ListUnmanagedSettingsRequest)(nil),  // 25: pomerium.dashboard.ListUnmanagedSettingsRequest
-	(*ListUnmanagedSettingsResponse)(nil), // 26: pomerium.dashboard.ListUnmanagedSettingsResponse
-	(*SetSettingsRequest)(nil),            // 27: pomerium.dashboard.SetSettingsRequest
-	(*SetSettingsResponse)(nil),           // 28: pomerium.dashboard.SetSettingsResponse
-	(*Settings_Certificate)(nil),          // 29: pomerium.dashboard.Settings.Certificate
-	(*Settings_StringList)(nil),           // 30: pomerium.dashboard.Settings.StringList
-	nil,                                   // 31: pomerium.dashboard.Settings.RequestParamsEntry
-	nil,                                   // 32: pomerium.dashboard.Settings.SetResponseHeadersEntry
-	nil,                                   // 33: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	nil,                                   // 34: pomerium.dashboard.Settings.IdentityProvidersEntry
-	(*timestamppb.Timestamp)(nil),         // 35: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),           // 36: google.protobuf.Duration
-	(*JwtGroupsFilter)(nil),               // 37: pomerium.dashboard.JwtGroupsFilter
-	(IssuerFormat)(0),                     // 38: pomerium.dashboard.IssuerFormat
-	(*structpb.Struct)(nil),               // 39: google.protobuf.Struct
-	(BearerTokenFormat)(0),                // 40: pomerium.dashboard.BearerTokenFormat
-	(*CircuitBreakerThresholds)(nil),      // 41: pomerium.dashboard.CircuitBreakerThresholds
+	(LicenseType)(0),                      // 4: pomerium.dashboard.LicenseType
+	(*LicenseOptions)(nil),                // 5: pomerium.dashboard.LicenseOptions
+	(*License)(nil),                       // 6: pomerium.dashboard.License
+	(*LicenseInfo)(nil),                   // 7: pomerium.dashboard.LicenseInfo
+	(*ConsoleSettings)(nil),               // 8: pomerium.dashboard.ConsoleSettings
+	(*IdentityProvider)(nil),              // 9: pomerium.dashboard.IdentityProvider
+	(*Settings)(nil),                      // 10: pomerium.dashboard.Settings
+	(*BlobStorageSettings)(nil),           // 11: pomerium.dashboard.BlobStorageSettings
+	(*ActivateLicenseRequest)(nil),        // 12: pomerium.dashboard.ActivateLicenseRequest
+	(*ActivateLicenseResponse)(nil),       // 13: pomerium.dashboard.ActivateLicenseResponse
+	(*AddLicenseRequest)(nil),             // 14: pomerium.dashboard.AddLicenseRequest
+	(*AddLicenseResponse)(nil),            // 15: pomerium.dashboard.AddLicenseResponse
+	(*DeleteLicenseRequest)(nil),          // 16: pomerium.dashboard.DeleteLicenseRequest
+	(*DeleteLicenseResponse)(nil),         // 17: pomerium.dashboard.DeleteLicenseResponse
+	(*GetConsoleSettingsRequest)(nil),     // 18: pomerium.dashboard.GetConsoleSettingsRequest
+	(*GetConsoleSettingsResponse)(nil),    // 19: pomerium.dashboard.GetConsoleSettingsResponse
+	(*GetSettingsRequest)(nil),            // 20: pomerium.dashboard.GetSettingsRequest
+	(*GetSettingsResponse)(nil),           // 21: pomerium.dashboard.GetSettingsResponse
+	(*GetUnmanagedSettingsRequest)(nil),   // 22: pomerium.dashboard.GetUnmanagedSettingsRequest
+	(*GetUnmanagedSettingsResponse)(nil),  // 23: pomerium.dashboard.GetUnmanagedSettingsResponse
+	(*ListLicensesRequest)(nil),           // 24: pomerium.dashboard.ListLicensesRequest
+	(*ListLicensesResponse)(nil),          // 25: pomerium.dashboard.ListLicensesResponse
+	(*ListUnmanagedSettingsRequest)(nil),  // 26: pomerium.dashboard.ListUnmanagedSettingsRequest
+	(*ListUnmanagedSettingsResponse)(nil), // 27: pomerium.dashboard.ListUnmanagedSettingsResponse
+	(*SetSettingsRequest)(nil),            // 28: pomerium.dashboard.SetSettingsRequest
+	(*SetSettingsResponse)(nil),           // 29: pomerium.dashboard.SetSettingsResponse
+	(*Settings_Certificate)(nil),          // 30: pomerium.dashboard.Settings.Certificate
+	(*Settings_StringList)(nil),           // 31: pomerium.dashboard.Settings.StringList
+	nil,                                   // 32: pomerium.dashboard.Settings.RequestParamsEntry
+	nil,                                   // 33: pomerium.dashboard.Settings.SetResponseHeadersEntry
+	nil,                                   // 34: pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	nil,                                   // 35: pomerium.dashboard.Settings.IdentityProvidersEntry
+	(*timestamppb.Timestamp)(nil),         // 36: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),           // 37: google.protobuf.Duration
+	(*JwtGroupsFilter)(nil),               // 38: pomerium.dashboard.JwtGroupsFilter
+	(IssuerFormat)(0),                     // 39: pomerium.dashboard.IssuerFormat
+	(*structpb.Struct)(nil),               // 40: google.protobuf.Struct
+	(BearerTokenFormat)(0),                // 41: pomerium.dashboard.BearerTokenFormat
+	(*CircuitBreakerThresholds)(nil),      // 42: pomerium.dashboard.CircuitBreakerThresholds
 }
 var file_settings_proto_depIdxs = []int32{
-	35, // 0: pomerium.dashboard.License.created_at:type_name -> google.protobuf.Timestamp
-	35, // 1: pomerium.dashboard.License.modified_at:type_name -> google.protobuf.Timestamp
-	35, // 2: pomerium.dashboard.License.deleted_at:type_name -> google.protobuf.Timestamp
+	36, // 0: pomerium.dashboard.License.created_at:type_name -> google.protobuf.Timestamp
+	36, // 1: pomerium.dashboard.License.modified_at:type_name -> google.protobuf.Timestamp
+	36, // 2: pomerium.dashboard.License.deleted_at:type_name -> google.protobuf.Timestamp
 	0,  // 3: pomerium.dashboard.LicenseInfo.status:type_name -> pomerium.dashboard.LicenseStatus
-	4,  // 4: pomerium.dashboard.LicenseInfo.options:type_name -> pomerium.dashboard.LicenseOptions
-	35, // 5: pomerium.dashboard.LicenseInfo.expiry:type_name -> google.protobuf.Timestamp
-	6,  // 6: pomerium.dashboard.ConsoleSettings.license_info:type_name -> pomerium.dashboard.LicenseInfo
-	35, // 7: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
-	36, // 8: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
-	36, // 9: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
-	36, // 10: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
-	29, // 11: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
-	36, // 12: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
-	36, // 13: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
-	36, // 14: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
-	36, // 15: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
-	36, // 16: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
-	36, // 17: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
-	31, // 18: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
-	32, // 19: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
-	33, // 20: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
-	37, // 21: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
-	38, // 22: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
-	36, // 23: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
-	36, // 24: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
-	36, // 25: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
-	36, // 26: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
-	39, // 27: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
-	36, // 28: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
-	36, // 29: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
-	30, // 30: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	30, // 31: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
-	40, // 32: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
-	30, // 33: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
+	5,  // 4: pomerium.dashboard.LicenseInfo.options:type_name -> pomerium.dashboard.LicenseOptions
+	36, // 5: pomerium.dashboard.LicenseInfo.expiry:type_name -> google.protobuf.Timestamp
+	7,  // 6: pomerium.dashboard.ConsoleSettings.license_info:type_name -> pomerium.dashboard.LicenseInfo
+	36, // 7: pomerium.dashboard.Settings.modified_at:type_name -> google.protobuf.Timestamp
+	37, // 8: pomerium.dashboard.Settings.dns_failure_refresh_rate:type_name -> google.protobuf.Duration
+	37, // 9: pomerium.dashboard.Settings.dns_query_timeout:type_name -> google.protobuf.Duration
+	37, // 10: pomerium.dashboard.Settings.dns_refresh_rate:type_name -> google.protobuf.Duration
+	30, // 11: pomerium.dashboard.Settings.certificates:type_name -> pomerium.dashboard.Settings.Certificate
+	37, // 12: pomerium.dashboard.Settings.timeout_read:type_name -> google.protobuf.Duration
+	37, // 13: pomerium.dashboard.Settings.timeout_write:type_name -> google.protobuf.Duration
+	37, // 14: pomerium.dashboard.Settings.timeout_idle:type_name -> google.protobuf.Duration
+	37, // 15: pomerium.dashboard.Settings.cookie_expire:type_name -> google.protobuf.Duration
+	37, // 16: pomerium.dashboard.Settings.idp_refresh_directory_timeout:type_name -> google.protobuf.Duration
+	37, // 17: pomerium.dashboard.Settings.idp_refresh_directory_interval:type_name -> google.protobuf.Duration
+	32, // 18: pomerium.dashboard.Settings.request_params:type_name -> pomerium.dashboard.Settings.RequestParamsEntry
+	33, // 19: pomerium.dashboard.Settings.set_response_headers:type_name -> pomerium.dashboard.Settings.SetResponseHeadersEntry
+	34, // 20: pomerium.dashboard.Settings.jwt_claims_headers:type_name -> pomerium.dashboard.Settings.JwtClaimsHeadersEntry
+	38, // 21: pomerium.dashboard.Settings.jwt_groups_filter:type_name -> pomerium.dashboard.JwtGroupsFilter
+	39, // 22: pomerium.dashboard.Settings.jwt_issuer_format:type_name -> pomerium.dashboard.IssuerFormat
+	37, // 23: pomerium.dashboard.Settings.default_upstream_timeout:type_name -> google.protobuf.Duration
+	37, // 24: pomerium.dashboard.Settings.otel_exporter_otlp_timeout:type_name -> google.protobuf.Duration
+	37, // 25: pomerium.dashboard.Settings.otel_exporter_otlp_traces_timeout:type_name -> google.protobuf.Duration
+	37, // 26: pomerium.dashboard.Settings.otel_bsp_schedule_delay:type_name -> google.protobuf.Duration
+	40, // 27: pomerium.dashboard.Settings.identity_provider_options:type_name -> google.protobuf.Struct
+	37, // 28: pomerium.dashboard.Settings.identity_provider_refresh_interval:type_name -> google.protobuf.Duration
+	37, // 29: pomerium.dashboard.Settings.identity_provider_refresh_timeout:type_name -> google.protobuf.Duration
+	31, // 30: pomerium.dashboard.Settings.access_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	31, // 31: pomerium.dashboard.Settings.authorize_log_fields:type_name -> pomerium.dashboard.Settings.StringList
+	41, // 32: pomerium.dashboard.Settings.bearer_token_format:type_name -> pomerium.dashboard.BearerTokenFormat
+	31, // 33: pomerium.dashboard.Settings.idp_access_token_allowed_audiences:type_name -> pomerium.dashboard.Settings.StringList
 	1,  // 34: pomerium.dashboard.Settings.codec_type:type_name -> pomerium.dashboard.CodecType
-	41, // 35: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
-	30, // 36: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
-	30, // 37: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
-	36, // 38: pomerium.dashboard.Settings.ssh_two_person_approval_request_timeout:type_name -> google.protobuf.Duration
-	30, // 39: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
-	30, // 40: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
-	10, // 41: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
-	30, // 42: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
-	30, // 43: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
+	42, // 35: pomerium.dashboard.Settings.circuit_breaker_thresholds:type_name -> pomerium.dashboard.CircuitBreakerThresholds
+	31, // 36: pomerium.dashboard.Settings.ssh_host_key_files:type_name -> pomerium.dashboard.Settings.StringList
+	31, // 37: pomerium.dashboard.Settings.ssh_host_keys:type_name -> pomerium.dashboard.Settings.StringList
+	37, // 38: pomerium.dashboard.Settings.ssh_two_person_approval_request_timeout:type_name -> google.protobuf.Duration
+	31, // 39: pomerium.dashboard.Settings.mcp_allowed_as_metadata_domains:type_name -> pomerium.dashboard.Settings.StringList
+	31, // 40: pomerium.dashboard.Settings.mcp_allowed_client_id_domains:type_name -> pomerium.dashboard.Settings.StringList
+	11, // 41: pomerium.dashboard.Settings.blob_storage:type_name -> pomerium.dashboard.BlobStorageSettings
+	31, // 42: pomerium.dashboard.Settings.allow_upgrades:type_name -> pomerium.dashboard.Settings.StringList
+	31, // 43: pomerium.dashboard.Settings.envoy_dynamic_extensions:type_name -> pomerium.dashboard.Settings.StringList
 	3,  // 44: pomerium.dashboard.Settings.path_with_escaped_slashes_action:type_name -> pomerium.dashboard.PathWithEscapedSlashesAction
 	2,  // 45: pomerium.dashboard.Settings.headers_with_underscores_action:type_name -> pomerium.dashboard.HeadersWithUnderscoresAction
-	34, // 46: pomerium.dashboard.Settings.identity_providers:type_name -> pomerium.dashboard.Settings.IdentityProvidersEntry
-	30, // 47: pomerium.dashboard.Settings.readonly_console_audiences:type_name -> pomerium.dashboard.Settings.StringList
-	5,  // 48: pomerium.dashboard.AddLicenseRequest.license:type_name -> pomerium.dashboard.License
-	5,  // 49: pomerium.dashboard.AddLicenseResponse.license:type_name -> pomerium.dashboard.License
-	7,  // 50: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
-	9,  // 51: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	9,  // 52: pomerium.dashboard.GetUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	5,  // 53: pomerium.dashboard.ListLicensesResponse.licenses:type_name -> pomerium.dashboard.License
-	9,  // 54: pomerium.dashboard.ListUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	9,  // 55: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
-	9,  // 56: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	8,  // 57: pomerium.dashboard.Settings.IdentityProvidersEntry.value:type_name -> pomerium.dashboard.IdentityProvider
-	11, // 58: pomerium.dashboard.SettingsService.ActivateLicense:input_type -> pomerium.dashboard.ActivateLicenseRequest
-	13, // 59: pomerium.dashboard.SettingsService.AddLicense:input_type -> pomerium.dashboard.AddLicenseRequest
-	15, // 60: pomerium.dashboard.SettingsService.DeleteLicense:input_type -> pomerium.dashboard.DeleteLicenseRequest
-	19, // 61: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	17, // 62: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
-	19, // 63: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	21, // 64: pomerium.dashboard.SettingsService.GetUnmanagedSettings:input_type -> pomerium.dashboard.GetUnmanagedSettingsRequest
-	23, // 65: pomerium.dashboard.SettingsService.ListLicenses:input_type -> pomerium.dashboard.ListLicensesRequest
-	25, // 66: pomerium.dashboard.SettingsService.ListUnmanagedSettings:input_type -> pomerium.dashboard.ListUnmanagedSettingsRequest
-	27, // 67: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
-	12, // 68: pomerium.dashboard.SettingsService.ActivateLicense:output_type -> pomerium.dashboard.ActivateLicenseResponse
-	14, // 69: pomerium.dashboard.SettingsService.AddLicense:output_type -> pomerium.dashboard.AddLicenseResponse
-	16, // 70: pomerium.dashboard.SettingsService.DeleteLicense:output_type -> pomerium.dashboard.DeleteLicenseResponse
-	20, // 71: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	18, // 72: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
-	20, // 73: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	22, // 74: pomerium.dashboard.SettingsService.GetUnmanagedSettings:output_type -> pomerium.dashboard.GetUnmanagedSettingsResponse
-	24, // 75: pomerium.dashboard.SettingsService.ListLicenses:output_type -> pomerium.dashboard.ListLicensesResponse
-	26, // 76: pomerium.dashboard.SettingsService.ListUnmanagedSettings:output_type -> pomerium.dashboard.ListUnmanagedSettingsResponse
-	28, // 77: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
-	68, // [68:78] is the sub-list for method output_type
-	58, // [58:68] is the sub-list for method input_type
-	58, // [58:58] is the sub-list for extension type_name
-	58, // [58:58] is the sub-list for extension extendee
-	0,  // [0:58] is the sub-list for field type_name
+	35, // 46: pomerium.dashboard.Settings.identity_providers:type_name -> pomerium.dashboard.Settings.IdentityProvidersEntry
+	31, // 47: pomerium.dashboard.Settings.readonly_console_audiences:type_name -> pomerium.dashboard.Settings.StringList
+	4,  // 48: pomerium.dashboard.Settings.license_type:type_name -> pomerium.dashboard.LicenseType
+	6,  // 49: pomerium.dashboard.AddLicenseRequest.license:type_name -> pomerium.dashboard.License
+	6,  // 50: pomerium.dashboard.AddLicenseResponse.license:type_name -> pomerium.dashboard.License
+	8,  // 51: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
+	10, // 52: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	10, // 53: pomerium.dashboard.GetUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	6,  // 54: pomerium.dashboard.ListLicensesResponse.licenses:type_name -> pomerium.dashboard.License
+	10, // 55: pomerium.dashboard.ListUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	10, // 56: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
+	10, // 57: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	9,  // 58: pomerium.dashboard.Settings.IdentityProvidersEntry.value:type_name -> pomerium.dashboard.IdentityProvider
+	12, // 59: pomerium.dashboard.SettingsService.ActivateLicense:input_type -> pomerium.dashboard.ActivateLicenseRequest
+	14, // 60: pomerium.dashboard.SettingsService.AddLicense:input_type -> pomerium.dashboard.AddLicenseRequest
+	16, // 61: pomerium.dashboard.SettingsService.DeleteLicense:input_type -> pomerium.dashboard.DeleteLicenseRequest
+	20, // 62: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	18, // 63: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
+	20, // 64: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	22, // 65: pomerium.dashboard.SettingsService.GetUnmanagedSettings:input_type -> pomerium.dashboard.GetUnmanagedSettingsRequest
+	24, // 66: pomerium.dashboard.SettingsService.ListLicenses:input_type -> pomerium.dashboard.ListLicensesRequest
+	26, // 67: pomerium.dashboard.SettingsService.ListUnmanagedSettings:input_type -> pomerium.dashboard.ListUnmanagedSettingsRequest
+	28, // 68: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
+	13, // 69: pomerium.dashboard.SettingsService.ActivateLicense:output_type -> pomerium.dashboard.ActivateLicenseResponse
+	15, // 70: pomerium.dashboard.SettingsService.AddLicense:output_type -> pomerium.dashboard.AddLicenseResponse
+	17, // 71: pomerium.dashboard.SettingsService.DeleteLicense:output_type -> pomerium.dashboard.DeleteLicenseResponse
+	21, // 72: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	19, // 73: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
+	21, // 74: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	23, // 75: pomerium.dashboard.SettingsService.GetUnmanagedSettings:output_type -> pomerium.dashboard.GetUnmanagedSettingsResponse
+	25, // 76: pomerium.dashboard.SettingsService.ListLicenses:output_type -> pomerium.dashboard.ListLicensesResponse
+	27, // 77: pomerium.dashboard.SettingsService.ListUnmanagedSettings:output_type -> pomerium.dashboard.ListUnmanagedSettingsResponse
+	29, // 78: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
+	69, // [69:79] is the sub-list for method output_type
+	59, // [59:69] is the sub-list for method input_type
+	59, // [59:59] is the sub-list for extension type_name
+	59, // [59:59] is the sub-list for extension extendee
+	0,  // [0:59] is the sub-list for field type_name
 }
 
 func init() { file_settings_proto_init() }
@@ -3121,7 +3200,7 @@ func file_settings_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_settings_proto_rawDesc), len(file_settings_proto_rawDesc)),
-			NumEnums:      4,
+			NumEnums:      5,
 			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   1,
