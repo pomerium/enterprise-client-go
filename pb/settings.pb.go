@@ -705,7 +705,7 @@ func (x *IdentityProvider) GetAudiences() []string {
 }
 
 // Settings defines the global pomerium settings
-// Next id: 138.
+// Next id: 139.
 type Settings struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Id             string                 `protobuf:"bytes,107,opt,name=id,proto3" json:"id,omitempty"`
@@ -838,7 +838,9 @@ type Settings struct {
 	IdentityProviders        map[string]*IdentityProvider `protobuf:"bytes,134,rep,name=identity_providers,json=identityProviders,proto3" json:"identity_providers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	ReadonlyConsoleAudiences *Settings_StringList         `protobuf:"bytes,135,opt,name=readonly_console_audiences,json=readonlyConsoleAudiences,proto3,oneof" json:"readonly_console_audiences,omitempty"`
 	// License type for Pomerium.
-	LicenseType   *LicenseType `protobuf:"varint,137,opt,name=license_type,json=licenseType,proto3,enum=pomerium.dashboard.LicenseType,oneof" json:"license_type,omitempty"`
+	LicenseType *LicenseType `protobuf:"varint,137,opt,name=license_type,json=licenseType,proto3,enum=pomerium.dashboard.LicenseType,oneof" json:"license_type,omitempty"`
+	// Configure default OIDC bridge support for all routes.
+	OidcBridge    *OIDCBridge `protobuf:"bytes,138,opt,name=oidc_bridge,json=oidcBridge,proto3,oneof" json:"oidc_bridge,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1690,6 +1692,13 @@ func (x *Settings) GetLicenseType() LicenseType {
 		return *x.LicenseType
 	}
 	return LicenseType_LICENSE_TYPE_UNKNOWN
+}
+
+func (x *Settings) GetOidcBridge() *OIDCBridge {
+	if x != nil {
+		return x.OidcBridge
+	}
+	return nil
 }
 
 type BlobStorageSettings struct {
@@ -2686,7 +2695,7 @@ const file_settings_proto_rawDesc = "" +
 	"\x06issuer\x18\x01 \x01(\tR\x06issuer\x12\x19\n" +
 	"\bjwks_url\x18\x02 \x01(\tR\ajwksUrl\x12%\n" +
 	"\x0esupported_algs\x18\x03 \x03(\tR\rsupportedAlgs\x12\x1c\n" +
-	"\taudiences\x18\x04 \x03(\tR\taudiences\"\xa6T\n" +
+	"\taudiences\x18\x04 \x03(\tR\taudiences\"\xfdT\n" +
 	"\bSettings\x12\x0e\n" +
 	"\x02id\x18k \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -2812,7 +2821,9 @@ const file_settings_proto_rawDesc = "" +
 	"\x1fheaders_with_underscores_action\x18\x85\x01 \x01(\x0e20.pomerium.dashboard.HeadersWithUnderscoresActionHeR\x1cheadersWithUnderscoresAction\x88\x01\x01\x12c\n" +
 	"\x12identity_providers\x18\x86\x01 \x03(\v23.pomerium.dashboard.Settings.IdentityProvidersEntryR\x11identityProviders\x12k\n" +
 	"\x1areadonly_console_audiences\x18\x87\x01 \x01(\v2'.pomerium.dashboard.Settings.StringListHfR\x18readonlyConsoleAudiences\x88\x01\x01\x12H\n" +
-	"\flicense_type\x18\x89\x01 \x01(\x0e2\x1f.pomerium.dashboard.LicenseTypeHgR\vlicenseType\x88\x01\x01\x1ai\n" +
+	"\flicense_type\x18\x89\x01 \x01(\x0e2\x1f.pomerium.dashboard.LicenseTypeHgR\vlicenseType\x88\x01\x01\x12E\n" +
+	"\voidc_bridge\x18\x8a\x01 \x01(\v2\x1e.pomerium.dashboard.OIDCBridgeHhR\n" +
+	"oidcBridge\x88\x01\x01\x1ai\n" +
 	"\vCertificate\x12\x1d\n" +
 	"\n" +
 	"cert_bytes\x18\x03 \x01(\fR\tcertBytes\x12\x1b\n" +
@@ -2939,7 +2950,8 @@ const file_settings_proto_rawDesc = "" +
 	"!_path_with_escaped_slashes_actionB\"\n" +
 	" _headers_with_underscores_actionB\x1d\n" +
 	"\x1b_readonly_console_audiencesB\x0f\n" +
-	"\r_license_typeJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
+	"\r_license_typeB\x0e\n" +
+	"\f_oidc_bridgeJ\x04\b\x0f\x10\x10J\x04\b)\x10*J\x04\b*\x10+J\x04\bU\x10VJ\x04\bV\x10W\"\x87\x01\n" +
 	"\x13BlobStorageSettings\x12\"\n" +
 	"\n" +
 	"bucket_uri\x18\x01 \x01(\tH\x00R\tbucketUri\x88\x01\x01\x12*\n" +
@@ -3095,6 +3107,7 @@ var file_settings_proto_goTypes = []any{
 	(*structpb.Struct)(nil),               // 40: google.protobuf.Struct
 	(BearerTokenFormat)(0),                // 41: pomerium.dashboard.BearerTokenFormat
 	(*CircuitBreakerThresholds)(nil),      // 42: pomerium.dashboard.CircuitBreakerThresholds
+	(*OIDCBridge)(nil),                    // 43: pomerium.dashboard.OIDCBridge
 }
 var file_settings_proto_depIdxs = []int32{
 	36, // 0: pomerium.dashboard.License.created_at:type_name -> google.protobuf.Timestamp
@@ -3146,41 +3159,42 @@ var file_settings_proto_depIdxs = []int32{
 	35, // 46: pomerium.dashboard.Settings.identity_providers:type_name -> pomerium.dashboard.Settings.IdentityProvidersEntry
 	31, // 47: pomerium.dashboard.Settings.readonly_console_audiences:type_name -> pomerium.dashboard.Settings.StringList
 	4,  // 48: pomerium.dashboard.Settings.license_type:type_name -> pomerium.dashboard.LicenseType
-	6,  // 49: pomerium.dashboard.AddLicenseRequest.license:type_name -> pomerium.dashboard.License
-	6,  // 50: pomerium.dashboard.AddLicenseResponse.license:type_name -> pomerium.dashboard.License
-	8,  // 51: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
-	10, // 52: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	10, // 53: pomerium.dashboard.GetUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	6,  // 54: pomerium.dashboard.ListLicensesResponse.licenses:type_name -> pomerium.dashboard.License
-	10, // 55: pomerium.dashboard.ListUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	10, // 56: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
-	10, // 57: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
-	9,  // 58: pomerium.dashboard.Settings.IdentityProvidersEntry.value:type_name -> pomerium.dashboard.IdentityProvider
-	12, // 59: pomerium.dashboard.SettingsService.ActivateLicense:input_type -> pomerium.dashboard.ActivateLicenseRequest
-	14, // 60: pomerium.dashboard.SettingsService.AddLicense:input_type -> pomerium.dashboard.AddLicenseRequest
-	16, // 61: pomerium.dashboard.SettingsService.DeleteLicense:input_type -> pomerium.dashboard.DeleteLicenseRequest
-	20, // 62: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	18, // 63: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
-	20, // 64: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
-	22, // 65: pomerium.dashboard.SettingsService.GetUnmanagedSettings:input_type -> pomerium.dashboard.GetUnmanagedSettingsRequest
-	24, // 66: pomerium.dashboard.SettingsService.ListLicenses:input_type -> pomerium.dashboard.ListLicensesRequest
-	26, // 67: pomerium.dashboard.SettingsService.ListUnmanagedSettings:input_type -> pomerium.dashboard.ListUnmanagedSettingsRequest
-	28, // 68: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
-	13, // 69: pomerium.dashboard.SettingsService.ActivateLicense:output_type -> pomerium.dashboard.ActivateLicenseResponse
-	15, // 70: pomerium.dashboard.SettingsService.AddLicense:output_type -> pomerium.dashboard.AddLicenseResponse
-	17, // 71: pomerium.dashboard.SettingsService.DeleteLicense:output_type -> pomerium.dashboard.DeleteLicenseResponse
-	21, // 72: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	19, // 73: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
-	21, // 74: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
-	23, // 75: pomerium.dashboard.SettingsService.GetUnmanagedSettings:output_type -> pomerium.dashboard.GetUnmanagedSettingsResponse
-	25, // 76: pomerium.dashboard.SettingsService.ListLicenses:output_type -> pomerium.dashboard.ListLicensesResponse
-	27, // 77: pomerium.dashboard.SettingsService.ListUnmanagedSettings:output_type -> pomerium.dashboard.ListUnmanagedSettingsResponse
-	29, // 78: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
-	69, // [69:79] is the sub-list for method output_type
-	59, // [59:69] is the sub-list for method input_type
-	59, // [59:59] is the sub-list for extension type_name
-	59, // [59:59] is the sub-list for extension extendee
-	0,  // [0:59] is the sub-list for field type_name
+	43, // 49: pomerium.dashboard.Settings.oidc_bridge:type_name -> pomerium.dashboard.OIDCBridge
+	6,  // 50: pomerium.dashboard.AddLicenseRequest.license:type_name -> pomerium.dashboard.License
+	6,  // 51: pomerium.dashboard.AddLicenseResponse.license:type_name -> pomerium.dashboard.License
+	8,  // 52: pomerium.dashboard.GetConsoleSettingsResponse.console_settings:type_name -> pomerium.dashboard.ConsoleSettings
+	10, // 53: pomerium.dashboard.GetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	10, // 54: pomerium.dashboard.GetUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	6,  // 55: pomerium.dashboard.ListLicensesResponse.licenses:type_name -> pomerium.dashboard.License
+	10, // 56: pomerium.dashboard.ListUnmanagedSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	10, // 57: pomerium.dashboard.SetSettingsRequest.settings:type_name -> pomerium.dashboard.Settings
+	10, // 58: pomerium.dashboard.SetSettingsResponse.settings:type_name -> pomerium.dashboard.Settings
+	9,  // 59: pomerium.dashboard.Settings.IdentityProvidersEntry.value:type_name -> pomerium.dashboard.IdentityProvider
+	12, // 60: pomerium.dashboard.SettingsService.ActivateLicense:input_type -> pomerium.dashboard.ActivateLicenseRequest
+	14, // 61: pomerium.dashboard.SettingsService.AddLicense:input_type -> pomerium.dashboard.AddLicenseRequest
+	16, // 62: pomerium.dashboard.SettingsService.DeleteLicense:input_type -> pomerium.dashboard.DeleteLicenseRequest
+	20, // 63: pomerium.dashboard.SettingsService.GetBrandingSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	18, // 64: pomerium.dashboard.SettingsService.GetConsoleSettings:input_type -> pomerium.dashboard.GetConsoleSettingsRequest
+	20, // 65: pomerium.dashboard.SettingsService.GetSettings:input_type -> pomerium.dashboard.GetSettingsRequest
+	22, // 66: pomerium.dashboard.SettingsService.GetUnmanagedSettings:input_type -> pomerium.dashboard.GetUnmanagedSettingsRequest
+	24, // 67: pomerium.dashboard.SettingsService.ListLicenses:input_type -> pomerium.dashboard.ListLicensesRequest
+	26, // 68: pomerium.dashboard.SettingsService.ListUnmanagedSettings:input_type -> pomerium.dashboard.ListUnmanagedSettingsRequest
+	28, // 69: pomerium.dashboard.SettingsService.SetSettings:input_type -> pomerium.dashboard.SetSettingsRequest
+	13, // 70: pomerium.dashboard.SettingsService.ActivateLicense:output_type -> pomerium.dashboard.ActivateLicenseResponse
+	15, // 71: pomerium.dashboard.SettingsService.AddLicense:output_type -> pomerium.dashboard.AddLicenseResponse
+	17, // 72: pomerium.dashboard.SettingsService.DeleteLicense:output_type -> pomerium.dashboard.DeleteLicenseResponse
+	21, // 73: pomerium.dashboard.SettingsService.GetBrandingSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	19, // 74: pomerium.dashboard.SettingsService.GetConsoleSettings:output_type -> pomerium.dashboard.GetConsoleSettingsResponse
+	21, // 75: pomerium.dashboard.SettingsService.GetSettings:output_type -> pomerium.dashboard.GetSettingsResponse
+	23, // 76: pomerium.dashboard.SettingsService.GetUnmanagedSettings:output_type -> pomerium.dashboard.GetUnmanagedSettingsResponse
+	25, // 77: pomerium.dashboard.SettingsService.ListLicenses:output_type -> pomerium.dashboard.ListLicensesResponse
+	27, // 78: pomerium.dashboard.SettingsService.ListUnmanagedSettings:output_type -> pomerium.dashboard.ListUnmanagedSettingsResponse
+	29, // 79: pomerium.dashboard.SettingsService.SetSettings:output_type -> pomerium.dashboard.SetSettingsResponse
+	70, // [70:80] is the sub-list for method output_type
+	60, // [60:70] is the sub-list for method input_type
+	60, // [60:60] is the sub-list for extension type_name
+	60, // [60:60] is the sub-list for extension extendee
+	0,  // [0:60] is the sub-list for field type_name
 }
 
 func init() { file_settings_proto_init() }
