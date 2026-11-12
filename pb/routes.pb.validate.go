@@ -1410,8 +1410,6 @@ func (m *Route) validate(all bool) error {
 
 	// no validation rules for OriginatorId
 
-	// no validation rules for NamespaceName
-
 	for idx, item := range m.GetHealthChecks() {
 		_, _ = idx, item
 
@@ -1474,6 +1472,8 @@ func (m *Route) validate(all bool) error {
 			}
 		}
 	}
+
+	// no validation rules for NamespaceName
 
 	if m.Description != nil {
 		// no validation rules for Description
@@ -1845,6 +1845,39 @@ func (m *Route) validate(all bool) error {
 
 	}
 
+	if m.OidcBridge != nil {
+
+		if all {
+			switch v := interface{}(m.GetOidcBridge()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "OidcBridge",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, RouteValidationError{
+						field:  "OidcBridge",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetOidcBridge()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return RouteValidationError{
+					field:  "OidcBridge",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return RouteMultiError(errors)
 	}
@@ -1921,6 +1954,113 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RouteValidationError{}
+
+// Validate checks the field values on OIDCBridge with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *OIDCBridge) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OIDCBridge with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in OIDCBridgeMultiError, or
+// nil if none found.
+func (m *OIDCBridge) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OIDCBridge) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.Enabled != nil {
+		// no validation rules for Enabled
+	}
+
+	if m.ClientSecret != nil {
+		// no validation rules for ClientSecret
+	}
+
+	if len(errors) > 0 {
+		return OIDCBridgeMultiError(errors)
+	}
+
+	return nil
+}
+
+// OIDCBridgeMultiError is an error wrapping multiple validation errors
+// returned by OIDCBridge.ValidateAll() if the designated constraints aren't met.
+type OIDCBridgeMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OIDCBridgeMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OIDCBridgeMultiError) AllErrors() []error { return m }
+
+// OIDCBridgeValidationError is the validation error returned by
+// OIDCBridge.Validate if the designated constraints aren't met.
+type OIDCBridgeValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OIDCBridgeValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OIDCBridgeValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OIDCBridgeValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OIDCBridgeValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OIDCBridgeValidationError) ErrorName() string { return "OIDCBridgeValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OIDCBridgeValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOIDCBridge.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OIDCBridgeValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OIDCBridgeValidationError{}
 
 // Validate checks the field values on SessionRecording with the rules defined
 // in the proto definition for this message. If any rules are violated, the
