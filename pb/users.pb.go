@@ -1296,16 +1296,14 @@ func (x *SetPomeriumServiceAccountResponse) GetJwt() string {
 
 // PomeriumSession defines a user session from the databroker
 type PomeriumSession struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	Id            string                         `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	User          *PomeriumSession_User          `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	Groups        []*PomeriumSession_Group       `protobuf:"bytes,3,rep,name=groups,proto3" json:"groups,omitempty"`
-	Issuer        string                         `protobuf:"bytes,4,opt,name=issuer,proto3" json:"issuer,omitempty"`
-	AccessedAt    *timestamppb.Timestamp         `protobuf:"bytes,9,opt,name=accessed_at,json=accessedAt,proto3" json:"accessed_at,omitempty"`
-	IssuedAt      *timestamppb.Timestamp         `protobuf:"bytes,5,opt,name=issued_at,json=issuedAt,proto3" json:"issued_at,omitempty"`
-	ExpiresAt     *timestamppb.Timestamp         `protobuf:"bytes,6,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	Audience      []string                       `protobuf:"bytes,7,rep,name=audience,proto3" json:"audience,omitempty"`
-	Claims        map[string]*structpb.ListValue `protobuf:"bytes,8,rep,name=claims,proto3" json:"claims,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	User          *PomeriumSession_User  `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
+	Issuer        string                 `protobuf:"bytes,4,opt,name=issuer,proto3" json:"issuer,omitempty"`
+	AccessedAt    *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=accessed_at,json=accessedAt,proto3" json:"accessed_at,omitempty"`
+	IssuedAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=issued_at,json=issuedAt,proto3" json:"issued_at,omitempty"`
+	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	Audience      []string               `protobuf:"bytes,7,rep,name=audience,proto3" json:"audience,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1354,13 +1352,6 @@ func (x *PomeriumSession) GetUser() *PomeriumSession_User {
 	return nil
 }
 
-func (x *PomeriumSession) GetGroups() []*PomeriumSession_Group {
-	if x != nil {
-		return x.Groups
-	}
-	return nil
-}
-
 func (x *PomeriumSession) GetIssuer() string {
 	if x != nil {
 		return x.Issuer
@@ -1392,13 +1383,6 @@ func (x *PomeriumSession) GetExpiresAt() *timestamppb.Timestamp {
 func (x *PomeriumSession) GetAudience() []string {
 	if x != nil {
 		return x.Audience
-	}
-	return nil
-}
-
-func (x *PomeriumSession) GetClaims() map[string]*structpb.ListValue {
-	if x != nil {
-		return x.Claims
 	}
 	return nil
 }
@@ -1555,11 +1539,14 @@ func (x *GetPomeriumSessionRequest) GetClusterId() string {
 }
 
 type GetPomeriumSessionResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Session            *PomeriumSession       `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
-	AssociatedSessions []*PomeriumSession     `protobuf:"bytes,2,rep,name=associated_sessions,json=associatedSessions,proto3" json:"associated_sessions,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Session *PomeriumSession       `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
+	// the directory groups of the session's user
+	Groups []*PomeriumSession_Group `protobuf:"bytes,3,rep,name=groups,proto3" json:"groups,omitempty"`
+	// the session's identity provider claims
+	Claims        map[string]*structpb.ListValue `protobuf:"bytes,4,rep,name=claims,proto3" json:"claims,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetPomeriumSessionResponse) Reset() {
@@ -1599,9 +1586,16 @@ func (x *GetPomeriumSessionResponse) GetSession() *PomeriumSession {
 	return nil
 }
 
-func (x *GetPomeriumSessionResponse) GetAssociatedSessions() []*PomeriumSession {
+func (x *GetPomeriumSessionResponse) GetGroups() []*PomeriumSession_Group {
 	if x != nil {
-		return x.AssociatedSessions
+		return x.Groups
+	}
+	return nil
+}
+
+func (x *GetPomeriumSessionResponse) GetClaims() map[string]*structpb.ListValue {
+	if x != nil {
+		return x.Claims
 	}
 	return nil
 }
@@ -2235,19 +2229,17 @@ const file_users_proto_rawDesc = "" +
 	"\v_cluster_id\"\x8a\x01\n" +
 	"!SetPomeriumServiceAccountResponse\x12S\n" +
 	"\x0fservice_account\x18\x01 \x01(\v2*.pomerium.dashboard.PomeriumServiceAccountR\x0eserviceAccount\x12\x10\n" +
-	"\x03jwt\x18\x02 \x01(\tR\x03jwt\"\xac\x05\n" +
+	"\x03jwt\x18\x02 \x01(\tR\x03jwt\"\xe5\x03\n" +
 	"\x0fPomeriumSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12<\n" +
-	"\x04user\x18\x02 \x01(\v2(.pomerium.dashboard.PomeriumSession.UserR\x04user\x12A\n" +
-	"\x06groups\x18\x03 \x03(\v2).pomerium.dashboard.PomeriumSession.GroupR\x06groups\x12\x16\n" +
+	"\x04user\x18\x02 \x01(\v2(.pomerium.dashboard.PomeriumSession.UserR\x04user\x12\x16\n" +
 	"\x06issuer\x18\x04 \x01(\tR\x06issuer\x12;\n" +
 	"\vaccessed_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"accessedAt\x127\n" +
 	"\tissued_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\bissuedAt\x129\n" +
 	"\n" +
 	"expires_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12\x1a\n" +
-	"\baudience\x18\a \x03(\tR\baudience\x12G\n" +
-	"\x06claims\x18\b \x03(\v2/.pomerium.dashboard.PomeriumSession.ClaimsEntryR\x06claims\x1aA\n" +
+	"\baudience\x18\a \x03(\tR\baudience\x1aA\n" +
 	"\x05Group\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
@@ -2255,10 +2247,7 @@ const file_users_proto_rawDesc = "" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
-	"\x05email\x18\x03 \x01(\tR\x05email\x1aU\n" +
-	"\vClaimsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x120\n" +
-	"\x05value\x18\x02 \x01(\v2\x1a.google.protobuf.ListValueR\x05value:\x028\x01\"\x94\x01\n" +
+	"\x05email\x18\x03 \x01(\tR\x05emailJ\x04\b\x03\x10\x04J\x04\b\b\x10\tR\x06groupsR\x06claims\"\x94\x01\n" +
 	"\x1cDeletePomeriumSessionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
 	"\n" +
@@ -2272,10 +2261,14 @@ const file_users_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
 	"\n" +
 	"cluster_id\x18\x02 \x01(\tH\x00R\tclusterId\x88\x01\x01B\r\n" +
-	"\v_cluster_id\"\xb1\x01\n" +
+	"\v_cluster_id\"\xe4\x02\n" +
 	"\x1aGetPomeriumSessionResponse\x12=\n" +
-	"\asession\x18\x01 \x01(\v2#.pomerium.dashboard.PomeriumSessionR\asession\x12T\n" +
-	"\x13associated_sessions\x18\x02 \x03(\v2#.pomerium.dashboard.PomeriumSessionR\x12associatedSessions\"\x99\x02\n" +
+	"\asession\x18\x01 \x01(\v2#.pomerium.dashboard.PomeriumSessionR\asession\x12A\n" +
+	"\x06groups\x18\x03 \x03(\v2).pomerium.dashboard.PomeriumSession.GroupR\x06groups\x12R\n" +
+	"\x06claims\x18\x04 \x03(\v2:.pomerium.dashboard.GetPomeriumSessionResponse.ClaimsEntryR\x06claims\x1aU\n" +
+	"\vClaimsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x120\n" +
+	"\x05value\x18\x02 \x01(\v2\x1a.google.protobuf.ListValueR\x05value:\x028\x01J\x04\b\x02\x10\x03R\x13associated_sessions\"\x99\x02\n" +
 	"\x1bListPomeriumSessionsRequest\x12\x19\n" +
 	"\x05query\x18\x01 \x01(\tH\x00R\x05query\x88\x01\x01\x12\x1b\n" +
 	"\x06offset\x18\x02 \x01(\x03H\x01R\x06offset\x88\x01\x01\x12\x19\n" +
@@ -2384,7 +2377,7 @@ var file_users_proto_goTypes = []any{
 	nil,                                                          // 33: pomerium.dashboard.UserInfo.NamespaceRolesEntry
 	(*PomeriumSession_Group)(nil),                                // 34: pomerium.dashboard.PomeriumSession.Group
 	(*PomeriumSession_User)(nil),                                 // 35: pomerium.dashboard.PomeriumSession.User
-	nil,                                                          // 36: pomerium.dashboard.PomeriumSession.ClaimsEntry
+	nil,                                                          // 36: pomerium.dashboard.GetPomeriumSessionResponse.ClaimsEntry
 	(*ListPomeriumSessionsForImpersonationResponse_Session)(nil), // 37: pomerium.dashboard.ListPomeriumSessionsForImpersonationResponse.Session
 	(*timestamppb.Timestamp)(nil),                                // 38: google.protobuf.Timestamp
 	(*structpb.ListValue)(nil),                                   // 39: google.protobuf.ListValue
@@ -2408,49 +2401,48 @@ var file_users_proto_depIdxs = []int32{
 	11, // 15: pomerium.dashboard.SetPomeriumServiceAccountRequest.service_account:type_name -> pomerium.dashboard.PomeriumServiceAccount
 	11, // 16: pomerium.dashboard.SetPomeriumServiceAccountResponse.service_account:type_name -> pomerium.dashboard.PomeriumServiceAccount
 	35, // 17: pomerium.dashboard.PomeriumSession.user:type_name -> pomerium.dashboard.PomeriumSession.User
-	34, // 18: pomerium.dashboard.PomeriumSession.groups:type_name -> pomerium.dashboard.PomeriumSession.Group
-	38, // 19: pomerium.dashboard.PomeriumSession.accessed_at:type_name -> google.protobuf.Timestamp
-	38, // 20: pomerium.dashboard.PomeriumSession.issued_at:type_name -> google.protobuf.Timestamp
-	38, // 21: pomerium.dashboard.PomeriumSession.expires_at:type_name -> google.protobuf.Timestamp
-	36, // 22: pomerium.dashboard.PomeriumSession.claims:type_name -> pomerium.dashboard.PomeriumSession.ClaimsEntry
-	22, // 23: pomerium.dashboard.GetPomeriumSessionResponse.session:type_name -> pomerium.dashboard.PomeriumSession
-	22, // 24: pomerium.dashboard.GetPomeriumSessionResponse.associated_sessions:type_name -> pomerium.dashboard.PomeriumSession
-	22, // 25: pomerium.dashboard.ListPomeriumSessionsResponse.sessions:type_name -> pomerium.dashboard.PomeriumSession
-	37, // 26: pomerium.dashboard.ListPomeriumSessionsForImpersonationResponse.sessions:type_name -> pomerium.dashboard.ListPomeriumSessionsForImpersonationResponse.Session
-	39, // 27: pomerium.dashboard.PomeriumSession.ClaimsEntry.value:type_name -> google.protobuf.ListValue
-	3,  // 28: pomerium.dashboard.UserService.GetGroupInfo:input_type -> pomerium.dashboard.GetGroupInfoRequest
-	5,  // 29: pomerium.dashboard.UserService.GetUserInfo:input_type -> pomerium.dashboard.GetUserInfoRequest
-	7,  // 30: pomerium.dashboard.UserService.QueryGroups:input_type -> pomerium.dashboard.QueryGroupsRequest
-	9,  // 31: pomerium.dashboard.UserService.QueryUsers:input_type -> pomerium.dashboard.QueryUsersRequest
-	12, // 32: pomerium.dashboard.PomeriumServiceAccountService.AddPomeriumServiceAccount:input_type -> pomerium.dashboard.AddPomeriumServiceAccountRequest
-	14, // 33: pomerium.dashboard.PomeriumServiceAccountService.DeletePomeriumServiceAccount:input_type -> pomerium.dashboard.DeletePomeriumServiceAccountRequest
-	16, // 34: pomerium.dashboard.PomeriumServiceAccountService.GetPomeriumServiceAccount:input_type -> pomerium.dashboard.GetPomeriumServiceAccountRequest
-	18, // 35: pomerium.dashboard.PomeriumServiceAccountService.ListPomeriumServiceAccounts:input_type -> pomerium.dashboard.ListPomeriumServiceAccountsRequest
-	20, // 36: pomerium.dashboard.PomeriumServiceAccountService.SetPomeriumServiceAccount:input_type -> pomerium.dashboard.SetPomeriumServiceAccountRequest
-	23, // 37: pomerium.dashboard.PomeriumSessionService.DeletePomeriumSession:input_type -> pomerium.dashboard.DeletePomeriumSessionRequest
-	25, // 38: pomerium.dashboard.PomeriumSessionService.GetPomeriumSession:input_type -> pomerium.dashboard.GetPomeriumSessionRequest
-	31, // 39: pomerium.dashboard.PomeriumSessionService.Impersonate:input_type -> pomerium.dashboard.ImpersonateRequest
-	27, // 40: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessions:input_type -> pomerium.dashboard.ListPomeriumSessionsRequest
-	29, // 41: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessionsForImpersonation:input_type -> pomerium.dashboard.ListPomeriumSessionsForImpersonationRequest
-	4,  // 42: pomerium.dashboard.UserService.GetGroupInfo:output_type -> pomerium.dashboard.GetGroupInfoResponse
-	6,  // 43: pomerium.dashboard.UserService.GetUserInfo:output_type -> pomerium.dashboard.GetUserInfoResponse
-	8,  // 44: pomerium.dashboard.UserService.QueryGroups:output_type -> pomerium.dashboard.QueryGroupsResponse
-	10, // 45: pomerium.dashboard.UserService.QueryUsers:output_type -> pomerium.dashboard.QueryUsersResponse
-	13, // 46: pomerium.dashboard.PomeriumServiceAccountService.AddPomeriumServiceAccount:output_type -> pomerium.dashboard.AddPomeriumServiceAccountResponse
-	15, // 47: pomerium.dashboard.PomeriumServiceAccountService.DeletePomeriumServiceAccount:output_type -> pomerium.dashboard.DeletePomeriumServiceAccountResponse
-	17, // 48: pomerium.dashboard.PomeriumServiceAccountService.GetPomeriumServiceAccount:output_type -> pomerium.dashboard.GetPomeriumServiceAccountResponse
-	19, // 49: pomerium.dashboard.PomeriumServiceAccountService.ListPomeriumServiceAccounts:output_type -> pomerium.dashboard.ListPomeriumServiceAccountsResponse
-	21, // 50: pomerium.dashboard.PomeriumServiceAccountService.SetPomeriumServiceAccount:output_type -> pomerium.dashboard.SetPomeriumServiceAccountResponse
-	24, // 51: pomerium.dashboard.PomeriumSessionService.DeletePomeriumSession:output_type -> pomerium.dashboard.DeletePomeriumSessionResponse
-	26, // 52: pomerium.dashboard.PomeriumSessionService.GetPomeriumSession:output_type -> pomerium.dashboard.GetPomeriumSessionResponse
-	32, // 53: pomerium.dashboard.PomeriumSessionService.Impersonate:output_type -> pomerium.dashboard.ImpersonateResponse
-	28, // 54: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessions:output_type -> pomerium.dashboard.ListPomeriumSessionsResponse
-	30, // 55: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessionsForImpersonation:output_type -> pomerium.dashboard.ListPomeriumSessionsForImpersonationResponse
-	42, // [42:56] is the sub-list for method output_type
-	28, // [28:42] is the sub-list for method input_type
-	28, // [28:28] is the sub-list for extension type_name
-	28, // [28:28] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	38, // 18: pomerium.dashboard.PomeriumSession.accessed_at:type_name -> google.protobuf.Timestamp
+	38, // 19: pomerium.dashboard.PomeriumSession.issued_at:type_name -> google.protobuf.Timestamp
+	38, // 20: pomerium.dashboard.PomeriumSession.expires_at:type_name -> google.protobuf.Timestamp
+	22, // 21: pomerium.dashboard.GetPomeriumSessionResponse.session:type_name -> pomerium.dashboard.PomeriumSession
+	34, // 22: pomerium.dashboard.GetPomeriumSessionResponse.groups:type_name -> pomerium.dashboard.PomeriumSession.Group
+	36, // 23: pomerium.dashboard.GetPomeriumSessionResponse.claims:type_name -> pomerium.dashboard.GetPomeriumSessionResponse.ClaimsEntry
+	22, // 24: pomerium.dashboard.ListPomeriumSessionsResponse.sessions:type_name -> pomerium.dashboard.PomeriumSession
+	37, // 25: pomerium.dashboard.ListPomeriumSessionsForImpersonationResponse.sessions:type_name -> pomerium.dashboard.ListPomeriumSessionsForImpersonationResponse.Session
+	39, // 26: pomerium.dashboard.GetPomeriumSessionResponse.ClaimsEntry.value:type_name -> google.protobuf.ListValue
+	3,  // 27: pomerium.dashboard.UserService.GetGroupInfo:input_type -> pomerium.dashboard.GetGroupInfoRequest
+	5,  // 28: pomerium.dashboard.UserService.GetUserInfo:input_type -> pomerium.dashboard.GetUserInfoRequest
+	7,  // 29: pomerium.dashboard.UserService.QueryGroups:input_type -> pomerium.dashboard.QueryGroupsRequest
+	9,  // 30: pomerium.dashboard.UserService.QueryUsers:input_type -> pomerium.dashboard.QueryUsersRequest
+	12, // 31: pomerium.dashboard.PomeriumServiceAccountService.AddPomeriumServiceAccount:input_type -> pomerium.dashboard.AddPomeriumServiceAccountRequest
+	14, // 32: pomerium.dashboard.PomeriumServiceAccountService.DeletePomeriumServiceAccount:input_type -> pomerium.dashboard.DeletePomeriumServiceAccountRequest
+	16, // 33: pomerium.dashboard.PomeriumServiceAccountService.GetPomeriumServiceAccount:input_type -> pomerium.dashboard.GetPomeriumServiceAccountRequest
+	18, // 34: pomerium.dashboard.PomeriumServiceAccountService.ListPomeriumServiceAccounts:input_type -> pomerium.dashboard.ListPomeriumServiceAccountsRequest
+	20, // 35: pomerium.dashboard.PomeriumServiceAccountService.SetPomeriumServiceAccount:input_type -> pomerium.dashboard.SetPomeriumServiceAccountRequest
+	23, // 36: pomerium.dashboard.PomeriumSessionService.DeletePomeriumSession:input_type -> pomerium.dashboard.DeletePomeriumSessionRequest
+	25, // 37: pomerium.dashboard.PomeriumSessionService.GetPomeriumSession:input_type -> pomerium.dashboard.GetPomeriumSessionRequest
+	31, // 38: pomerium.dashboard.PomeriumSessionService.Impersonate:input_type -> pomerium.dashboard.ImpersonateRequest
+	27, // 39: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessions:input_type -> pomerium.dashboard.ListPomeriumSessionsRequest
+	29, // 40: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessionsForImpersonation:input_type -> pomerium.dashboard.ListPomeriumSessionsForImpersonationRequest
+	4,  // 41: pomerium.dashboard.UserService.GetGroupInfo:output_type -> pomerium.dashboard.GetGroupInfoResponse
+	6,  // 42: pomerium.dashboard.UserService.GetUserInfo:output_type -> pomerium.dashboard.GetUserInfoResponse
+	8,  // 43: pomerium.dashboard.UserService.QueryGroups:output_type -> pomerium.dashboard.QueryGroupsResponse
+	10, // 44: pomerium.dashboard.UserService.QueryUsers:output_type -> pomerium.dashboard.QueryUsersResponse
+	13, // 45: pomerium.dashboard.PomeriumServiceAccountService.AddPomeriumServiceAccount:output_type -> pomerium.dashboard.AddPomeriumServiceAccountResponse
+	15, // 46: pomerium.dashboard.PomeriumServiceAccountService.DeletePomeriumServiceAccount:output_type -> pomerium.dashboard.DeletePomeriumServiceAccountResponse
+	17, // 47: pomerium.dashboard.PomeriumServiceAccountService.GetPomeriumServiceAccount:output_type -> pomerium.dashboard.GetPomeriumServiceAccountResponse
+	19, // 48: pomerium.dashboard.PomeriumServiceAccountService.ListPomeriumServiceAccounts:output_type -> pomerium.dashboard.ListPomeriumServiceAccountsResponse
+	21, // 49: pomerium.dashboard.PomeriumServiceAccountService.SetPomeriumServiceAccount:output_type -> pomerium.dashboard.SetPomeriumServiceAccountResponse
+	24, // 50: pomerium.dashboard.PomeriumSessionService.DeletePomeriumSession:output_type -> pomerium.dashboard.DeletePomeriumSessionResponse
+	26, // 51: pomerium.dashboard.PomeriumSessionService.GetPomeriumSession:output_type -> pomerium.dashboard.GetPomeriumSessionResponse
+	32, // 52: pomerium.dashboard.PomeriumSessionService.Impersonate:output_type -> pomerium.dashboard.ImpersonateResponse
+	28, // 53: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessions:output_type -> pomerium.dashboard.ListPomeriumSessionsResponse
+	30, // 54: pomerium.dashboard.PomeriumSessionService.ListPomeriumSessionsForImpersonation:output_type -> pomerium.dashboard.ListPomeriumSessionsForImpersonationResponse
+	41, // [41:55] is the sub-list for method output_type
+	27, // [27:41] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_users_proto_init() }
